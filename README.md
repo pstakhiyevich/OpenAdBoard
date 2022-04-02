@@ -3,25 +3,29 @@
 
 ------------
 ### Project stack
-Jakarta EE / MySQL / HTML5 / CSS3 / JavaScript / Bootstrap 5
+Jakarta EE / MySQL / HTML5 / CSS3 / Bootstrap 5 / JavaScript
 
 ------------
 The platform includes the following roles and their corresponded functionality:
 
-|                       | Guest | User | Moder | Admin |
-|-----------------------|-------|------|-------|-------|
-| View and search items |   *   |   *  |   *   |   *   |
-| Sign in/up            |   *   |   *  |   *   |   *   |
-| Sign out              |       |   *  |   *   |   *   |
-| Add / Edit items      |       |   *  |   *   |   *   |
-| Bookmark              |       |   *  |   *   |   *   |
-| Comment               |       |   *  |   *   |   *   |
-| Edit user info        |       |   *  |   *   |   *   |
-| Add / Edit categories |       |      |   *   |   *   |
-| Add / Edit cities     |       |      |   *   |   *   |
-| Delete comments       |       |      |   *   |   *   |
-| Change user status    |       |      |       |   *   |
-| Change user role      |       |      |       |   *   |
+|                                       | Guest | User | Moder | Admin |
+|---------------------------------------|-------|------|-------|-------|
+| View/Search items                     |   *   |   *  |   *   |   *   |
+| Sign in/up                            |   *   |   *  |   *   |   *   |
+| Sign out                              |       |   *  |   *   |   *   |
+| Change own account email and password |       |   *  |   *   |   *   |
+| Add items                             |       |   *  |   *   |   *   |
+| Edit/Delete own items                 |       |   *  |   *   |   *   |
+| View/Add/Delete own bookmarks         |       |   *  |   *   |   *   |
+| View comments                         |       |   *  |   *   |   *   |
+| Add/Delete own comments               |       |   *  |   *   |   *   |
+| View contact info on an item page     |       |   *  |   *   |   *   |
+| View user pages                       |       |   *  |   *   |   *   |
+| Delete comments                       |       |      |   *   |   *   |
+| Manage categories                     |       |      |   *   |   *   |
+| Manage cities                         |       |      |   *   |   *   |
+| Manage users                          |       |      |       |   *   |
+
 
 ------------
 ### Database diagram
