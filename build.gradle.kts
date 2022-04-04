@@ -17,11 +17,11 @@ dependencies {
 
     implementation ("org.apache.logging.log4j:log4j-core:2.17.2")
     implementation ("org.apache.logging.log4j:log4j-api:2.17.2")
-    implementation ("mysql:mysql-connector-java:8.0.28")
     implementation ("jakarta.servlet:jakarta.servlet-api:5.0.0")
-    implementation ("jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:2.0.0")
-    implementation ("com.sun.mail:jakarta.mail:2.0.1")
+    implementation("org.glassfish.web:jakarta.servlet.jsp.jstl:2.0.0")
+    compileOnly("jakarta.servlet.jsp:jakarta.servlet.jsp-api:3.0.0")
 
+    implementation ("mysql:mysql-connector-java:8.0.28")
 }
 
 tasks {

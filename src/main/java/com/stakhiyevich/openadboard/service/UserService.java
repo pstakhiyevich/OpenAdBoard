@@ -1,5 +1,9 @@
 package com.stakhiyevich.openadboard.service;
 
-public interface UserService {
+import com.stakhiyevich.openadboard.model.entity.UserEntity;
 
+import java.util.List;
+
+public interface UserService {
+    List<UserEntity> findAll();
 }
