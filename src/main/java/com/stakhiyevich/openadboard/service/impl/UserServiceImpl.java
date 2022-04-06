@@ -5,7 +5,7 @@ import com.stakhiyevich.openadboard.exception.TransactionException;
 import com.stakhiyevich.openadboard.model.dao.AbstractDao;
 import com.stakhiyevich.openadboard.model.dao.TransactionManager;
 import com.stakhiyevich.openadboard.model.dao.impl.UserDaoImpl;
-import com.stakhiyevich.openadboard.model.entity.UserEntity;
+import com.stakhiyevich.openadboard.model.entity.User;
 import com.stakhiyevich.openadboard.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,10 +18,10 @@ public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger();
 
     @Override
-    public List<UserEntity> findAll() {
-        AbstractDao<UserEntity> userDao = new UserDaoImpl();
+    public List<User> findAll() {
+        AbstractDao<User> userDao = new UserDaoImpl();
         TransactionManager transactionManager = new TransactionManager();
-        List<UserEntity> users = new ArrayList<>();
+        List<User> users = new ArrayList<>();
         try {
             transactionManager.beginTransaction(userDao);
             try {

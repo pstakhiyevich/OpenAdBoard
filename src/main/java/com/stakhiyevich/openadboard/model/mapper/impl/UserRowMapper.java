@@ -1,6 +1,6 @@
 package com.stakhiyevich.openadboard.model.mapper.impl;
 
-import com.stakhiyevich.openadboard.model.entity.UserEntity;
+import com.stakhiyevich.openadboard.model.entity.User;
 import com.stakhiyevich.openadboard.model.entity.UserRole;
 import com.stakhiyevich.openadboard.model.entity.UserStatus;
 import com.stakhiyevich.openadboard.model.mapper.DatabaseColumnTitleHolder;
@@ -14,14 +14,14 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Optional;
 
-public class UserRowMapper implements RowMapper<UserEntity> {
+public class UserRowMapper implements RowMapper<User> {
 
     private static final Logger logger = LogManager.getLogger();
 
     @Override
-    public Optional<UserEntity> mapRow(ResultSet resultSet) {
+    public Optional<User> mapRow(ResultSet resultSet) {
         try {
-            UserEntity user = new UserEntity();
+            User user = new User();
             user.setId(resultSet.getLong(DatabaseColumnTitleHolder.USER_ID));
             user.setName(resultSet.getString(DatabaseColumnTitleHolder.USER_NAME));
             user.setEmail(resultSet.getString(DatabaseColumnTitleHolder.USER_EMAIL));
