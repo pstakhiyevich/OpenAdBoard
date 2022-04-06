@@ -3,8 +3,8 @@ package com.stakhiyevich.openadboard.controller;
 import com.stakhiyevich.openadboard.controller.command.Command;
 import com.stakhiyevich.openadboard.controller.command.CommandFactory;
 import com.stakhiyevich.openadboard.controller.command.Router;
-import com.stakhiyevich.openadboard.controller.constant.PagePathHolder;
-import com.stakhiyevich.openadboard.controller.constant.RoutingTypeHolder;
+import com.stakhiyevich.openadboard.controller.command.PagePathHolder;
+import com.stakhiyevich.openadboard.controller.command.RoutingTypeHolder;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
-import static com.stakhiyevich.openadboard.controller.constant.RequestParameterHolder.COMMAND;
+import static com.stakhiyevich.openadboard.controller.command.RequestParameterHolder.COMMAND;
 
 @WebServlet(name = "Controller", urlPatterns = "/controller")
 public class Controller extends HttpServlet {

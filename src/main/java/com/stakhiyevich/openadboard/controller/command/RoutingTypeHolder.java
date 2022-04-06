@@ -1,4 +1,4 @@
-package com.stakhiyevich.openadboard.controller.constant;
+package com.stakhiyevich.openadboard.controller.command;
 
 public enum RoutingTypeHolder {
     FORWARD,

@@ -16,7 +16,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ConnectionPool {
     private static final Logger logger = LogManager.getLogger();
 
-    private static ConnectionPool instance = new ConnectionPool();
+    private static ConnectionPool instance;
     private static final AtomicBoolean isPoolCreated = new AtomicBoolean(false);
     private static final Lock locker = new ReentrantLock(true);
 
@@ -74,6 +74,7 @@ public class ConnectionPool {
         }
         if (!(connection instanceof ProxyConnection)) {
             logger.error("wrong instance");
+            throw new ConnectionPoolException("wrong instance");
         }
         try {
             usedConnections.remove(connection);

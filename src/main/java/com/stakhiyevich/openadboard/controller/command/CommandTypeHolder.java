@@ -1,4 +1,4 @@
-package com.stakhiyevich.openadboard.controller.constant;
+package com.stakhiyevich.openadboard.controller.command;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

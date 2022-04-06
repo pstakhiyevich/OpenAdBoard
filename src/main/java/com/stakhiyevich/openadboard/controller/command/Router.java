@@ -1,7 +1,5 @@
 package com.stakhiyevich.openadboard.controller.command;
 
-import com.stakhiyevich.openadboard.controller.constant.RoutingTypeHolder;
-
 public class Router {
 
     private String resultPage;

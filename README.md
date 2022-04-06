@@ -29,7 +29,7 @@ The platform includes the following roles and their corresponded functionality:
 
 ------------
 ### Database diagram
-![model](https://user-images.githubusercontent.com/42889643/159910235-f271d0d4-f102-41fb-9766-86c94f28e4c5.png)
+![model](https://user-images.githubusercontent.com/42889643/161931686-5f98178d-3ea1-42e0-b12a-618c8fc3797d.png)
 ------------
 ### Usage
 soon...

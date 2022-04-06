@@ -11,7 +11,6 @@ public class UserEntity extends AbstractEntity {
     private LocalDateTime registrationDate;
     private String hash;
     private String avatar;
-    //todo ask about user status and user role
     private UserStatus status;
     private UserRole role;
 

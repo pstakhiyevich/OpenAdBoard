@@ -1,7 +1,6 @@
 package com.stakhiyevich.openadboard.controller.command;
 
 import com.stakhiyevich.openadboard.controller.command.impl.HomePageCommand;
-import com.stakhiyevich.openadboard.controller.constant.CommandTypeHolder;
 
 import java.util.EnumMap;
 
