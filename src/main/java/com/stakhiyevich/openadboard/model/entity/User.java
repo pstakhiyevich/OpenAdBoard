@@ -3,7 +3,7 @@ package com.stakhiyevich.openadboard.model.entity;
 import java.time.LocalDateTime;
 
 
-public class UserEntity extends AbstractEntity {
+public class User extends AbstractEntity {
 
     private String name;
     private String email;
@@ -81,10 +81,10 @@ public class UserEntity extends AbstractEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof UserEntity)) return false;
+        if (!(o instanceof User)) return false;
         if (!super.equals(o)) return false;
 
-        UserEntity user = (UserEntity) o;
+        User user = (User) o;
 
         if (getName() != null ? !getName().equals(user.getName()) : user.getName() != null) return false;
         if (getEmail() != null ? !getEmail().equals(user.getEmail()) : user.getEmail() != null) return false;
