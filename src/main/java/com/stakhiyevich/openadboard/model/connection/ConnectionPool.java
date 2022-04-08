@@ -20,7 +20,7 @@ public class ConnectionPool {
     private static final AtomicBoolean isPoolCreated = new AtomicBoolean(false);
     private static final Lock locker = new ReentrantLock(true);
 
-    private static final int DEFAULT_POOL_SIZE = 32;
+    private static final int DEFAULT_POOL_SIZE = 4;
 
     private final BlockingDeque<ProxyConnection> availableConnections;
     private final BlockingDeque<ProxyConnection> usedConnections;

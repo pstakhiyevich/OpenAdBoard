@@ -12,4 +12,10 @@
         <location>/views/errors/errorPage500.jsp</location>
     </error-page>
 
+    <listener>
+        <listener-class>com.stakhiyevich.openadboard.controller.listener.HttpSessionListenerImpl</listener-class>
+    </listener>
+    <listener>
+        <listener-class>com.stakhiyevich.openadboard.controller.listener.ServletContextListenerImpl</listener-class>
+    </listener>
 </web-app>
