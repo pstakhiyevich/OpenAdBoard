@@ -4,6 +4,7 @@ public class RequestParameterHolder {
 
     public static final String COMMAND = "command";
     public static final String USERS = "users";
+    public static final String SELECTED_LANGUAGE = "selected_language";
 
     private RequestParameterHolder() {
     }

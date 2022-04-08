@@ -6,7 +6,8 @@ import org.apache.logging.log4j.Logger;
 public enum CommandTypeHolder {
 
     BAD_COMMAND,
-    HOME_PAGE;
+    HOME_PAGE,
+    CHANGE_LANGUAGE;
 
     private static final Logger logger = LogManager.getLogger();
 
