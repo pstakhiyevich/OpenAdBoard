@@ -54,11 +54,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findUserByEmailAndPassword(String email, String password) {
-        Optional<User> user = findUserByEmail(email);
-        if (user.isPresent() && passwordHashGenerator.checkPasswordHash(password, user.get().getPassword())) {
-            return user;
+        String hashedPassword = passwordHashGenerator.generatePasswordHash(password).get();
+        AbstractDao userDao = new UserDaoImpl();
+        Optional<User> user = Optional.empty();
+        try (TransactionManager transactionManager = new TransactionManager()) {
+            transactionManager.beginTransaction(userDao);
+            try {
+                user = ((UserDao) userDao).findUserByEmailAndPassword(email, hashedPassword);
+                transactionManager.commit();
+            } catch (DaoException e) {
+                transactionManager.rollback();
+            }
+        } catch (TransactionException e) {
+            logger.error("failed to find user by email and password");
         }
-        return Optional.empty();
+        return user;
     }
 
     private Optional<User> findUserByEmail(String email) {

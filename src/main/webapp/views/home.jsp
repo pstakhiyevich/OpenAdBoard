@@ -23,8 +23,10 @@
     <title>Home page</title>
 
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 <jsp:include page="header.jsp"/>
 
+
+<jsp:include page="footer.jsp"/>
 </body>
 </html>

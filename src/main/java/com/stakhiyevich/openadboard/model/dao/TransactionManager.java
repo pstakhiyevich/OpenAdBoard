@@ -10,24 +10,13 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
 
-/**
- * The TransactionManager class manages the workflow of a database transaction.
- */
+
 public class TransactionManager implements AutoCloseable {
 
     private static final Logger logger = LogManager.getLogger();
 
-    /**
-     * The Connection object.
-     */
     private Connection connection;
 
-    /**
-     * Commences a transaction by acquiring an available connection from the connection pool and disabling the connection's auto-commit mode.
-     *
-     * @param dao the arbitrary number of Data Access Objects for the transaction
-     * @throws TransactionException if there is an error occurred during a transaction's initiation
-     */
     public void beginTransaction(AbstractDao... dao) throws TransactionException {
         if (connection == null) {
             connection = ConnectionPool.getInstance().acquireConnection();
@@ -41,11 +30,6 @@ public class TransactionManager implements AutoCloseable {
         Arrays.stream(dao).forEach(d -> d.setConnection(connection));
     }
 
-    /**
-     * Closes the transaction by releasing the connection to the connection pool and enabling the connection's auto-commit mode.
-     *
-     * @throws TransactionException if there is an error occurred during the transaction's completion
-     */
     @Override
     public void close() throws TransactionException {
         if (connection == null) {
@@ -67,11 +51,6 @@ public class TransactionManager implements AutoCloseable {
         connection = null;
     }
 
-    /**
-     * Commits the transaction.
-     *
-     * @throws TransactionException if there is an error occurred during the transaction's commit.
-     */
     public void commit() throws TransactionException {
         if (connection == null) {
             logger.error("failed to commit a transaction because the connection is null");
@@ -85,11 +64,6 @@ public class TransactionManager implements AutoCloseable {
         }
     }
 
-    /**
-     * Rollbacks the transaction.
-     *
-     * @throws TransactionException if there is an error occurred during the transaction's rollback
-     */
     public void rollback() throws TransactionException {
         if (connection == null) {
             logger.error("failed to rollback a transaction because the connection is null");
