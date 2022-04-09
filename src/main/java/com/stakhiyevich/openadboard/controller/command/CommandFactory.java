@@ -2,6 +2,7 @@ package com.stakhiyevich.openadboard.controller.command;
 
 import com.stakhiyevich.openadboard.controller.command.impl.DefaultCommand;
 import com.stakhiyevich.openadboard.controller.command.impl.get.HomePageCommand;
+import com.stakhiyevich.openadboard.controller.command.impl.get.SignUpPageCommand;
 import com.stakhiyevich.openadboard.controller.command.impl.post.ChangeLanguageCommand;
 import com.stakhiyevich.openadboard.controller.command.impl.post.LogOutCommand;
 import com.stakhiyevich.openadboard.controller.command.impl.post.SignInCommand;
@@ -19,7 +20,9 @@ public final class CommandFactory {
         commands.put(CommandTypeHolder.HOME_PAGE, new HomePageCommand());
         commands.put(CommandTypeHolder.CHANGE_LANGUAGE, new ChangeLanguageCommand());
         commands.put(CommandTypeHolder.SIGN_IN, new SignInCommand());
+        commands.put(CommandTypeHolder.SIGN_UP_PAGE, new SignUpPageCommand());
         commands.put(CommandTypeHolder.LOG_OUT, new LogOutCommand());
+
     }
 
     public static CommandFactory getInstance() {
