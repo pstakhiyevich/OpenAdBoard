@@ -20,15 +20,9 @@
             <div class="mx-auto w-75 order-1">
                 <form class="" id="search_form" action="${pageContext.request.contextPath}/controller" method="get">
                     <input type="hidden" name="command" value="home_page">
-                    <div class="row">
-                        <div class="col-12">
-                            <input required type="search" class="form-control" id="search_input" name="search_query"
-                                   placeholder=<fmt:message key="label.search"/>>
-                        </div>
-                        <div class="col-4">
-                            <div class="mb-0 mt-0 error-hint text-danger custom_hidden"><fmt:message key="message.wrong.search.query"/></div>
-                        </div>
-                    </div>
+                    <input required type="search" class="form-control" id="search_input" name="search_query" placeholder=<fmt:message
+                            key="label.search"/>>
+                    <div class="error-hint text-danger custom_hidden"><fmt:message key="message.wrong.search.query"/></div>
                 </form>
             </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".dual-collapse2">
@@ -64,9 +58,9 @@
                                                 aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <c:if test="${sessionScope.signInFeedback.fail != null}">
+                                        <c:if test="${sessionScope.sign_in_feedback.fail != null}">
                                             <div class="text-danger text-center">
-                                                <fmt:message key="${sessionScope.signInFeedback.fail}"/>
+                                                <fmt:message key="${sessionScope.sign_in_feedback.fail}"/>
                                             </div>
                                         </c:if>
                                         <form class="text-end" id="sign_in_form" method="post"
@@ -76,9 +70,9 @@
                                                        class="form-control form-control-lg"
                                                        placeholder="email"/>
                                                 <div class="error-hint text-danger custom_hidden"><fmt:message key="message.wrong.email"/></div>
-                                                <c:if test="${sessionScope.signInFeedback.email != null}">
+                                                <c:if test="${sessionScope.sign_in_feedback.email != null}">
                                                     <div class="text-danger text-start">
-                                                        <fmt:message key="${sessionScope.signInFeedback.email}"/>
+                                                        <fmt:message key="${sessionScope.sign_in_feedback.email}"/>
                                                     </div>
                                                 </c:if>
                                             </div>
@@ -87,9 +81,9 @@
                                                        class="form-control form-control-lg"
                                                        placeholder="password"/>
                                                 <div class="error-hint text-danger custom_hidden"><fmt:message key="message.wrong.password"/></div>
-                                                <c:if test="${sessionScope.signInFeedback.password != null}">
+                                                <c:if test="${sessionScope.sign_in_feedback.password != null}">
                                                     <div class="text-danger text-start">
-                                                        <fmt:message key="${sessionScope.signInFeedback.password}"/>
+                                                        <fmt:message key="${sessionScope.sign_in_feedback.password}"/>
                                                     </div>
                                                 </c:if>
                                             </div>
@@ -105,17 +99,17 @@
                                 </div>
                             </div>
                         </div>
-                        <c:if test="${!empty sessionScope.signInFeedback}">
+                        <c:if test="${!empty sessionScope.sign_in_feedback}">
                             <script>
                                 const myModal = new bootstrap.Modal(document.getElementById('sign_in_modal'));
                                 myModal.show()
                             </script>
+                            <c:remove var="sign_in_feedback" scope="session"/>
                         </c:if>
-                        <c:remove var="signInFeedback" scope="session"/>
+
                     </c:if>
                     <li class="nav-item dropdown">
-                        <a class="nav-link link-dark" href="#" id="navbarDropdownLanguage" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="ms-1 nav-link link-dark" href="#" id="navbarDropdownLanguage" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="static/graphics/language_black_24dp.svg">
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownLanguage">
@@ -136,13 +130,13 @@
                         <li class="nav-item">
                             <a href="${pageContext.request.contextPath}/controller?command=bookmark_page"
                                class="nav-link link-dark">
-                                <span class="material-icons-sharp">bookmark</span>
+                                <img src="static/graphics/bookmark_border_black_18dp.svg">
                             </a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link link-dark" href="#" id="navbarDropdownAccount" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="material-icons-sharp">account_circle</span>
+                                <img src="static/graphics/account_circle_black_36dp.svg">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownAccount">
                                 <li><a class="dropdown-item"

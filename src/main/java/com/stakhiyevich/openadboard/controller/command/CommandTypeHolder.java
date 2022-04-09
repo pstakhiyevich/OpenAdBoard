@@ -8,7 +8,8 @@ public enum CommandTypeHolder {
     DEFAULT_COMMAND,
     HOME_PAGE,
     CHANGE_LANGUAGE,
-    SIGN_IN;
+    SIGN_IN,
+    LOG_OUT;
 
     private static final Logger logger = LogManager.getLogger();
 
