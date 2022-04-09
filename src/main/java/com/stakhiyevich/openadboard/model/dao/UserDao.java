@@ -10,4 +10,7 @@ public interface UserDao {
 
     Optional<User> findUserByEmailAndPassword(String email, String password) throws DaoException;
 
+    boolean isEmailExist(String email) throws DaoException;
+
+    boolean createUser(User user, String password, String userHash) throws DaoException;
 }

@@ -23,4 +23,8 @@ public interface UserService {
      * @return an optional object of a user
      */
     Optional<User> findUserByEmailAndPassword(String email, String password);
+
+    boolean isEmailExist(String email);
+
+    boolean createUser(String name, String email, String password);
 }

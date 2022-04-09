@@ -24,12 +24,19 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             "FROM users " +
             "JOIN user_statuses ON users.user_statuses_id = user_statuses.id " +
             "JOIN user_roles ON users.user_roles_id = user_roles.id";
+    private static final String SQL_CREATE_USER =
+            "INSERT INTO users(name, email, password, registration_date, hash, avatar, user_statuses_id, user_roles_id) " +
+                    "VALUES(?, ?, ?, ?, ?, ?, " +
+                    "(SELECT user_statuses.id FROM user_statuses WHERE title = ?), " +
+                    "(SELECT user_roles.id FROM user_roles WHERE title = ?))";
     private static final String SQL_FIND_BY_EMAIL =
             "SELECT users.id, users.name, users.email, users.password, users.registration_date, users.hash, users.avatar, user_statuses.title, user_roles.title " +
                     "FROM users " +
                     "JOIN user_statuses ON users.user_statuses_id = user_statuses.id " +
                     "JOIN user_roles ON users.user_roles_id = user_roles.id " +
                     "WHERE email = ?";
+    private static final String SQL_IS_EMAIL_EXIST =
+            "SELECT id FROM users WHERE email = ? LIMIT 1";
     private static final String SQL_FIND_BY_EMAIL_AND_PASSWORD =
             "SELECT users.id, users.name, users.email, users.registration_date, users.hash, users.avatar, user_statuses.title, user_roles.title " +
                     "FROM users " +
@@ -53,6 +60,42 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             throw new DaoException("can't find users", e);
         }
         return result;
+    }
+
+    @Override
+    public boolean isEmailExist(String email) throws DaoException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_IS_EMAIL_EXIST)) {
+            statement.setString(1, email);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
+        } catch (SQLException e) {
+            logger.error("failed to check if user with {} email exists", email, e);
+            throw new DaoException("failed to check if user with " + email + " exists", e);
+        }
+    }
+
+    @Override
+    public boolean createUser(User user, String password, String userHash) throws DaoException {
+        boolean isCreated = false;
+        try (PreparedStatement statement = connection.prepareStatement(SQL_CREATE_USER)) {
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getEmail());
+            statement.setString(3, password);
+            statement.setObject(4, user.getRegistrationDate());
+            statement.setString(5, userHash);
+            statement.setString(6, user.getAvatar());
+            statement.setString(7, user.getStatus().name());
+            statement.setString(8, user.getRole().name());
+            int result = statement.executeUpdate();
+            if (result != 0) {
+                isCreated = true;
+            }
+        } catch (SQLException e) {
+            logger.error("failed to create a user", e);
+            throw new DaoException("failed to create a user", e);
+        }
+        return isCreated;
     }
 
     @Override

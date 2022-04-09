@@ -25,7 +25,6 @@ public class SignInFormValidator implements FormValidator {
     @Override
     public Map<String, String> validateForm(Map<String, String[]> validationData) {
         Map<String, String> validationResult = new HashMap<>();
-
         if (!validationData.get(EMAIL)[0].matches(EMAIL_PATTERN)) {
             validationResult.put(EMAIL, MESSAGE_EMAIL_WRONG);
         }

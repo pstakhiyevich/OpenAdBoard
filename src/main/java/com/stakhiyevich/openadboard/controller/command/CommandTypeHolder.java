@@ -10,7 +10,8 @@ public enum CommandTypeHolder {
     CHANGE_LANGUAGE,
     SIGN_IN,
     SIGN_UP_PAGE,
-    LOG_OUT;
+    LOG_OUT,
+    SIGN_UP;
 
     private static final Logger logger = LogManager.getLogger();
 

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class Item extends AbstractEntity {
+
     private String title;
     private BigDecimal price;
     private String description;

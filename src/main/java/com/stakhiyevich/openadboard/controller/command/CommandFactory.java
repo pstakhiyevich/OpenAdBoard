@@ -6,6 +6,7 @@ import com.stakhiyevich.openadboard.controller.command.impl.get.SignUpPageComman
 import com.stakhiyevich.openadboard.controller.command.impl.post.ChangeLanguageCommand;
 import com.stakhiyevich.openadboard.controller.command.impl.post.LogOutCommand;
 import com.stakhiyevich.openadboard.controller.command.impl.post.SignInCommand;
+import com.stakhiyevich.openadboard.controller.command.impl.post.SignUpCommand;
 
 import java.util.EnumMap;
 
@@ -22,7 +23,7 @@ public final class CommandFactory {
         commands.put(CommandTypeHolder.SIGN_IN, new SignInCommand());
         commands.put(CommandTypeHolder.SIGN_UP_PAGE, new SignUpPageCommand());
         commands.put(CommandTypeHolder.LOG_OUT, new LogOutCommand());
-
+        commands.put(CommandTypeHolder.SIGN_UP, new SignUpCommand());
     }
 
     public static CommandFactory getInstance() {
