@@ -5,23 +5,24 @@ import org.apache.logging.log4j.Logger;
 
 public enum CommandTypeHolder {
 
-    BAD_COMMAND,
+    DEFAULT_COMMAND,
     HOME_PAGE,
-    CHANGE_LANGUAGE;
+    CHANGE_LANGUAGE,
+    SIGN_IN;
 
     private static final Logger logger = LogManager.getLogger();
 
     public static CommandTypeHolder getCommandType(String command) {
         if (command == null) {
             logger.error("the command is null");
-            return BAD_COMMAND;
+            return DEFAULT_COMMAND;
         }
         CommandTypeHolder type;
         try {
             type = CommandTypeHolder.valueOf(command.toUpperCase());
         } catch (IllegalArgumentException e) {
             logger.error("can't find the command", e);
-            type = BAD_COMMAND;
+            type = DEFAULT_COMMAND;
         }
         return type;
     }

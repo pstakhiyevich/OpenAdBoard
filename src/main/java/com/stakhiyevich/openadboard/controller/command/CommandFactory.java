@@ -1,7 +1,9 @@
 package com.stakhiyevich.openadboard.controller.command;
 
+import com.stakhiyevich.openadboard.controller.command.impl.DefaultCommand;
 import com.stakhiyevich.openadboard.controller.command.impl.get.HomePageCommand;
 import com.stakhiyevich.openadboard.controller.command.impl.post.ChangeLanguageCommand;
+import com.stakhiyevich.openadboard.controller.command.impl.post.SignInCommand;
 
 import java.util.EnumMap;
 
@@ -12,8 +14,10 @@ public final class CommandFactory {
 
     private CommandFactory() {
         commands = new EnumMap<>(CommandTypeHolder.class);
+        commands.put(CommandTypeHolder.DEFAULT_COMMAND, new DefaultCommand());
         commands.put(CommandTypeHolder.HOME_PAGE, new HomePageCommand());
         commands.put(CommandTypeHolder.CHANGE_LANGUAGE, new ChangeLanguageCommand());
+        commands.put(CommandTypeHolder.SIGN_IN, new SignInCommand());
     }
 
     public static CommandFactory getInstance() {

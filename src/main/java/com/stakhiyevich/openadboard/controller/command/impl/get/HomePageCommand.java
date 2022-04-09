@@ -17,11 +17,6 @@ import static com.stakhiyevich.openadboard.controller.command.RequestParameterHo
 public class HomePageCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        UserService userService = new UserServiceImpl();
-        List<User> users = userService.findAll();
-        request.setAttribute(USERS, users);
-        session.setAttribute("test", "test");
         return new Router(PagePathHolder.HOME_PAGE, RoutingTypeHolder.FORWARD);
     }
 }

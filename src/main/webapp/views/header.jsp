@@ -9,7 +9,6 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-light border-bottom">
         <div class="container-fluid mt-3">
-            <!--left side-->
             <div class="navbar-collapse w-50 collapse order-0 order-md-0 dual-collapse2">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item active me-3">
