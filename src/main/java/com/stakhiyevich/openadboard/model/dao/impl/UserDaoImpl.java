@@ -2,6 +2,7 @@ package com.stakhiyevich.openadboard.model.dao.impl;
 
 import com.stakhiyevich.openadboard.exception.DaoException;
 import com.stakhiyevich.openadboard.model.dao.AbstractDao;
+import com.stakhiyevich.openadboard.model.dao.JdbcTemplate;
 import com.stakhiyevich.openadboard.model.dao.UserDao;
 import com.stakhiyevich.openadboard.model.entity.User;
 import com.stakhiyevich.openadboard.model.mapper.RowMapper;
@@ -45,6 +46,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                     "WHERE users.email = ? AND users.password = ?";
 
     private final RowMapper<User> userMapper = new UserRowMapper();
+    private final JdbcTemplate<User> jdbcTemplate = new JdbcTemplate<>();
 
     @Override
     public List<User> findALl() throws DaoException {
@@ -77,25 +79,16 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     public boolean createUser(User user, String password, String userHash) throws DaoException {
-        boolean isCreated = false;
-        try (PreparedStatement statement = connection.prepareStatement(SQL_CREATE_USER)) {
-            statement.setString(1, user.getName());
-            statement.setString(2, user.getEmail());
-            statement.setString(3, password);
-            statement.setObject(4, user.getRegistrationDate());
-            statement.setString(5, userHash);
-            statement.setString(6, user.getAvatar());
-            statement.setString(7, user.getStatus().name());
-            statement.setString(8, user.getRole().name());
-            int result = statement.executeUpdate();
-            if (result != 0) {
-                isCreated = true;
-            }
-        } catch (SQLException e) {
-            logger.error("failed to create a user", e);
-            throw new DaoException("failed to create a user", e);
-        }
-        return isCreated;
+        Object[] args = {
+                user.getName(),
+                user.getEmail(),
+                password,
+                user.getRegistrationDate(),
+                userHash,
+                user.getAvatar(),
+                user.getStatus().name(),
+                user.getRole().name()};
+        return jdbcTemplate.update(connection, SQL_CREATE_USER, args) >= 0;
     }
 
     @Override
