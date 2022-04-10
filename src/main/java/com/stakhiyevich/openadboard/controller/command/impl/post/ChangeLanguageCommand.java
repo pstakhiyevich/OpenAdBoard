@@ -16,14 +16,14 @@ public class ChangeLanguageCommand implements Command {
         HttpSession session = request.getSession();
         String selectedLanguage = request.getParameter(SELECTED_LANGUAGE);
         switch (selectedLanguage) {
-            case RUSSIAN -> {
-                session.setAttribute(LOCALIZATION, RUSSIAN);
-            }
             case ENGLISH -> {
                 session.setAttribute(LOCALIZATION, ENGLISH);
             }
             case CHINESE -> {
                 session.setAttribute(LOCALIZATION, CHINESE);
+            }
+            case RUSSIAN -> {
+                session.setAttribute(LOCALIZATION, RUSSIAN);
             }
         }
         return new Router(HOME_URL, REDIRECT);
