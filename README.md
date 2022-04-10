@@ -1,6 +1,8 @@
 ### Description
 **OpenAdBoard** is a marketplace platform where anyone can post classified advertisements within various categories and cities.
 
+The platform supports three languages: English, Chinese, and Russian.
+
 ------------
 ### Project stack
 Jakarta EE / MySQL / HTML5 / CSS3 / Bootstrap 5 / JavaScript
