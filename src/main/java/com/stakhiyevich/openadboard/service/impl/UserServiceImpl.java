@@ -121,6 +121,42 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    @Override
+    public int countAllUsers() {
+        AbstractDao userDao = new UserDaoImpl();
+        int numberOfUsers = 0;
+        try (TransactionManager transactionManager = new TransactionManager()) {
+            transactionManager.beginTransaction(userDao);
+            try {
+                numberOfUsers = ((UserDaoImpl) userDao).countAllUsers();
+                transactionManager.commit();
+            } catch (DaoException e) {
+                transactionManager.rollback();
+            }
+        } catch (TransactionException e) {
+            logger.error("can't perform a transaction", e);
+        }
+        return numberOfUsers;
+    }
+
+    @Override
+    public List<User> findAllPaginatedUsers(int currentPage, int usersPerPage) {
+        AbstractDao userDao = new UserDaoImpl();
+        List<User> users = new ArrayList<>();
+        try (TransactionManager transactionManager = new TransactionManager()) {
+            transactionManager.beginTransaction(userDao);
+            try {
+                users = ((UserDaoImpl) userDao).findAllPaginatedUsers(currentPage, usersPerPage);
+                transactionManager.commit();
+            } catch (DaoException e) {
+                transactionManager.rollback();
+            }
+        } catch (TransactionException e) {
+            logger.error("can't find users");
+        }
+        return users;
+    }
+
     private Optional<User> findUserByEmail(String email) {
         AbstractDao userDao = new UserDaoImpl();
         Optional<User> user = Optional.empty();

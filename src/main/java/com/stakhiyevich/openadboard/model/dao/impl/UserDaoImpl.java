@@ -44,6 +44,8 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                     "JOIN user_statuses ON users.user_statuses_id = user_statuses.id " +
                     "JOIN user_roles ON users.user_roles_id = user_roles.id " +
                     "WHERE users.email = ? AND users.password = ?";
+    private static final String SQL_COUNT_USERS = "SELECT COUNT(users.id) FROM users";
+    private static final String SQL_PAGINATION = " LIMIT ?, ? ";
 
     private final RowMapper<User> userMapper = new UserRowMapper();
     private final JdbcTemplate<User> jdbcTemplate = new JdbcTemplate<>();
@@ -89,6 +91,23 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                 user.getStatus().name(),
                 user.getRole().name()};
         return jdbcTemplate.update(connection, SQL_CREATE_USER, args) >= 0;
+    }
+
+    @Override
+    public int countAllUsers() throws DaoException {
+        return jdbcTemplate.query(connection, SQL_COUNT_USERS);
+    }
+
+    @Override
+    public List<User> findAllPaginatedUsers(int currentPage, int usersPerPage) throws DaoException {
+        int startItem = currentPage * usersPerPage - usersPerPage;
+        Object[] args = {startItem, usersPerPage};
+        try {
+            return jdbcTemplate.query(connection, SQL_FIND_ALL_USERS + SQL_PAGINATION, args, userMapper);
+        } catch (DaoException e) {
+            logger.error("can't find users", e);
+            throw new DaoException("can't find users", e);
+        }
     }
 
     @Override

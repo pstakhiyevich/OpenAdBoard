@@ -11,7 +11,8 @@ public enum CommandTypeHolder {
     SIGN_IN,
     SIGN_UP_PAGE,
     LOG_OUT,
-    SIGN_UP;
+    SIGN_UP,
+    USER_MANAGEMENT_PAGE;
 
     private static final Logger logger = LogManager.getLogger();
 

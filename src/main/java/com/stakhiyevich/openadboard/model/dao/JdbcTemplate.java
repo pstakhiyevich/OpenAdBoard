@@ -31,6 +31,21 @@ public class JdbcTemplate<T> {
         return resultList;
     }
 
+    public int query(Connection connection, String sql) throws DaoException {
+        int result = 0;
+        try (Statement statement = connection.createStatement()) {
+            try (ResultSet resultSet = statement.executeQuery(sql)) {
+                if (resultSet.next()) {
+                    result = resultSet.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("failed to execute a query", e);
+            throw new DaoException("failed to execute a query", e);
+        }
+        return result;
+    }
+
     public int update(Connection connection, String sql, Object[] args) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             PreparedStatementSetter.setValues(statement, args);
