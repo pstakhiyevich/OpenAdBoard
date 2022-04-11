@@ -13,7 +13,9 @@ import static com.stakhiyevich.openadboard.util.validator.ValidatorPatternHolder
 import static com.stakhiyevich.openadboard.util.validator.ValidatorPatternHolder.PASSWORD_PATTERN;
 
 public class SignInFormValidator implements FormValidator {
+
     private static FormValidator instance;
+
     private SignInFormValidator() {
     }
     public static FormValidator getInstance() {

@@ -18,7 +18,7 @@ import static com.stakhiyevich.openadboard.controller.command.RoutingTypeHolder.
 import static com.stakhiyevich.openadboard.controller.command.RoutingTypeHolder.REDIRECT;
 import static com.stakhiyevich.openadboard.controller.command.SessionAttributeHolder.*;
 
-public class UserManagementPage implements Command {
+public class UserManagementPageCommand implements Command {
 
     private static final int DEFAULT_PAGE_NUMBER = 1;
     private static final int DEFAULT_USERS_PER_PAGE = 2;

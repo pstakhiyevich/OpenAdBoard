@@ -102,12 +102,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     public List<User> findAllPaginatedUsers(int currentPage, int usersPerPage) throws DaoException {
         int startItem = currentPage * usersPerPage - usersPerPage;
         Object[] args = {startItem, usersPerPage};
-        try {
-            return jdbcTemplate.query(connection, SQL_FIND_ALL_USERS + SQL_PAGINATION, args, userMapper);
-        } catch (DaoException e) {
-            logger.error("can't find users", e);
-            throw new DaoException("can't find users", e);
-        }
+        return jdbcTemplate.query(connection, SQL_FIND_ALL_USERS + SQL_PAGINATION, args, userMapper);
     }
 
     @Override

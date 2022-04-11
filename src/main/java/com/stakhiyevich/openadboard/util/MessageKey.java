@@ -1,6 +1,7 @@
 package com.stakhiyevich.openadboard.util;
 
 public final class MessageKey {
+
     public static final String MESSAGE_NAME_WRONG = "message.name.wrong";
     public static final String MESSAGE_EMAIL_WRONG = "message.email.wrong";
     public static final String MESSAGE_PASSWORD_WRONG = "message.password.wrong";
