@@ -25,9 +25,7 @@ public class UserRowMapper implements RowMapper<User> {
             user.setId(resultSet.getLong(DatabaseColumnTitleHolder.USER_ID));
             user.setName(resultSet.getString(DatabaseColumnTitleHolder.USER_NAME));
             user.setEmail(resultSet.getString(DatabaseColumnTitleHolder.USER_EMAIL));
-            user.setPassword(resultSet.getString(DatabaseColumnTitleHolder.USER_PASSWORD));
             user.setRegistrationDate(resultSet.getObject(DatabaseColumnTitleHolder.USER_REGISTRATION_DATE, LocalDateTime.class));
-            user.setHash(resultSet.getString(DatabaseColumnTitleHolder.USER_HASH));
             user.setAvatar(resultSet.getString(DatabaseColumnTitleHolder.USER_AVATAR));
             String status = resultSet.getString(DatabaseColumnTitleHolder.USER_STATUS).toUpperCase();
             String role = resultSet.getString(DatabaseColumnTitleHolder.USER_ROLE).toUpperCase(Locale.ROOT);

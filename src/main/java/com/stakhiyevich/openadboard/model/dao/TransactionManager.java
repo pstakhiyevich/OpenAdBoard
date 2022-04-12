@@ -10,7 +10,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
 
-public class TransactionManager {
+
+public class TransactionManager implements AutoCloseable {
 
     private static final Logger logger = LogManager.getLogger();
 
@@ -23,55 +24,56 @@ public class TransactionManager {
         try {
             connection.setAutoCommit(false);
         } catch (SQLException e) {
-            logger.error("can't begin transaction", e);
-            throw new TransactionException("can't begin transaction", e);
+            logger.error("failed to begin a transaction", e);
+            throw new TransactionException("failed begin a transaction", e);
         }
         Arrays.stream(dao).forEach(d -> d.setConnection(connection));
     }
 
-    public void endTransaction() throws TransactionException {
+    @Override
+    public void close() throws TransactionException {
         if (connection == null) {
-            logger.error("can't end transaction because the connection is null");
-            throw new TransactionException("can't end transaction because the connection is null");
+            logger.error("failed to end the transaction because the connection is null");
+            throw new TransactionException("failed to end the transaction because the connection is null");
         }
         try {
             connection.setAutoCommit(true);
         } catch (SQLException e) {
-            logger.error("can't end transaction", e);
-            throw new TransactionException("can't end transaction", e);
+            logger.error("failed to end a transaction", e);
+            throw new TransactionException("failed to end a transaction", e);
         }
         try {
             ConnectionPool.getInstance().releaseConnection(connection);
         } catch (ConnectionPoolException e) {
-            logger.error("can't release connection", e);
-            throw new TransactionException("can't release connection", e);
+            logger.error("failed to release a connection", e);
+            throw new TransactionException("failed to release a connection", e);
         }
         connection = null;
     }
 
     public void commit() throws TransactionException {
         if (connection == null) {
-            logger.error("can't commit transaction because the connection is null");
-            throw new TransactionException("can't commit transaction because the connection is null");
+            logger.error("failed to commit a transaction because the connection is null");
+            throw new TransactionException("failed to commit a transaction because the connection is null");
         }
         try {
             connection.commit();
         } catch (SQLException e) {
-            logger.error("can't commit transaction", e);
-            throw new TransactionException("can't commit transaction", e);
+            logger.error("failed to commit a transaction", e);
+            throw new TransactionException("failed to commit a transaction", e);
         }
     }
 
     public void rollback() throws TransactionException {
         if (connection == null) {
-            logger.error("can't rollback transaction because the connection is null");
-            throw new TransactionException("can't rollback transaction because the connection is null");
+            logger.error("failed to rollback a transaction because the connection is null");
+            throw new TransactionException("failed to rollback a transaction because the connection is null");
         }
         try {
             connection.rollback();
         } catch (SQLException e) {
-            logger.error("can't rollback transaction", e);
-            throw new TransactionException("can't rollback transaction", e);
+            logger.error("failed to rollback a transaction", e);
+            throw new TransactionException("failed to rollback a transaction", e);
         }
     }
 }
