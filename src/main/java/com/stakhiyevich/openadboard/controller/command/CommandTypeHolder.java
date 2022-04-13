@@ -12,7 +12,9 @@ public enum CommandTypeHolder {
     SIGN_UP_PAGE,
     LOG_OUT,
     SIGN_UP,
-    USER_MANAGEMENT_PAGE;
+    USER_MANAGEMENT_PAGE,
+    CATEGORY_MANAGEMENT_PAGE,
+    CITY_MANAGEMENT_PAGE;
 
     private static final Logger logger = LogManager.getLogger();
 

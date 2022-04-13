@@ -12,6 +12,12 @@ public class DatabaseColumnTitleHolder {
     public static final String USER_STATUS = "user_statuses.title";
     public static final String USER_ROLE = "user_roles.title";
 
+    public static final String CATEGORY_ID = "item_categories.id";
+    public static final String CATEGORY_TITLE = "item_categories.title";
+
+    public static final String CITY_ID = "cities.id";
+    public static final String CITY_TITLE = "cities.title";
+
     private DatabaseColumnTitleHolder() {
     }
 }

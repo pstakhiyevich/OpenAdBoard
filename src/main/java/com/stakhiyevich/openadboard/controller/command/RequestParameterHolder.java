@@ -13,7 +13,10 @@ public class RequestParameterHolder {
     public static final String FAIL = "fail";
     public static final String USERS_PER_PAGE = "users_per_page";
     public static final String PAGE = "page";
-
+    public static final String CATEGORIES_PER_PAGE = "categoriesPerPage";
+    public static final String CITIES_PER_PAGE = "citiesPerPage";
+    public static final String CATEGORIES = "categories";
+    public static final String CITIES = "cities";
 
     private RequestParameterHolder() {
     }

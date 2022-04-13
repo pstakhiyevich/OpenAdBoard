@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
         try (TransactionManager transactionManager = new TransactionManager()) {
             transactionManager.beginTransaction(userDao);
             try {
-                users = ((UserDaoImpl) userDao).findALl();
+                users = ((UserDaoImpl) userDao).findAll();
                 transactionManager.commit();
             } catch (DaoException e) {
                 transactionManager.rollback();

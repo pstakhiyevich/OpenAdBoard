@@ -51,7 +51,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private final JdbcTemplate<User> jdbcTemplate = new JdbcTemplate<>();
 
     @Override
-    public List<User> findALl() throws DaoException {
+    public List<User> findAll() throws DaoException {
         List<User> result = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_ALL_USERS)) {
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -64,6 +64,11 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             throw new DaoException("can't find users", e);
         }
         return result;
+    }
+
+    @Override
+    public Optional<User> findById(long id) throws DaoException {
+        return Optional.empty();
     }
 
     @Override
@@ -107,6 +112,21 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     public boolean create(User user) {
+        return false;
+    }
+
+    @Override
+    public Optional<User> update(User user) throws DaoException {
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean delete(User user) throws DaoException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(long id) throws DaoException {
         return false;
     }
 

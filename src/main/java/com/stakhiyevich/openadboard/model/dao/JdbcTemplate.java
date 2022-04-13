@@ -46,6 +46,22 @@ public class JdbcTemplate<T> {
         return result;
     }
 
+    public List<T> query(Connection connection, String sql, RowMapper<T> rowMapper) throws DaoException {
+        List<T> resultList = new ArrayList<>();
+        try (Statement statement = connection.createStatement()) {
+            try (ResultSet resultSet = statement.executeQuery(sql)) {
+                while (resultSet.next()) {
+                    Optional<T> entity = rowMapper.mapRow(resultSet);
+                    resultList.add(entity.get());
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("failed to execute a query", e);
+            throw new DaoException("failed to execute a query", e);
+        }
+        return resultList;
+    }
+
     public int update(Connection connection, String sql, Object[] args) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             PreparedStatementSetter.setValues(statement, args);
@@ -54,5 +70,18 @@ public class JdbcTemplate<T> {
             logger.error("failed to execute an update", e);
             throw new DaoException("failed to execute an update", e);
         }
+    }
+
+    public Optional<T> update(Connection connection, String sql, Object[] args, T t) throws DaoException {
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            PreparedStatementSetter.setValues(statement, args);
+            if (statement.executeUpdate() >= 0) {
+                return Optional.of(t);
+            }
+        } catch (SQLException e) {
+            logger.error("failed to execute an update", e);
+            throw new DaoException("failed to execute an update", e);
+        }
+        return Optional.empty();
     }
 }
