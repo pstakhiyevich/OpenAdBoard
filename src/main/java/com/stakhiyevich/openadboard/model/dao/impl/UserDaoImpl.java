@@ -2,7 +2,7 @@ package com.stakhiyevich.openadboard.model.dao.impl;
 
 import com.stakhiyevich.openadboard.exception.DaoException;
 import com.stakhiyevich.openadboard.model.dao.AbstractDao;
-import com.stakhiyevich.openadboard.model.dao.JdbcTemplate;
+import com.stakhiyevich.openadboard.model.dao.CustomJdbcTemplate;
 import com.stakhiyevich.openadboard.model.dao.UserDao;
 import com.stakhiyevich.openadboard.model.entity.User;
 import com.stakhiyevich.openadboard.model.mapper.RowMapper;
@@ -48,7 +48,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private static final String SQL_PAGINATION = " LIMIT ?, ? ";
 
     private final RowMapper<User> userMapper = new UserRowMapper();
-    private final JdbcTemplate<User> jdbcTemplate = new JdbcTemplate<>();
+    private final CustomJdbcTemplate<User> customJdbcTemplate = new CustomJdbcTemplate<>();
 
     @Override
     public List<User> findAll() throws DaoException {
@@ -95,19 +95,19 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                 user.getAvatar(),
                 user.getStatus().name(),
                 user.getRole().name()};
-        return jdbcTemplate.update(connection, SQL_CREATE_USER, args) >= 0;
+        return customJdbcTemplate.update(connection, SQL_CREATE_USER, args) >= 0;
     }
 
     @Override
     public int countAllUsers() throws DaoException {
-        return jdbcTemplate.query(connection, SQL_COUNT_USERS);
+        return customJdbcTemplate.query(connection, SQL_COUNT_USERS);
     }
 
     @Override
     public List<User> findAllPaginatedUsers(int currentPage, int usersPerPage) throws DaoException {
         int startItem = currentPage * usersPerPage - usersPerPage;
         Object[] args = {startItem, usersPerPage};
-        return jdbcTemplate.query(connection, SQL_FIND_ALL_USERS + SQL_PAGINATION, args, userMapper);
+        return customJdbcTemplate.query(connection, SQL_FIND_ALL_USERS + SQL_PAGINATION, args, userMapper);
     }
 
     @Override

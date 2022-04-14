@@ -18,6 +18,19 @@ public class DatabaseColumnTitleHolder {
     public static final String CITY_ID = "cities.id";
     public static final String CITY_TITLE = "cities.title";
 
+    public static final String ITEM_ID = "items.id";
+    public static final String ITEM_TITLE = "items.title";
+    public static final String ITEM_PRICE = "items.price";
+    public static final String ITEM_DESCRIPTION = "items.description";
+    public static final String ITEM_CONTACT = "items.contact";
+    public static final String ITEM_CITY = "items.city";
+    public static final String ITEM_CREATE_TIME = "items.create_time";
+    public static final String ITEM_UPDATE_TIME = "items.update_time";
+    public static final String ITEM_PICTURE = "items.picture";
+    public static final String ITEM_ACTIVE = "items.active";
+    public static final String ITEM_CATEGORY = "items.item_categories.title";
+    public static final String ITEM_USER_ID = "items.users_id";
+
     private DatabaseColumnTitleHolder() {
     }
 }

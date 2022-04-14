@@ -3,7 +3,7 @@ package com.stakhiyevich.openadboard.model.dao.impl;
 import com.stakhiyevich.openadboard.exception.DaoException;
 import com.stakhiyevich.openadboard.model.dao.AbstractDao;
 import com.stakhiyevich.openadboard.model.dao.CategoryDao;
-import com.stakhiyevich.openadboard.model.dao.JdbcTemplate;
+import com.stakhiyevich.openadboard.model.dao.CustomJdbcTemplate;
 import com.stakhiyevich.openadboard.model.entity.Category;
 import com.stakhiyevich.openadboard.model.mapper.impl.CategoryRowMapper;
 import org.apache.logging.log4j.LogManager;
@@ -29,13 +29,13 @@ public class CategoryDaoImpl extends AbstractDao<Category> implements CategoryDa
     private static final String SQL_COUNT_CATEGORIES = "SELECT COUNT(item_categories.id) FROM item_categories";
     private static final String SQL_PAGINATION = " LIMIT ?, ? ";
 
-    private final JdbcTemplate<Category> jdbcTemplate = new JdbcTemplate<>();
+    private final CustomJdbcTemplate<Category> customJdbcTemplate = new CustomJdbcTemplate<>();
     private final CategoryRowMapper categoryRowMapper = new CategoryRowMapper();
 
     @Override
     public List<Category> findAll() throws DaoException {
         try {
-            return jdbcTemplate.query(connection, SQL_FIND_ALL, categoryRowMapper);
+            return customJdbcTemplate.query(connection, SQL_FIND_ALL, categoryRowMapper);
         } catch (DaoException e) {
             logger.error("can't find categories", e);
             throw new DaoException("can't find categories", e);
@@ -47,7 +47,7 @@ public class CategoryDaoImpl extends AbstractDao<Category> implements CategoryDa
         int startItem = currentPage * categoriesPerPage - categoriesPerPage;
         Object[] args = {startItem, categoriesPerPage};
         try {
-            return jdbcTemplate.query(connection, SQL_FIND_ALL + SQL_PAGINATION, args, categoryRowMapper);
+            return customJdbcTemplate.query(connection, SQL_FIND_ALL + SQL_PAGINATION, args, categoryRowMapper);
         } catch (DaoException e) {
             logger.error("can't find users", e);
             throw new DaoException("can't find users", e);
@@ -56,7 +56,7 @@ public class CategoryDaoImpl extends AbstractDao<Category> implements CategoryDa
 
     @Override
     public int countAllCategories() throws DaoException {
-        return jdbcTemplate.query(connection, SQL_COUNT_CATEGORIES);
+        return customJdbcTemplate.query(connection, SQL_COUNT_CATEGORIES);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class CategoryDaoImpl extends AbstractDao<Category> implements CategoryDa
         Object[] args = {id};
         List<Category> categories;
         try {
-            categories = jdbcTemplate.query(connection, SQL_FIND_BY_ID, args, categoryRowMapper);
+            categories = customJdbcTemplate.query(connection, SQL_FIND_BY_ID, args, categoryRowMapper);
             if (!categories.isEmpty()) {
                 return Optional.ofNullable(categories.get(0));
             }
@@ -83,7 +83,7 @@ public class CategoryDaoImpl extends AbstractDao<Category> implements CategoryDa
     public boolean delete(long id) throws DaoException {
         Object[] args = {id};
         try {
-            return jdbcTemplate.update(connection, SQL_DELETE, args) >= 0;
+            return customJdbcTemplate.update(connection, SQL_DELETE, args) >= 0;
         } catch (DaoException e) {
             logger.error("can't delete comment with id {}", id, e);
             throw new DaoException("can't comment item", e);
@@ -93,12 +93,12 @@ public class CategoryDaoImpl extends AbstractDao<Category> implements CategoryDa
     @Override
     public boolean create(Category category) throws DaoException {
         Object[] args = {category.getTitle()};
-        return jdbcTemplate.update(connection, SQL_CREATE, args) >= 0;
+        return customJdbcTemplate.update(connection, SQL_CREATE, args) >= 0;
     }
 
     @Override
     public Optional<Category> update(Category category) throws DaoException {
         Object[] args = {category.getTitle(), category.getId()};
-        return jdbcTemplate.update(connection, SQL_UPDATE, args, category);
+        return customJdbcTemplate.update(connection, SQL_UPDATE, args, category);
     }
 }

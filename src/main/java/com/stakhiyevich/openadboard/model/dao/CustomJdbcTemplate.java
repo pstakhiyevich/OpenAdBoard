@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class JdbcTemplate<T> {
+public class CustomJdbcTemplate<T> {
 
     private static final Logger logger = LogManager.getLogger();
 
@@ -60,6 +60,22 @@ public class JdbcTemplate<T> {
             throw new DaoException("failed to execute a query", e);
         }
         return resultList;
+    }
+
+    public int query(Connection connection, String sql, Object[] args) throws DaoException {
+        int result = 0;
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            PreparedStatementSetter.setValues(statement, args);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    result = resultSet.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("failed to execute a query", e);
+            throw new DaoException("failed to execute a query", e);
+        }
+        return result;
     }
 
     public int update(Connection connection, String sql, Object[] args) throws DaoException {
