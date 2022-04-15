@@ -17,6 +17,7 @@ public class RequestParameterHolder {
     public static final String CITIES_PER_PAGE = "citiesPerPage";
     public static final String CATEGORIES = "categories";
     public static final String CITIES = "cities";
+    public static final String UPLOAD_FILE_PATH = "upload_file_path";
 
     private RequestParameterHolder() {
     }
