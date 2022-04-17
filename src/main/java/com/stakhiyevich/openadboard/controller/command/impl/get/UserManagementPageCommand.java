@@ -14,6 +14,8 @@ import java.util.List;
 import static com.stakhiyevich.openadboard.controller.command.PagePathHolder.USER_MANAGEMENT_PAGE;
 import static com.stakhiyevich.openadboard.controller.command.PageUrlHolder.HOME_URL;
 import static com.stakhiyevich.openadboard.controller.command.RequestParameterHolder.*;
+import static com.stakhiyevich.openadboard.controller.command.RequestParameterHolder.CURRENT_PAGE;
+import static com.stakhiyevich.openadboard.controller.command.RequestParameterHolder.NUMBER_OF_PAGES;
 import static com.stakhiyevich.openadboard.controller.command.RoutingTypeHolder.FORWARD;
 import static com.stakhiyevich.openadboard.controller.command.RoutingTypeHolder.REDIRECT;
 import static com.stakhiyevich.openadboard.controller.command.SessionAttributeHolder.*;

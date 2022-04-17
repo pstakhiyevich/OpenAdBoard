@@ -12,6 +12,8 @@ public final class MessageKey {
     public static final String MESSAGE_PASSWORDS_DO_NOT_MATCH = "message.password.not.match";
     public static final String MESSAGE_EMAIL_EXISTS = "message.email.exists";
     public static final String MESSAGE_SUCCESS_REGISTRATION = "message.success.registration";
+    public static final String MESSAGE_SEARCH_QUERY_WRONG = "message.search.query.wrong";
+
 
 
     private MessageKey() {

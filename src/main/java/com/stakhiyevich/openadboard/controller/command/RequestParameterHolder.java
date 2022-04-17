@@ -18,6 +18,16 @@ public class RequestParameterHolder {
     public static final String CATEGORIES = "categories";
     public static final String CITIES = "cities";
     public static final String UPLOAD_FILE_PATH = "upload_file_path";
+    public static final String SEARCH_QUERY = "search_query";
+    public static final String SELECTED_CATEGORY = "selected_category";
+    public static final String SELECTED_CITY = "selected_city";
+    public static final String ITEMS_PER_PAGE = "items_per_page";
+    public static final String ITEMS = "items";
+    public static final String NUMBER_OF_PAGES = "number_of_pages";
+    public static final String CURRENT_PAGE = "current_page";
+    public static final int DEFAULT_PAGE_NUMBER = 1;
+    public static final int DEFAULT_ITEMS_PER_PAGE = 4;
+
 
     private RequestParameterHolder() {
     }

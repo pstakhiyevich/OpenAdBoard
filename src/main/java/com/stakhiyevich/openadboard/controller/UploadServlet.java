@@ -3,6 +3,7 @@ package com.stakhiyevich.openadboard.controller;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,6 +22,7 @@ import static com.stakhiyevich.openadboard.controller.command.RequestParameterHo
         maxFileSize = 1024 * 1024 * 10,
         maxRequestSize = 1024 * 1024 * 100
 )
+@WebServlet(name = "UploadServlet", urlPatterns = "/upload")
 public class UploadServlet extends HttpServlet {
 
     private static final Logger logger = LogManager.getLogger();
