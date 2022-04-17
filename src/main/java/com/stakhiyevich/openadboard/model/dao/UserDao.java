@@ -7,15 +7,23 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserDao {
+
+    boolean isEmailExist(String email) throws DaoException;
+
     Optional<User> findByEmail(String email) throws DaoException;
 
     Optional<User> findUserByEmailAndPassword(String email, String password) throws DaoException;
 
-    boolean isEmailExist(String email) throws DaoException;
-
     boolean createUser(User user, String password, String userHash) throws DaoException;
+
+    boolean activateUserByHash(String hash) throws DaoException;
+
+    List<User> findAllUsers() throws DaoException;
+
+    List<User> findAllPaginatedUsers(int currentPage, int usersPerPage) throws DaoException;
 
     int countAllUsers() throws DaoException;
 
-    List<User> findAllPaginatedUsers(int currentPage, int usersPerPage) throws DaoException;
+    Optional<User> changePassword(User user, String newPassword) throws DaoException;
+
 }

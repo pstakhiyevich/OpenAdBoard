@@ -36,7 +36,7 @@ public class CityServiceImpl implements CityService {
         try (TransactionManager transactionManager = new TransactionManager()) {
             transactionManager.beginTransaction(cityDao);
             try {
-                cities = ((CityDaoImpl) cityDao).findAll();
+                cities = ((CityDaoImpl) cityDao).findAllCities();
                 transactionManager.commit();
             } catch (DaoException e) {
                 transactionManager.rollback();
@@ -54,7 +54,7 @@ public class CityServiceImpl implements CityService {
         try (TransactionManager transactionManager = new TransactionManager()) {
             transactionManager.beginTransaction(cityDao);
             try {
-                cities = ((CityDaoImpl) cityDao).findAllCitiesPagination(currentPage, citiesPerPage);
+                cities = ((CityDaoImpl) cityDao).findAllPaginatedCities(currentPage, citiesPerPage);
                 transactionManager.commit();
             } catch (DaoException e) {
                 transactionManager.rollback();

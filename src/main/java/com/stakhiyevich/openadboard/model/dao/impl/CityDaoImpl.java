@@ -33,24 +33,24 @@ public class CityDaoImpl extends AbstractDao<City> implements CityDao {
     private final CityRowMapper cityRowMapper = new CityRowMapper();
 
     @Override
-    public List<City> findAll() throws DaoException {
+    public List<City> findAllCities() throws DaoException {
         try {
             return customJdbcTemplate.query(connection, SQL_FIND_ALL, cityRowMapper);
         } catch (DaoException e) {
-            logger.error("can't find cities", e);
-            throw new DaoException("can't find cities", e);
+            logger.error("failed to find cities", e);
+            throw new DaoException("failed to find cities", e);
         }
     }
 
     @Override
-    public List<City> findAllCitiesPagination(int currentPage, int citiesPerPage) throws DaoException {
+    public List<City> findAllPaginatedCities(int currentPage, int citiesPerPage) throws DaoException {
         int startItem = currentPage * citiesPerPage - citiesPerPage;
         Object[] args = {startItem, citiesPerPage};
         try {
             return customJdbcTemplate.query(connection, SQL_FIND_ALL + SQL_PAGINATION, args, cityRowMapper);
         } catch (DaoException e) {
-            logger.error("can't find users", e);
-            throw new DaoException("can't find users", e);
+            logger.error("failed to find users", e);
+            throw new DaoException("failed to find users", e);
         }
     }
 
@@ -69,7 +69,7 @@ public class CityDaoImpl extends AbstractDao<City> implements CityDao {
                 return Optional.ofNullable(cities.get(0));
             }
         } catch (DaoException e) {
-            logger.error("can't find a city with id {}", id, e);
+            logger.error("failed to find a city with id {}", id, e);
         }
         return Optional.empty();
     }
@@ -85,8 +85,8 @@ public class CityDaoImpl extends AbstractDao<City> implements CityDao {
         try {
             return customJdbcTemplate.update(connection, SQL_DELETE, args) >= 0;
         } catch (DaoException e) {
-            logger.error("can't delete comment with id {}", id, e);
-            throw new DaoException("can't comment item", e);
+            logger.error("failed to delete comment with id {}", id, e);
+            throw new DaoException("failed to comment item", e);
         }
     }
 

@@ -36,7 +36,7 @@ public class CategoryServiceImpl implements CategoryService {
         try (TransactionManager transactionManager = new TransactionManager()) {
             transactionManager.beginTransaction(itemCategoryDao);
             try {
-                categories = ((CategoryDaoImpl) itemCategoryDao).findAll();
+                categories = ((CategoryDaoImpl) itemCategoryDao).findAllCategories();
                 transactionManager.commit();
             } catch (DaoException e) {
                 transactionManager.rollback();
@@ -54,7 +54,7 @@ public class CategoryServiceImpl implements CategoryService {
         try (TransactionManager transactionManager = new TransactionManager()) {
             transactionManager.beginTransaction(itemCategoryDao);
             try {
-                categories = ((CategoryDaoImpl) itemCategoryDao).findAllCategoriesPagination(currentPage, categoriesPerPage);
+                categories = ((CategoryDaoImpl) itemCategoryDao).findAllPaginatedCategories(currentPage, categoriesPerPage);
                 transactionManager.commit();
             } catch (DaoException e) {
                 transactionManager.rollback();

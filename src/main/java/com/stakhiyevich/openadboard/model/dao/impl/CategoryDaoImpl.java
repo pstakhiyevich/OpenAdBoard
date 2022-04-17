@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class CategoryDaoImpl extends AbstractDao<Category> implements CategoryDao {
-
     private static final Logger logger = LogManager.getLogger();
 
     private static final String SQL_FIND_ALL = "SELECT id, title " +
@@ -33,24 +32,24 @@ public class CategoryDaoImpl extends AbstractDao<Category> implements CategoryDa
     private final CategoryRowMapper categoryRowMapper = new CategoryRowMapper();
 
     @Override
-    public List<Category> findAll() throws DaoException {
+    public List<Category> findAllCategories() throws DaoException {
         try {
             return customJdbcTemplate.query(connection, SQL_FIND_ALL, categoryRowMapper);
         } catch (DaoException e) {
-            logger.error("can't find categories", e);
-            throw new DaoException("can't find categories", e);
+            logger.error("failed to find categories", e);
+            throw new DaoException("failed to find categories", e);
         }
     }
 
     @Override
-    public List<Category> findAllCategoriesPagination(int currentPage, int categoriesPerPage) throws DaoException {
+    public List<Category> findAllPaginatedCategories(int currentPage, int categoriesPerPage) throws DaoException {
         int startItem = currentPage * categoriesPerPage - categoriesPerPage;
         Object[] args = {startItem, categoriesPerPage};
         try {
             return customJdbcTemplate.query(connection, SQL_FIND_ALL + SQL_PAGINATION, args, categoryRowMapper);
         } catch (DaoException e) {
-            logger.error("can't find users", e);
-            throw new DaoException("can't find users", e);
+            logger.error("failed to find users", e);
+            throw new DaoException("failed to find users", e);
         }
     }
 
@@ -69,7 +68,7 @@ public class CategoryDaoImpl extends AbstractDao<Category> implements CategoryDa
                 return Optional.ofNullable(categories.get(0));
             }
         } catch (DaoException e) {
-            logger.error("can't find a category with id {}", id, e);
+            logger.error("failed to find a category with id {}", id, e);
         }
         return Optional.empty();
     }
@@ -85,8 +84,8 @@ public class CategoryDaoImpl extends AbstractDao<Category> implements CategoryDa
         try {
             return customJdbcTemplate.update(connection, SQL_DELETE, args) >= 0;
         } catch (DaoException e) {
-            logger.error("can't delete comment with id {}", id, e);
-            throw new DaoException("can't comment item", e);
+            logger.error("failed to delete comment with id {}", id, e);
+            throw new DaoException("failed to comment item", e);
         }
     }
 

@@ -6,7 +6,10 @@ import com.stakhiyevich.openadboard.model.entity.Category;
 import java.util.List;
 
 public interface CategoryDao {
-    List<Category> findAllCategoriesPagination(int currentPage, int categoriesPerPage) throws DaoException;
+
+    List<Category> findAllCategories() throws DaoException;
+
+    List<Category> findAllPaginatedCategories(int currentPage, int categoriesPerPage) throws DaoException;
 
     int countAllCategories() throws DaoException;
 }

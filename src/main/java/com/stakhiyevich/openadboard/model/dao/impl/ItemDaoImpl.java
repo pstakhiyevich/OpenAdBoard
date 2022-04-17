@@ -6,10 +6,13 @@ import com.stakhiyevich.openadboard.model.dao.ItemDao;
 import com.stakhiyevich.openadboard.model.dao.CustomJdbcTemplate;
 import com.stakhiyevich.openadboard.model.entity.Item;
 import com.stakhiyevich.openadboard.model.mapper.impl.ItemRowMapper;
+import com.stakhiyevich.openadboard.model.query.QueryBuilder;
+import com.stakhiyevich.openadboard.model.query.impl.ItemQueryBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class ItemDaoImpl extends AbstractDao<Item> implements ItemDao {
@@ -48,7 +51,7 @@ public class ItemDaoImpl extends AbstractDao<Item> implements ItemDao {
     private final ItemRowMapper itemRowMapper = new ItemRowMapper();
 
     @Override
-    public List<Item> findAll() throws DaoException {
+    public List<Item> findAllItems() throws DaoException {
         return customJdbcTemplate.query(connection, SQL_FIND_ITEMS, itemRowMapper);
     }
 
@@ -111,7 +114,7 @@ public class ItemDaoImpl extends AbstractDao<Item> implements ItemDao {
     }
 
     @Override
-    public List<Item> findItems(int currentPage, int recordsPerPage) throws DaoException {
+    public List<Item> findPaginatedItems(int currentPage, int recordsPerPage) throws DaoException {
         int startItem = currentPage * recordsPerPage - recordsPerPage;
         Object[] args = {startItem, recordsPerPage};
         try {
@@ -120,6 +123,22 @@ public class ItemDaoImpl extends AbstractDao<Item> implements ItemDao {
             logger.error("failed to find items", e);
             throw new DaoException("failed to find items", e);
         }
+    }
+
+    @Override
+    public List<Item> findItemsWithParameters(Map<String, String[]> parameters) throws DaoException {
+        QueryBuilder queryBuilder = new ItemQueryBuilder();
+        String sqlQuery = queryBuilder.buildSelectQuery(SQL_FIND_ITEMS, parameters);
+        Object[] args = queryBuilder.extractSelectQueryArguments(parameters).toArray();
+        return customJdbcTemplate.query(connection, sqlQuery, args, itemRowMapper);
+    }
+
+    @Override
+    public int countItemsWithParameters(Map<String, String[]> parameters) throws DaoException {
+        QueryBuilder queryBuilder = new ItemQueryBuilder();
+        String sqlQuery = queryBuilder.buildCountQuery(SQL_COUNT_ITEMS, parameters);
+        Object[] args = queryBuilder.extractCountQueryArguments(parameters).toArray();
+        return customJdbcTemplate.query(connection, sqlQuery, args);
     }
 
     @Override
