@@ -31,6 +31,12 @@ public class DatabaseColumnTitleHolder {
     public static final String ITEM_CATEGORY = "items.item_categories.title";
     public static final String ITEM_USER_ID = "items.users_id";
 
+    public static final String COMMENT_ID = "comments.id";
+    public static final String COMMENT_TEXT = "comments.text";
+    public static final String COMMENT_CREATE_TIME = "comments.create_time";
+    public static final String COMMENT_ITEM_ID = "comments.items_id";
+    public static final String COMMENT_USER_ID = "comments.users_id";
+
     private DatabaseColumnTitleHolder() {
     }
 }

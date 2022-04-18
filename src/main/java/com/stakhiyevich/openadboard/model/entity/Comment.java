@@ -2,7 +2,7 @@ package com.stakhiyevich.openadboard.model.entity;
 
 import java.time.LocalDateTime;
 
-public class Comment {
+public class Comment extends AbstractEntity {
 
     private String text;
     private LocalDateTime createTime;
