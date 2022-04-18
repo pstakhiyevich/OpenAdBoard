@@ -32,6 +32,14 @@ public class RequestParameterHolder {
     public static final int DEFAULT_PAGE_NUMBER = 1;
     public static final int DEFAULT_ITEMS_PER_PAGE = 4;
     public static final String COMMENT_ID = "comment_id";
+    public static final String TITLE = "title";
+    public static final String PRICE = "price";
+    public static final String DESCRIPTION = "description";
+    public static final String CONTACT = "contact";
+    public static final String CITY = "city";
+    public static final String CATEGORY = "category";
+    public static final String PICTURE = "picture";
+    public static final String FEEDBACK = "feedback";
 
 
     private RequestParameterHolder() {

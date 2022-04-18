@@ -40,7 +40,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public boolean addItem(String title, BigDecimal price, String description, String contact, String pictureFileName, Long categoryId, User user, Long cityId, List<Part> parts) {
+    public boolean addItem(String title, BigDecimal price, String description, String contact, Long categoryId, User user, Long cityId, List<Part> parts) {
         AbstractDao itemDao = new ItemDaoImpl();
         AbstractDao categoryDao = new CategoryDaoImpl();
         AbstractDao cityDao = new CityDaoImpl();
@@ -53,6 +53,7 @@ public class ItemServiceImpl implements ItemService {
                 if (category.isEmpty() || city.isEmpty()) {
                     return false;
                 }
+                String pictureFileName = parts.get(0).getSubmittedFileName();
                 Item item = createItemObject(title, price, description, contact, pictureFileName, category.get(), user, city.get());
                 String pictureFullPath = uploadService.uploadFile(parts, pictureFileName).get();
                 item.setPicture(pictureFullPath);

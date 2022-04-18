@@ -18,6 +18,16 @@ public final class MessageKey {
     public static final String MESSAGE_COMMENT_ADD_FAIL = "message.comment.add.fail";
     public static final String MESSAGE_COMMENT_DELETE_SUCCESS = "message.comment.delete.success";
     public static final String MESSAGE_COMMENT_DELETE_FAIL = "message.comment.delete.fail";
+    public static final String MESSAGE_TITLE_WRONG = "message.title.wrong";
+    public static final String MESSAGE_PRICE_WRONG = "message.price.wrong";
+    public static final String MESSAGE_DESCRIPTION_WRONG = "message.description.wrong";
+    public static final String MESSAGE_CONTACT_WRONG = "message.contact.wrong";
+    public static final String MESSAGE_CITY_WRONG = "message.city.wrong";
+    public static final String MESSAGE_CATEGORY_WRONG = "message.category.wrong";
+    public static final String MESSAGE_PICTURE_WRONG = "message.picture.wrong";
+    public static final String MESSAGE_ERROR = "message.error";
+    public static final String MESSAGE_ADD_ITEM_SUCCESS = "message.add.item.success";
+    public static final String MESSAGE_FAIL_ADD_ITEM = "message.fail.add.item";
 
 
     private MessageKey() {

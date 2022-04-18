@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface ItemService {
 
-    boolean addItem(String title, BigDecimal price, String description, String contact, String pictureFileName, Long categoryId, User user, Long cityId, List<Part> parts);
+    boolean addItem(String title, BigDecimal price, String description, String contact, Long categoryId, User user, Long cityId, List<Part> parts);
 
     int countItems();
 

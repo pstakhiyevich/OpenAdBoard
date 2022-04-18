@@ -15,7 +15,11 @@ public enum CommandTypeHolder {
     USER_MANAGEMENT_PAGE,
     CATEGORY_MANAGEMENT_PAGE,
     CITY_MANAGEMENT_PAGE,
-    ITEM_PAGE;
+    ITEM_PAGE,
+    ADD_ITEM_PAGE,
+    ADD_ITEM,
+    ADD_COMMENT,
+    DELETE_COMMENT;
 
     private static final Logger logger = LogManager.getLogger();
 
