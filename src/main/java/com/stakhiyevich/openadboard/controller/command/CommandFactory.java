@@ -28,6 +28,8 @@ public final class CommandFactory {
         commands.put(CommandTypeHolder.DELETE_COMMENT, new DeleteCommentCommand());
         commands.put(CommandTypeHolder.ADD_ITEM, new AddItemCommand());
         commands.put(CommandTypeHolder.ADD_ITEM_PAGE, new AddItemPageCommand());
+        commands.put(CommandTypeHolder.EDIT_ITEM_PAGE, new EditItemPageCommand());
+        commands.put(CommandTypeHolder.EDIT_ITEM, new EditItemCommand());
     }
 
     public static CommandFactory getInstance() {

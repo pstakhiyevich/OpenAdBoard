@@ -10,6 +10,7 @@ public final class PagePathHolder {
     public static final String CITY_MANAGEMENT_PAGE = "/views/city_management.jsp";
     public static final String ITEM_PAGE = "/views/item.jsp";
     public static final String ADD_ITEM_PAGE = "/views/add_item.jsp";
+    public static final String EDIT_ITEM_PAGE = "/views/edit_item.jsp";
 
     private PagePathHolder() {
     }
