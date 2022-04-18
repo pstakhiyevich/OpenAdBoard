@@ -28,8 +28,10 @@ public class RequestParameterHolder {
     public static final String COMMENTS = "comments";
     public static final String NUMBER_OF_PAGES = "number_of_pages";
     public static final String CURRENT_PAGE = "current_page";
+    public static final String COMMENT_TEXT = "comment_text";
     public static final int DEFAULT_PAGE_NUMBER = 1;
     public static final int DEFAULT_ITEMS_PER_PAGE = 4;
+    public static final String COMMENT_ID = "comment_id";
 
 
     private RequestParameterHolder() {

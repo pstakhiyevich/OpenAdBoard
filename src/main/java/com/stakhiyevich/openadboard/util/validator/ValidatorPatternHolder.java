@@ -10,6 +10,8 @@ public class ValidatorPatternHolder {
     public static final String PASSWORD_PATTERN = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=\\S+$).{6,50}$";
     //1-50, letters, digits, whitespaces, :.,-' symbols
     public static final String TITLE_PATTERN = "^([\\w\\s:.,'-]{1,50})$";
+    //1-500, letters, digits, whitespaces, :!?.,_'- symbols
+    public static final String COMMENT_TEXT_PATTERN = "^([\\w\\s:!?.,_'-]{1,500})$";
 
     private ValidatorPatternHolder() {
     }

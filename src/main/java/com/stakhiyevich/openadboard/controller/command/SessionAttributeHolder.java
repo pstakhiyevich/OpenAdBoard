@@ -10,6 +10,9 @@ public class SessionAttributeHolder {
     public static final String VALIDATION_FEEDBACK = "validationFeedback";
     public static final String SIGN_IN_FEEDBACK = "sign_in_feedback";
     public static final String USER = "user";
+    public static final String COMMENT_VALIDATION_FEEDBACK = "commentValidationFeedback";
+    public static final String ADD_DELETE_COMMENT_FEEDBACK = "addDeleteCommentFeedback";
+
 
 
     private SessionAttributeHolder() {
