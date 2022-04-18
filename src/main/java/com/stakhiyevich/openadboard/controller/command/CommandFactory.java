@@ -26,6 +26,7 @@ public final class CommandFactory {
         commands.put(CommandTypeHolder.USER_MANAGEMENT_PAGE, new UserManagementPageCommand());
         commands.put(CommandTypeHolder.CATEGORY_MANAGEMENT_PAGE, new CategoryManagementPageCommand());
         commands.put(CommandTypeHolder.CITY_MANAGEMENT_PAGE, new CityManagementPageCommand());
+        commands.put(CommandTypeHolder.ITEM_PAGE, new ItemPage());
     }
 
     public static CommandFactory getInstance() {

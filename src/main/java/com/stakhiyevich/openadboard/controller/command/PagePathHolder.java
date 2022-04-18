@@ -8,6 +8,7 @@ public final class PagePathHolder {
     public static final String USER_MANAGEMENT_PAGE = "/views/user_management.jsp";
     public static final String CATEGORY_MANAGEMENT_PAGE = "/views/category_management.jsp";
     public static final String CITY_MANAGEMENT_PAGE = "/views/city_management.jsp";
+    public static final String ITEM_PAGE = "/views/item.jsp";
 
     private PagePathHolder() {
     }

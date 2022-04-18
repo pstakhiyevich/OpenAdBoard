@@ -23,6 +23,8 @@ public class RequestParameterHolder {
     public static final String SELECTED_CITY = "selected_city";
     public static final String ITEMS_PER_PAGE = "items_per_page";
     public static final String ITEMS = "items";
+    public static final String ITEM = "item";
+    public static final String ITEM_ID = "item_id";
     public static final String NUMBER_OF_PAGES = "number_of_pages";
     public static final String CURRENT_PAGE = "current_page";
     public static final int DEFAULT_PAGE_NUMBER = 1;
