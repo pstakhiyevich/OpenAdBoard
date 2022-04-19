@@ -23,7 +23,9 @@ public enum CommandTypeHolder {
     EDIT_ITEM_PAGE,
     ADD_COMMENT,
     DELETE_COMMENT,
-    BOOKMARK_PAGE;
+    BOOKMARK_PAGE,
+    ADD_BOOKMARK,
+    DELETE_BOOKMARK;
 
     private static final Logger logger = LogManager.getLogger();
 

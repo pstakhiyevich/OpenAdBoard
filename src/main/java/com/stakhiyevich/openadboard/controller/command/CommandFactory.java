@@ -32,6 +32,8 @@ public final class CommandFactory {
         commands.put(CommandTypeHolder.EDIT_ITEM, new EditItemCommand());
         commands.put(CommandTypeHolder.DELETE_ITEM, new DeleteItemCommand());
         commands.put(CommandTypeHolder.BOOKMARK_PAGE, new BookmarkPageCommand());
+        commands.put(CommandTypeHolder.ADD_BOOKMARK, new AddBookmarkCommand());
+        commands.put(CommandTypeHolder.DELETE_BOOKMARK, new DeleteBookmarkCommand());
     }
 
     public static CommandFactory getInstance() {

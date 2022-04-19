@@ -32,6 +32,10 @@ public final class MessageKey {
     public static final String MESSAGE_EDIT_ITEM_FAIL = "message.edit.item.fail";
     public static final String MESSAGE_DELETE_ITEM_SUCCESS = "message.delete.item.success";
     public static final String MESSAGE_DELETE_ITEM_FAIL = "message.delete.item.fail";
+    public static final String MESSAGE_ADD_BOOKMARK_SUCCESS = "message.add.bookmark.success";
+    public static final String MESSAGE_ADD_BOOKMARK_FAIL = "message.add.bookmark.fail";
+    public static final String MESSAGE_DELETE_BOOKMARK_SUCCESS = "message.delete.bookmark.success";
+    public static final String MESSAGE_DELETE_BOOKMARK_FAIL = "message.delete.bookmark.fail";
 
     private MessageKey() {
     }
