@@ -40,6 +40,7 @@ public class RequestParameterHolder {
     public static final String CATEGORY = "category";
     public static final String PICTURE = "picture";
     public static final String FEEDBACK = "feedback";
+    public static final String BOOKMARKS = "bookmarks";
 
 
     private RequestParameterHolder() {
