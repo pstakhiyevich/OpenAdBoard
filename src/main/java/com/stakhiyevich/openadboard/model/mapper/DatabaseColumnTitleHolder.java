@@ -37,6 +37,9 @@ public class DatabaseColumnTitleHolder {
     public static final String COMMENT_ITEM_ID = "comments.items_id";
     public static final String COMMENT_USER_ID = "comments.users_id";
 
+    public static final String BOOKMARK_USER_ID = "bookmarks.users_id";
+    public static final String BOOKMARK_ITEM_ID = "bookmarks.items_id";
+
     private DatabaseColumnTitleHolder() {
     }
 }
