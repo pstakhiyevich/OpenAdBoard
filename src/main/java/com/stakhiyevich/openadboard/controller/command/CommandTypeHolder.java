@@ -19,6 +19,7 @@ public enum CommandTypeHolder {
     ADD_ITEM_PAGE,
     ADD_ITEM,
     EDIT_ITEM,
+    DELETE_ITEM,
     EDIT_ITEM_PAGE,
     ADD_COMMENT,
     DELETE_COMMENT;

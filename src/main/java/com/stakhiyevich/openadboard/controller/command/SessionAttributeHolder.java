@@ -15,7 +15,7 @@ public class SessionAttributeHolder {
     public static final String ADD_ITEM_FEEDBACK = "addItemFeedback";
     public static final String EDIT_ITEM_VALIDATION_FEEDBACK = "editItemValidationFeedback";
     public static final String EDIT_ITEM_FEEDBACK = "editItemFeedback";
-
+    public static final String DELETE_ITEM_FEEDBACK = "deleteItemFeedback";
 
 
     private SessionAttributeHolder() {

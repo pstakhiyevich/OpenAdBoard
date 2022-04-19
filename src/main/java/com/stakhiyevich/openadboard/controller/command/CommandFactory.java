@@ -30,6 +30,7 @@ public final class CommandFactory {
         commands.put(CommandTypeHolder.ADD_ITEM_PAGE, new AddItemPageCommand());
         commands.put(CommandTypeHolder.EDIT_ITEM_PAGE, new EditItemPageCommand());
         commands.put(CommandTypeHolder.EDIT_ITEM, new EditItemCommand());
+        commands.put(CommandTypeHolder.DELETE_ITEM, new DeleteItemCommand());
     }
 
     public static CommandFactory getInstance() {

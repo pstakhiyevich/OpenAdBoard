@@ -30,6 +30,8 @@ public final class MessageKey {
     public static final String MESSAGE_FAIL_ADD_ITEM = "message.fail.add.item";
     public static final String MESSAGE_EDIT_ITEM_SUCCESS = "message.edit.item.success";
     public static final String MESSAGE_EDIT_ITEM_FAIL = "message.edit.item.fail";
+    public static final String MESSAGE_DELETE_ITEM_SUCCESS = "message.delete.item.success";
+    public static final String MESSAGE_DELETE_ITEM_FAIL = "message.delete.item.fail";
 
     private MessageKey() {
     }
