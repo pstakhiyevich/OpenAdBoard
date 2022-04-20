@@ -27,7 +27,8 @@ public enum CommandTypeHolder {
     ADD_BOOKMARK,
     DELETE_BOOKMARK,
     ACTIVATE_USER,
-    ADD_CITY;
+    ADD_CITY,
+    EDIT_CITY;
 
     private static final Logger logger = LogManager.getLogger();
 

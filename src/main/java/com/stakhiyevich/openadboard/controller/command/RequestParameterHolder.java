@@ -37,6 +37,7 @@ public class RequestParameterHolder {
     public static final String DESCRIPTION = "description";
     public static final String CONTACT = "contact";
     public static final String CITY = "city";
+    public static final String CITY_ID = "city_id";
     public static final String CITY_TITLE = "city_title";
     public static final String CATEGORY = "category";
     public static final String PICTURE = "picture";
