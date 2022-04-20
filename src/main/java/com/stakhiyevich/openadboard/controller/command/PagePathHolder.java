@@ -13,6 +13,7 @@ public final class PagePathHolder {
     public static final String EDIT_ITEM_PAGE = "/views/edit_item.jsp";
     public static final String BOOKMARK_PAGE = "/views/bookmark.jsp";
     public static final String ACTIVATE_USER_PAGE = "/views/activate_user.jsp";
+    public static final String USER_PAGE = "/views/user.jsp";
 
     private PagePathHolder() {
     }

@@ -61,6 +61,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> findUserById(Long id) {
+        AbstractDao userDao = new UserDaoImpl();
+        Optional<User> user = Optional.empty();
+        try (TransactionManager transactionManager = new TransactionManager()) {
+            transactionManager.beginTransaction(userDao);
+            try {
+                user = ((UserDaoImpl) userDao).findById(id);
+                transactionManager.commit();
+            } catch (DaoException e) {
+                transactionManager.rollback();
+            }
+        } catch (TransactionException e) {
+            logger.error("failed to perform a transaction", e);
+        }
+        return user;
+    }
+
+    @Override
     public Optional<User> findUserByEmailAndPassword(String email, String password) {
         String hashedPassword = passwordHashGenerator.generatePasswordHash(password).get();
         AbstractDao userDao = new UserDaoImpl();

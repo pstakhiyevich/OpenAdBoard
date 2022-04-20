@@ -24,13 +24,13 @@ public class DeleteCategoryCommand implements Command {
     public Router execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(USER);
-        CategoryService categoryService = CategoryServiceImpl.getInstance();
 
         if (!user.getRole().equals(UserRole.MODER) && !user.getRole().equals(UserRole.ADMIN)) {
             return new Router(ERROR_PAGE_404, ERROR);
         }
 
         long categoryId = parseLongParameter(request.getParameter(CATEGORY_ID));
+        CategoryService categoryService = CategoryServiceImpl.getInstance();
 
         boolean result = categoryService.deleteCategory(categoryId);
         if (result) {

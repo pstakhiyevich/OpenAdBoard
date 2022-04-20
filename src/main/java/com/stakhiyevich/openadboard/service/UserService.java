@@ -10,6 +10,8 @@ public interface UserService {
 
     List<User> findAll();
 
+    Optional<User> findUserById(Long id);
+
     Optional<User> findUserByEmailAndPassword(String email, String password);
 
     boolean isEmailExist(String email);
