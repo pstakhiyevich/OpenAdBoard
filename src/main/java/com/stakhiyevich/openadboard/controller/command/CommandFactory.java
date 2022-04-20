@@ -38,6 +38,9 @@ public final class CommandFactory {
         commands.put(CommandTypeHolder.ADD_CITY, new AddCityCommand());
         commands.put(CommandTypeHolder.EDIT_CITY, new EditCityCommand());
         commands.put(CommandTypeHolder.DELETE_CITY, new DeleteCityCommand());
+        commands.put(CommandTypeHolder.ADD_CATEGORY, new AddCategoryCommand());
+        commands.put(CommandTypeHolder.EDIT_CATEGORY, new EditCategoryCommand());
+        commands.put(CommandTypeHolder.DELETE_CATEGORY, new DeleteCategoryCommand());
     }
 
     public static CommandFactory getInstance() {

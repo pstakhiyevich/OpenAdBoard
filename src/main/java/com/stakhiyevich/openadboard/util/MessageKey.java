@@ -44,6 +44,12 @@ public final class MessageKey {
     public static final String MESSAGE_CITY_EDIT_FAIL = "message.city.edit.fail";
     public static final String MESSAGE_CITY_DELETE_SUCCESS = "message.city.delete.success";
     public static final String MESSAGE_CITY_DELETE_FAIL = "message.city.delete.fail";
+    public static final String MESSAGE_CATEGORY_ADD_SUCCESS = "message.category.add.success";
+    public static final String MESSAGE_CATEGORY_ADD_FAIL = "message.category.add.fail";
+    public static final String MESSAGE_CATEGORY_EDIT_SUCCESS = "message.category.edit.success";
+    public static final String MESSAGE_CATEGORY_EDIT_FAIL = "message.category.edit.fail";
+    public static final String MESSAGE_CATEGORY_DELETE_SUCCESS = "message.category.delete.success";
+    public static final String MESSAGE_CATEGORY_DELETE_FAIL = "message.category.delete.fail";
 
     private MessageKey() {
     }
