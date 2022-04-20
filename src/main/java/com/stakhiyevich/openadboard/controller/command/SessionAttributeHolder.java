@@ -18,6 +18,8 @@ public class SessionAttributeHolder {
     public static final String DELETE_ITEM_FEEDBACK = "deleteItemFeedback";
     public static final String ADD_DELETE_BOOKMARK_FEEDBACK = "addDeleteBookmarkFeedback";
     public static final String ACTIVATION_FEEDBACK = "activationFeedback";
+    public static final String CITY_MANAGEMENT_PAGE_FEEDBACK = "cityManagementPageFeedback";
+
 
     private SessionAttributeHolder() {
     }

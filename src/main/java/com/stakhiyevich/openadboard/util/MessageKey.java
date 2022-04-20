@@ -38,6 +38,8 @@ public final class MessageKey {
     public static final String MESSAGE_DELETE_BOOKMARK_FAIL = "message.delete.bookmark.fail";
     public static final String MESSAGE_SUCCESS_ACTIVATION = "message.success.activation";
     public static final String MESSAGE_FAIL_ACTIVATION = "message.fail.activation";
+    public static final String MESSAGE_CITY_ADD_SUCCESS = "message.city.add.success";
+    public static final String MESSAGE_CITY_ADD_FAIL = "message.city.add.fail";
 
     private MessageKey() {
     }
