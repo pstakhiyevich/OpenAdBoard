@@ -42,6 +42,8 @@ public final class MessageKey {
     public static final String MESSAGE_CITY_ADD_FAIL = "message.city.add.fail";
     public static final String MESSAGE_CITY_EDIT_SUCCESS = "message.city.edit.success";
     public static final String MESSAGE_CITY_EDIT_FAIL = "message.city.edit.fail";
+    public static final String MESSAGE_CITY_DELETE_SUCCESS = "message.city.delete.success";
+    public static final String MESSAGE_CITY_DELETE_FAIL = "message.city.delete.fail";
 
     private MessageKey() {
     }

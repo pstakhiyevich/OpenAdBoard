@@ -37,6 +37,7 @@ public final class CommandFactory {
         commands.put(CommandTypeHolder.ACTIVATE_USER, new ActivateUserCommand());
         commands.put(CommandTypeHolder.ADD_CITY, new AddCityCommand());
         commands.put(CommandTypeHolder.EDIT_CITY, new EditCityCommand());
+        commands.put(CommandTypeHolder.DELETE_CITY, new DeleteCityCommand());
     }
 
     public static CommandFactory getInstance() {
