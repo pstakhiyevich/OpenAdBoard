@@ -41,6 +41,7 @@ public class RequestParameterHolder {
     public static final String PICTURE = "picture";
     public static final String FEEDBACK = "feedback";
     public static final String BOOKMARKS = "bookmarks";
+    public static final String TOKEN = "token";
 
 
     private RequestParameterHolder() {

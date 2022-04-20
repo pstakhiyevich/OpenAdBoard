@@ -19,4 +19,6 @@ public interface UserService {
     int countAllUsers();
 
     List<User> findAllPaginatedUsers(int currentPage, int usersPerPage);
+
+    boolean activateUserByHash(String hash);
 }

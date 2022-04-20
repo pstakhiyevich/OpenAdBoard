@@ -109,6 +109,7 @@ public class UserServiceImpl implements UserService {
                 String userHash = userHashGenerator.generateUserHash(email).get();
                 boolean result = ((UserDaoImpl) userDao).createUser(user, hashedPassword, userHash);
                 if (result) {
+                    //todo send activation email
                     transactionManager.commit();
                     return true;
                 }
@@ -155,6 +156,28 @@ public class UserServiceImpl implements UserService {
             logger.error("can't find users");
         }
         return users;
+    }
+
+    @Override
+    public boolean activateUserByHash(String hash) {
+        if (hash != null && !hash.isEmpty()) {
+            AbstractDao userDao = new UserDaoImpl();
+            try (TransactionManager transactionManager = new TransactionManager()) {
+                transactionManager.beginTransaction(userDao);
+                try {
+                    boolean isActivated = ((UserDaoImpl) userDao).activateUserByHash(hash);
+                    if (isActivated) {
+                        transactionManager.commit();
+                        return true;
+                    }
+                } catch (DaoException e) {
+                    transactionManager.rollback();
+                }
+            } catch (TransactionException e) {
+                logger.error("failed to activate user");
+            }
+        }
+        return false;
     }
 
     private Optional<User> findUserByEmail(String email) {
