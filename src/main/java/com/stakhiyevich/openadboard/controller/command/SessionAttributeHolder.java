@@ -25,8 +25,8 @@ public class SessionAttributeHolder {
     public static final String EDIT_CATEGORY_VALIDATION_FEEDBACK = "editCategoryValidationFeedback";
     public static final String CHANGE_PASSWORD_VALIDATION_FEEDBACK = "changePasswordValidationFeedback";
     public static final String CHANGE_PASSWORD_FEEDBACK = "changePasswordFeedback";
-
-
+    public static final String EDIT_USER_INFORMATION_VALIDATION_FEEDBACK = "editUserInformationValidationFeedback";
+    public static final String EDIT_USER_INFORMATION_FEEDBACK = "editUserInformationFeedback";
 
     private SessionAttributeHolder() {
     }

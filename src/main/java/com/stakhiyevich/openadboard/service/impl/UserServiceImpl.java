@@ -9,11 +9,13 @@ import com.stakhiyevich.openadboard.model.dao.impl.UserDaoImpl;
 import com.stakhiyevich.openadboard.model.entity.User;
 import com.stakhiyevich.openadboard.model.entity.UserRole;
 import com.stakhiyevich.openadboard.model.entity.UserStatus;
+import com.stakhiyevich.openadboard.service.UploadService;
 import com.stakhiyevich.openadboard.service.UserService;
 import com.stakhiyevich.openadboard.util.hasher.PasswordHashGenerator;
 import com.stakhiyevich.openadboard.util.hasher.UserHashGenerator;
 import com.stakhiyevich.openadboard.util.hasher.impl.PasswordHashGeneratorImpl;
 import com.stakhiyevich.openadboard.util.hasher.impl.UserHashGeneratorImpl;
+import jakarta.servlet.http.Part;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -127,7 +129,7 @@ public class UserServiceImpl implements UserService {
                 String userHash = userHashGenerator.generateUserHash(email).get();
                 boolean result = ((UserDaoImpl) userDao).createUser(user, hashedPassword, userHash);
                 if (result) {
-                    //todo send activation email
+                    //todo send activation email here
                     transactionManager.commit();
                     return true;
                 }
@@ -218,6 +220,37 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    @Override
+    public boolean updateUser(User user, String userName, String userEmail, List<Part> parts) {
+        AbstractDao userDao = new UserDaoImpl();
+        UploadService uploadService = new UploadServiceImpl();
+        try (TransactionManager transactionManager = new TransactionManager()) {
+            transactionManager.beginTransaction(userDao);
+            try {
+                String avatarName;
+                if (parts.isEmpty()) {
+                    avatarName = user.getAvatar();
+                } else {
+                    avatarName = uploadService.uploadFile(parts, parts.get(0).getSubmittedFileName()).get();
+                    if (!user.getAvatar().equals(DEFAULT_AVATAR)) {
+                        uploadService.deleteFile(user.getAvatar());
+                    }
+                }
+                User updatedUserObject = updateUserObject(user, userName, userEmail, avatarName);
+                Optional<User> result = userDao.update(updatedUserObject);
+                if (result.isPresent()) {
+                    transactionManager.commit();
+                    return true;
+                }
+            } catch (DaoException e) {
+                transactionManager.rollback();
+            }
+        } catch (TransactionException e) {
+            logger.error("failed to perform a transaction", e);
+        }
+        return false;
+    }
+
     private Optional<User> findUserByEmail(String email) {
         AbstractDao userDao = new UserDaoImpl();
         Optional<User> user = Optional.empty();
@@ -243,6 +276,13 @@ public class UserServiceImpl implements UserService {
         user.setAvatar(DEFAULT_AVATAR);
         user.setStatus(UserStatus.INACTIVATED);
         user.setRole(UserRole.USER);
+        return user;
+    }
+
+    private User updateUserObject(User user, String userName, String userEmail, String avatarFileName) {
+        user.setName(userName);
+        user.setEmail(userEmail);
+        user.setAvatar(avatarFileName);
         return user;
     }
 }

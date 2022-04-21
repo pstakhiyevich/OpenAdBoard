@@ -16,6 +16,7 @@ public enum CommandTypeHolder {
     CATEGORY_MANAGEMENT_PAGE,
     CITY_MANAGEMENT_PAGE,
     ITEM_PAGE,
+    USER_PAGE,
     ADD_ITEM_PAGE,
     ADD_ITEM,
     EDIT_ITEM,
@@ -34,7 +35,8 @@ public enum CommandTypeHolder {
     EDIT_CATEGORY,
     DELETE_CATEGORY,
     EDIT_USER_PAGE,
-    CHANGE_PASSWORD;
+    CHANGE_PASSWORD,
+    EDIT_USER_PROFILE;
 
     private static final Logger logger = LogManager.getLogger();
 

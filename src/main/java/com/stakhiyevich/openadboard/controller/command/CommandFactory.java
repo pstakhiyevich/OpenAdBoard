@@ -24,6 +24,7 @@ public final class CommandFactory {
         commands.put(CommandTypeHolder.CATEGORY_MANAGEMENT_PAGE, new CategoryManagementPageCommand());
         commands.put(CommandTypeHolder.CITY_MANAGEMENT_PAGE, new CityManagementPageCommand());
         commands.put(CommandTypeHolder.ITEM_PAGE, new ItemPageCommand());
+        commands.put(CommandTypeHolder.USER_PAGE, new UserPageCommand());
         commands.put(CommandTypeHolder.ADD_COMMENT, new AddCommentCommand());
         commands.put(CommandTypeHolder.DELETE_COMMENT, new DeleteCommentCommand());
         commands.put(CommandTypeHolder.ADD_ITEM, new AddItemCommand());
@@ -43,6 +44,7 @@ public final class CommandFactory {
         commands.put(CommandTypeHolder.DELETE_CATEGORY, new DeleteCategoryCommand());
         commands.put(CommandTypeHolder.EDIT_USER_PAGE, new EditUserPageCommand());
         commands.put(CommandTypeHolder.CHANGE_PASSWORD, new ChangePasswordCommand());
+        commands.put(CommandTypeHolder.EDIT_USER_PROFILE, new EditUserProfileCommand());
     }
 
     public static CommandFactory getInstance() {

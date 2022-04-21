@@ -1,6 +1,7 @@
 package com.stakhiyevich.openadboard.service;
 
 import com.stakhiyevich.openadboard.model.entity.User;
+import jakarta.servlet.http.Part;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,4 +26,6 @@ public interface UserService {
     boolean activateUserByHash(String hash);
 
     boolean changePassword(User user, String newPassword);
+
+    boolean updateUser(User user, String userName, String userEmail, List<Part> parts);
 }
