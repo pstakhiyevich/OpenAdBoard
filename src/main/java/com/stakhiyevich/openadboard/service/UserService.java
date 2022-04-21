@@ -28,4 +28,7 @@ public interface UserService {
     boolean changePassword(User user, String newPassword);
 
     boolean updateUser(User user, String userName, String userEmail, List<Part> parts);
+
+    boolean saveUserStatusAndRole(Long userId, String userStatus, String userRole);
+
 }

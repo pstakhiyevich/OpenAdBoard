@@ -36,7 +36,8 @@ public enum CommandTypeHolder {
     DELETE_CATEGORY,
     EDIT_USER_PAGE,
     CHANGE_PASSWORD,
-    EDIT_USER_PROFILE;
+    EDIT_USER_PROFILE,
+    SAVE_USER_CHANGES;
 
     private static final Logger logger = LogManager.getLogger();
 

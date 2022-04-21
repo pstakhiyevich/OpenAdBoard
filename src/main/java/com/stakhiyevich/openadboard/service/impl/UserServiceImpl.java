@@ -118,6 +118,33 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean saveUserStatusAndRole(Long userId, String userStatus, String userRole) {
+        AbstractDao userDao = new UserDaoImpl();
+        try (TransactionManager transactionManager = new TransactionManager()) {
+            transactionManager.beginTransaction(userDao);
+            try {
+                User user = ((UserDaoImpl) userDao).findById(userId).orElseThrow(DaoException::new);
+                if (userStatus != null) {
+                    user.setStatus(UserStatus.valueOf(userStatus));
+                }
+                if (userRole != null) {
+                    user.setRole(UserRole.valueOf(userRole));
+                }
+                Optional<User> resul = userDao.update(user);
+                if (resul.isPresent()) {
+                    transactionManager.commit();
+                    return true;
+                }
+            } catch (DaoException e) {
+                transactionManager.rollback();
+            }
+        } catch (TransactionException e) {
+            logger.error("failed to perform a transaction", e);
+        }
+        return false;
+    }
+
+    @Override
     public boolean createUser(String name, String email, String password) {
         AbstractDao userDao = new UserDaoImpl();
         try (TransactionManager transactionManager = new TransactionManager()) {

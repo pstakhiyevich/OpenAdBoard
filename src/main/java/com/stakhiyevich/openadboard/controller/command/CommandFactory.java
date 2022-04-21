@@ -45,6 +45,7 @@ public final class CommandFactory {
         commands.put(CommandTypeHolder.EDIT_USER_PAGE, new EditUserPageCommand());
         commands.put(CommandTypeHolder.CHANGE_PASSWORD, new ChangePasswordCommand());
         commands.put(CommandTypeHolder.EDIT_USER_PROFILE, new EditUserProfileCommand());
+        commands.put(CommandTypeHolder.SAVE_USER_CHANGES, new SaveUserChangesCommand());
     }
 
     public static CommandFactory getInstance() {

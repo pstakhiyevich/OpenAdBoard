@@ -54,6 +54,8 @@ public final class MessageKey {
     public static final String MESSAGE_CHANGE_PASSWORD_FAIL = "message.change.password.fail";
     public static final String MESSAGE_EDIT_USER_INFORMATION_SUCCESS = "message.edit.user.information.success";
     public static final String MESSAGE_EDIT_USER_INFORMATION_FAIL = "message.edit.user.information.fail";
+    public static final String MESSAGE_USER_CHANGE_SUCCESS = "message.user.change.success";
+    public static final String MESSAGE_USER_CHANGE_FAIL = "message.user.change.fail";
 
     private MessageKey() {
     }

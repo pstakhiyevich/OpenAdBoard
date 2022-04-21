@@ -52,6 +52,10 @@ public class RequestParameterHolder {
     public static final String NEW_PASSWORD = "new_password";
     public static final String REPEAT_NEW_PASSWORD = "repeat_new_password";
     public static final String AVATAR = "avatar";
+    public static final String SELECTED_USER_ID = "selected_user_id";
+    public static final String SELECTED_USER_STATUS = "selected_user_status";
+    public static final String SELECTED_USER_ROLE = "selected_user_role";
+    public static final String FEEDBACK_USER_CHANGE = "feedback_user_change";
 
     private RequestParameterHolder() {
     }
