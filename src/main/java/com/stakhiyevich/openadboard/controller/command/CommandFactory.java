@@ -41,6 +41,7 @@ public final class CommandFactory {
         commands.put(CommandTypeHolder.ADD_CATEGORY, new AddCategoryCommand());
         commands.put(CommandTypeHolder.EDIT_CATEGORY, new EditCategoryCommand());
         commands.put(CommandTypeHolder.DELETE_CATEGORY, new DeleteCategoryCommand());
+        commands.put(CommandTypeHolder.EDIT_USER_PAGE, new EditUserPageCommand());
     }
 
     public static CommandFactory getInstance() {

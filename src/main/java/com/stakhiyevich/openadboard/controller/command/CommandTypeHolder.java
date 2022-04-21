@@ -32,7 +32,8 @@ public enum CommandTypeHolder {
     DELETE_CITY,
     ADD_CATEGORY,
     EDIT_CATEGORY,
-    DELETE_CATEGORY;
+    DELETE_CATEGORY,
+    EDIT_USER_PAGE;
 
     private static final Logger logger = LogManager.getLogger();
 
