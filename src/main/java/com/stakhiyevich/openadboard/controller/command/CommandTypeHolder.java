@@ -33,7 +33,8 @@ public enum CommandTypeHolder {
     ADD_CATEGORY,
     EDIT_CATEGORY,
     DELETE_CATEGORY,
-    EDIT_USER_PAGE;
+    EDIT_USER_PAGE,
+    CHANGE_PASSWORD;
 
     private static final Logger logger = LogManager.getLogger();
 

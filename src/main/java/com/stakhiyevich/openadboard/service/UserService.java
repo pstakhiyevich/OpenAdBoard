@@ -23,4 +23,6 @@ public interface UserService {
     List<User> findAllPaginatedUsers(int currentPage, int usersPerPage);
 
     boolean activateUserByHash(String hash);
+
+    boolean changePassword(User user, String newPassword);
 }

@@ -48,6 +48,9 @@ public class RequestParameterHolder {
     public static final String USER_ID = "user_id";
     public static final String NUMBER_OF_ITEMS = "numberOfItems";
     public static final String REQUESTED_USER = "requested_user";
+    public static final String OLD_PASSWORD = "old_password";
+    public static final String NEW_PASSWORD = "new_password";
+    public static final String REPEAT_NEW_PASSWORD = "repeat_new_password";
 
 
     private RequestParameterHolder() {

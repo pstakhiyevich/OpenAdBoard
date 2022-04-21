@@ -50,6 +50,8 @@ public final class MessageKey {
     public static final String MESSAGE_CATEGORY_EDIT_FAIL = "message.category.edit.fail";
     public static final String MESSAGE_CATEGORY_DELETE_SUCCESS = "message.category.delete.success";
     public static final String MESSAGE_CATEGORY_DELETE_FAIL = "message.category.delete.fail";
+    public static final String MESSAGE_CHANGE_PASSWORD_SUCCESS = "message.change.password.success";
+    public static final String MESSAGE_CHANGE_PASSWORD_FAIL = "message.change.password.fail";
 
     private MessageKey() {
     }

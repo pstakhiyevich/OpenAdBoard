@@ -198,6 +198,26 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    @Override
+    public boolean changePassword(User user, String newPassword) {
+        AbstractDao userDao = new UserDaoImpl();
+        try (TransactionManager transactionManager = new TransactionManager()) {
+            transactionManager.beginTransaction(userDao);
+            try {
+                Optional<User> resul = ((UserDaoImpl) userDao).changePassword(user, passwordHashGenerator.generatePasswordHash(newPassword).get());
+                if (resul.isPresent()) {
+                    transactionManager.commit();
+                    return true;
+                }
+            } catch (DaoException e) {
+                transactionManager.rollback();
+            }
+        } catch (TransactionException e) {
+            logger.error("failed to perform a transaction", e);
+        }
+        return false;
+    }
+
     private Optional<User> findUserByEmail(String email) {
         AbstractDao userDao = new UserDaoImpl();
         Optional<User> user = Optional.empty();
