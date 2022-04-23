@@ -31,7 +31,7 @@ public class RequestParameterHolder {
     public static final String CURRENT_PAGE = "current_page";
     public static final String COMMENT_TEXT = "comment_text";
     public static final int DEFAULT_PAGE_NUMBER = 1;
-    public static final int DEFAULT_ITEMS_PER_PAGE = 4;
+    public static final int DEFAULT_ITEMS_PER_PAGE = 16;
     public static final String COMMENT_ID = "comment_id";
     public static final String TITLE = "title";
     public static final String PRICE = "price";
