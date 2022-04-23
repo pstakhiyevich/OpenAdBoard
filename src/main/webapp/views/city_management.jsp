@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="com.stakhiyevich.openadboard.model.entity.UserRole" %>
+<%@ page import="com.stakhiyevich.webdemo.model.entity.UserRole" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <fmt:setLocale value="${sessionScope.localization}" scope="session"/>
@@ -77,12 +77,15 @@
                     <div class="col">
                         <c:if test="${sessionScope.user.role == UserRole.ADMIN}">
                             <a class="btn btn-outline-primary"
-                               href="${pageContext.request.contextPath}/controller?command=user_management_page"><fmt:message key="label.users"/></a>
+                               href="${pageContext.request.contextPath}/controller?command=user_management_page"><fmt:message
+                                    key="label.users"/></a>
                         </c:if>
                         <a class="btn btn-outline-primary"
-                           href="${pageContext.request.contextPath}/controller?command=category_management_page"><fmt:message key="label.categories"/></a>
+                           href="${pageContext.request.contextPath}/controller?command=category_management_page"><fmt:message
+                                key="label.categories"/></a>
                         <a class="btn btn-primary"
-                           href="${pageContext.request.contextPath}/controller?command=city_management_page"><fmt:message key="label.cities"/></a>
+                           href="${pageContext.request.contextPath}/controller?command=city_management_page"><fmt:message
+                                key="label.cities"/></a>
                     </div>
                     <div class="col d-flex justify-content-end">
                         <div>
@@ -96,7 +99,8 @@
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h3 class="modal-title" id="addCityModalLabel"><fmt:message key="label.add.city"/></h3>
+                                            <h3 class="modal-title" id="addCityModalLabel"><fmt:message
+                                                    key="label.add.city"/></h3>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                         </div>
@@ -111,7 +115,8 @@
                                                            class="form-control form-control-lg"
                                                            placeholder="enter city"
                                                            value=""/>
-                                                    <div class="error-hint text-danger custom_hidden"><fmt:message key="message.wrong.city.title"/></div>
+                                                    <div class="error-hint text-danger custom_hidden"><fmt:message
+                                                            key="message.wrong.city.title"/></div>
                                                     <c:if test="${sessionScope.signInFeedback.email != null}">
                                                         <div class="text-danger text-start">
                                                             <fmt:message key="${sessionScope.signInFeedback.email}"/>
@@ -119,7 +124,8 @@
                                                     </c:if>
                                                 </div>
                                                 <button type="submit"
-                                                        class="btn btn-outline-primary btn-lg btn-block mt-4 w-50"><fmt:message key="label.add"/>
+                                                        class="btn btn-outline-primary btn-lg btn-block mt-4 w-50">
+                                                    <fmt:message key="label.add"/>
                                                 </button>
                                             </form>
                                         </div>
@@ -156,7 +162,8 @@
                                                 <div class="modal-dialog modal-dialog-centered">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h3 class="modal-title" id="exampleModalLabel"><fmt:message key="label.edit"/>
+                                                            <h3 class="modal-title" id="exampleModalLabel"><fmt:message
+                                                                    key="label.edit"/>
                                                                 city</h3>
                                                             <button type="button" class="btn-close"
                                                                     data-bs-dismiss="modal"
@@ -177,11 +184,13 @@
                                                                            class="form-control form-control-lg"
                                                                            placeholder="city"
                                                                            value="${city.getTitle()}"/>
-                                                                    <div class="error-hint text-danger custom_hidden"><fmt:message key="message.wrong.city.title"/></div>
-                                                                    <c:if test="${sessionScope.signInFeedback.email != null}">
+                                                                    <div class="error-hint text-danger custom_hidden">
+                                                                        <fmt:message
+                                                                                key="message.wrong.city.title"/></div>
+                                                                    <c:if test="${sessionScope.editCityValidationFeedback.title != null}">
                                                                         <div class="text-danger text-start">
                                                                             <fmt:message
-                                                                                    key="${sessionScope.signInFeedback.email}"/>
+                                                                                    key="${sessionScope.editCityValidationFeedback.title}"/>
                                                                         </div>
                                                                     </c:if>
                                                                 </div>
@@ -194,6 +203,8 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <c:remove var="editCityValidationFeedback" scope="session"/>
+                                            <c:remove var="selectedCity" scope="session"/>
                                         </div>
                                         <div class="col-auto">
                                             <form type="hidden" method="post"

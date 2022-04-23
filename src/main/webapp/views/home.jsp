@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="util" uri="customtags" %>
 
 <fmt:setLocale value="${sessionScope.localization}" scope="session"/>
 <fmt:setBundle basename="text"/>
@@ -189,7 +190,7 @@
                                         ${item.getDescription()}
                                 </p>
                                 <p class="mb-1">
-                                    <fmt:message key="message.last.updated"/>
+                                    <fmt:message key="message.last.updated"/> <util:Time itemTime="${item.getUpdateTime()}"/>
                                 </p>
                             </div>
                         </div>
@@ -245,6 +246,7 @@
     </div>
 </div>
 <!-- ===============MAIN END============ -->
+<jsp:include page="footer.jsp"/>
 <script src="static/js/home_script.js"></script>
 </body>
 </html>

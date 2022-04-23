@@ -77,8 +77,8 @@
                                type="text"
                                id="user_name_input"
                                class="form-control form-control-lg"
-                               placeholder="name"
-                               required
+                               placeholder=<fmt:message key="label.name"/>
+                                       required
                         />
                         <div class="error-hint text-danger custom_hidden"><fmt:message key="message.wrong.user.name"/></div>
                         <c:if test="${sessionScope.validationFeedback.name != null}">
@@ -93,8 +93,8 @@
                                name="email"
                                id="user_email_input"
                                class="form-control form-control-lg"
-                               placeholder="email"
-                               required
+                               placeholder=<fmt:message key="label.email"/>
+                                       required
                         />
                         <div class="error-hint text-danger custom_hidden"><fmt:message key="message.wrong.email"/></div>
                         <c:if test="${sessionScope.validationFeedback.email != null}">
@@ -109,8 +109,8 @@
                                maxlength="50"
                                id="user_password_input"
                                class="form-control form-control-lg"
-                               placeholder="password"
-                               required
+                               placeholder=<fmt:message key="label.password"/>
+                                       required
                         />
                         <div class="error-hint text-danger custom_hidden"><fmt:message key="message.wrong.password"/></div>
                         <c:if test="${sessionScope.validationFeedback.password != null}">
@@ -125,8 +125,8 @@
                                maxlength="50"
                                id="user_repeated_password_input"
                                class="form-control form-control-lg"
-                               placeholder="repeat password"
-                               required
+                               placeholder=<fmt:message key="label.repeat.password"/>
+                                       required
                         />
                         <div class="error-hint text-danger custom_hidden"><fmt:message key="message.wrong.password"/></div>
                         <c:if test="${sessionScope.validationFeedback.repeated_password != null}">

@@ -108,7 +108,7 @@
                                             <form class="text-end" id="add_category_form" method="post"
                                                   action="${pageContext.request.contextPath}/controller?command=add_category">
                                                 <div class="form-outline mb-4">
-                                                    <input pattern="/^([\w\s:.'-]{1,30})$/" title="wrong title"
+                                                    <input pattern="^([\w\s:.'-]{1,30})$" title="wrong title"
                                                            required type="text" name="category_title"
                                                            id="add_category_title"
                                                            class="form-control form-control-lg"
@@ -183,7 +183,7 @@
                                                                 <input type="hidden" name="category_id"
                                                                        value="${category.getId()}">
                                                                 <div class="form-outline mb-4">
-                                                                    <input pattern="/^([\w\s:.'-]{1,30})$/"
+                                                                    <input pattern="^([\w\s:.'-]{1,30})$"
                                                                            title="wrong title"
                                                                            required type="text" name="category_title"
                                                                            id="category_title"
@@ -191,8 +191,8 @@
                                                                            placeholder="category"
                                                                            value="${category.getTitle()}"/>
                                                                     <div class="error-hint text-danger custom_hidden">
-                                                                        <fmt:message
-                                                                                key="message.wrong.category.title"/></div>
+                                                                        <fmt:message key="message.wrong.category.title"/>
+                                                                    </div>
                                                                     <c:if test="${sessionScope.editCategoryValidationFeedback.title != null}">
                                                                         <div class="text-danger text-start">
                                                                             <fmt:message
@@ -235,17 +235,17 @@
                     </table>
                     <nav aria-label="navigation for items">
                         <ul class="pagination justify-content-center mt-3 mb-4">
-                            <c:if test="${currentPage != 1 && currentPage != null}">
+                            <c:if test="${current_page != 1 && current_page != null}">
                                 <li class="page-item">
                                     <a class="page-link"
-                                       href="${pageContext.request.contextPath}/controller?command=category_management_page&categoriesPerPage=${categoriesPerPage}&page=${currentPage-1}">
+                                       href="${pageContext.request.contextPath}/controller?command=category_management_page&categories_per_page=${categories_per_page}&page=${current_page-1}">
                                         <fmt:message key="label.previous"/>
                                     </a>
                                 </li>
                             </c:if>
-                            <c:forEach begin="1" end="${numberOfPages}" var="i">
+                            <c:forEach begin="1" end="${number_of_pages}" var="i">
                                 <c:choose>
-                                    <c:when test="${currentPage eq i}">
+                                    <c:when test="${current_page eq i}">
                                         <li class="page-item active">
                                             <a class="page-link"> ${i} <span class="sr-only"></span></a>
                                         </li>
@@ -253,17 +253,17 @@
                                     <c:otherwise>
                                         <li class="page-item">
                                             <a class="page-link"
-                                               href="${pageContext.request.contextPath}/controller?command=category_management_page&categoriesPerPage=${categoriesPerPage}&page=${i}">
+                                               href="${pageContext.request.contextPath}/controller?command=category_management_page&categories_per_page=${categories_per_page}&page=${i}">
                                                     ${i}
                                             </a>
                                         </li>
                                     </c:otherwise>
                                 </c:choose>
                             </c:forEach>
-                            <c:if test="${currentPage lt numberOfPages}">
+                            <c:if test="${current_page lt number_of_pages}">
                                 <li class="page-item">
                                     <a class="page-link"
-                                       href="${pageContext.request.contextPath}/controller?command=category_management_page&categoriesPerPage=${categoriesPerPage}&page=${currentPage+1}">
+                                       href="${pageContext.request.contextPath}/controller?command=category_management_page&categoriesPerPage=${categories_per_page}&page=${current_page+1}">
                                         <fmt:message key="label.next"/>
                                     </a>
                                 </li>

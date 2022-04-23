@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page import="com.stakhiyevich.openadboard.model.entity.UserRole" %>
+<%@ taglib prefix="util" uri="customtags" %>
 
 <fmt:setLocale value="${sessionScope.localization}" scope="session"/>
 <fmt:setBundle basename="text"/>

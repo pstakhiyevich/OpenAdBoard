@@ -2,6 +2,7 @@ package com.stakhiyevich.openadboard.util;
 
 public final class MessageKey {
 
+    public static final String LOCALIZATION_PREFIX = "text_";
     public static final String MESSAGE_NAME_WRONG = "message.name.wrong";
     public static final String MESSAGE_EMAIL_WRONG = "message.email.wrong";
     public static final String MESSAGE_PASSWORD_WRONG = "message.password.wrong";
@@ -56,6 +57,16 @@ public final class MessageKey {
     public static final String MESSAGE_EDIT_USER_INFORMATION_FAIL = "message.edit.user.information.fail";
     public static final String MESSAGE_USER_CHANGE_SUCCESS = "message.user.change.success";
     public static final String MESSAGE_USER_CHANGE_FAIL = "message.user.change.fail";
+    public static final String MESSAGE_GOOD_MORNING = "message.good.morning";
+    public static final String MESSAGE_GOOD_AFTERNOON = "message.good.afternoon";
+    public static final String MESSAGE_GOOD_EVENING = "message.good.evening";
+    public static final String MESSAGE_GOOD_NIGHT = "message.good.night";
+    public static final String MESSAGE_HELLO = "message.hello";
+    public static final String MESSAGE_AGO = "message.ago";
+    public static final String MESSAGE_DAYS = "message.days";
+    public static final String MESSAGE_HOURS = "message.hours";
+    public static final String MESSAGE_MINUTES = "message.minutes";
+    public static final String MESSAGE_SECONDS = "message.seconds";
 
     private MessageKey() {
     }
