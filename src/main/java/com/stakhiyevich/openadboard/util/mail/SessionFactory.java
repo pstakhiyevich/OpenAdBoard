@@ -5,7 +5,7 @@ import jakarta.mail.Session;
 
 import java.util.Properties;
 
-public class SessionFactory {
+class SessionFactory {
 
     static final String USER_NAME = "mail.smtp.user";
     static final String USER_PASSWORD = "mail.smtp.password";

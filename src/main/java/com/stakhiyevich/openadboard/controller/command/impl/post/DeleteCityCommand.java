@@ -41,3 +41,4 @@ public class DeleteCityCommand implements Command {
         return new Router(CITY_MANAGEMENT_PAGE_URL, REDIRECT);
     }
 }
+

@@ -28,7 +28,7 @@ public class CommandFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         guestCommands = EnumSet.of(DEFAULT_COMMAND, HOME_PAGE, SIGN_UP_PAGE,
                 ITEM_PAGE, CHANGE_LANGUAGE, SIGN_UP, ACTIVATE_USER, SIGN_IN);
-        userCommands = EnumSet.of(HOME_PAGE, SIGN_UP_PAGE,
+        userCommands = EnumSet.of(DEFAULT_COMMAND, HOME_PAGE, SIGN_UP_PAGE,
                 ADD_ITEM_PAGE, EDIT_ITEM_PAGE, ITEM_PAGE, USER_PAGE, EDIT_USER_PAGE,
                 BOOKMARK_PAGE, CHANGE_LANGUAGE, SIGN_UP, ACTIVATE_USER, SIGN_IN, LOG_OUT,
                 ADD_ITEM, EDIT_ITEM, DELETE_ITEM, ADD_COMMENT, DELETE_COMMENT, ADD_BOOKMARK,

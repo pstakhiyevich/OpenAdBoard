@@ -1,8 +1,9 @@
 package com.stakhiyevich.openadboard.model.entity.dto;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class BookmarkEntityDto {
+public class BookmarkEntityDto implements Serializable {
 
     private long userId;
     private long itemId;

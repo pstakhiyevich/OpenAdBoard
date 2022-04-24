@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class CategoryDaoImpl extends AbstractDao<Category> implements CategoryDao {
+
     private static final Logger logger = LogManager.getLogger();
 
     private static final String SQL_FIND_ALL = "SELECT id, title " +

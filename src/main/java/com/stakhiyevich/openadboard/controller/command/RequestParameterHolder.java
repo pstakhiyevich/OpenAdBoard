@@ -31,7 +31,11 @@ public class RequestParameterHolder {
     public static final String CURRENT_PAGE = "current_page";
     public static final String COMMENT_TEXT = "comment_text";
     public static final int DEFAULT_PAGE_NUMBER = 1;
+    public static final long HEAD_ADMIN_ID = 1;
     public static final int DEFAULT_ITEMS_PER_PAGE = 16;
+    public static final int DEFAULT_CATEGORIES_PER_PAGE = 16;
+    public static final int DEFAULT_CITIES_PER_PAGE = 16;
+    public static final int DEFAULT_USERS_PER_PAGE = 16;
     public static final String COMMENT_ID = "comment_id";
     public static final String TITLE = "title";
     public static final String PRICE = "price";
@@ -45,6 +49,7 @@ public class RequestParameterHolder {
     public static final String FEEDBACK = "feedback";
     public static final String BOOKMARKS = "bookmarks";
     public static final String TOKEN = "token";
+    public static final String IS_BOOKMARKED = "is_bookmarked";
     public static final String USER_ID = "user_id";
     public static final String NUMBER_OF_ITEMS = "numberOfItems";
     public static final String REQUESTED_USER = "requested_user";

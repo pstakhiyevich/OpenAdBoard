@@ -42,11 +42,9 @@ public class UserHashGeneratorImpl implements UserHashGenerator {
             SecretKeyFactory fac = SecretKeyFactory.getInstance(ALGORITHM);
             byte[] securePassword = fac.generateSecret(spec).getEncoded();
             return Optional.of(Base64.getEncoder().encodeToString(securePassword));
-
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            logger.error("can't generate user hash", e);
+            logger.error("failed to generate user hash", e);
             return Optional.empty();
-
         } finally {
             spec.clearPassword();
         }

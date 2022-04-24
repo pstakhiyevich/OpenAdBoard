@@ -11,10 +11,13 @@ import com.stakhiyevich.openadboard.model.entity.UserRole;
 import com.stakhiyevich.openadboard.model.entity.UserStatus;
 import com.stakhiyevich.openadboard.service.UploadService;
 import com.stakhiyevich.openadboard.service.UserService;
+import com.stakhiyevich.openadboard.util.encoder.impl.LinkEncoderImpl;
 import com.stakhiyevich.openadboard.util.hasher.PasswordHashGenerator;
 import com.stakhiyevich.openadboard.util.hasher.UserHashGenerator;
 import com.stakhiyevich.openadboard.util.hasher.impl.PasswordHashGeneratorImpl;
 import com.stakhiyevich.openadboard.util.hasher.impl.UserHashGeneratorImpl;
+import com.stakhiyevich.openadboard.util.locale.ResourceBundleManager;
+import com.stakhiyevich.openadboard.util.mail.MailSender;
 import jakarta.servlet.http.Part;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,6 +26,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.ResourceBundle;
+
+import static com.stakhiyevich.openadboard.util.MessageKey.MESSAGE_EMAIL_SUBJECT;
+import static com.stakhiyevich.openadboard.util.MessageKey.MESSAGE_EMAIL_TEXT;
 
 public class UserServiceImpl implements UserService {
 
@@ -45,61 +52,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAll() {
-        AbstractDao userDao = new UserDaoImpl();
-        List<User> users = new ArrayList<>();
-        try (TransactionManager transactionManager = new TransactionManager()) {
-            transactionManager.beginTransaction(userDao);
-            try {
-                users = ((UserDaoImpl) userDao).findAllUsers();
-                transactionManager.commit();
-            } catch (DaoException e) {
-                transactionManager.rollback();
-            }
-        } catch (TransactionException e) {
-            logger.error("failed to find users");
-        }
-        return users;
-    }
-
-    @Override
-    public Optional<User> findUserById(Long id) {
-        AbstractDao userDao = new UserDaoImpl();
-        Optional<User> user = Optional.empty();
-        try (TransactionManager transactionManager = new TransactionManager()) {
-            transactionManager.beginTransaction(userDao);
-            try {
-                user = ((UserDaoImpl) userDao).findById(id);
-                transactionManager.commit();
-            } catch (DaoException e) {
-                transactionManager.rollback();
-            }
-        } catch (TransactionException e) {
-            logger.error("failed to perform a transaction", e);
-        }
-        return user;
-    }
-
-    @Override
-    public Optional<User> findUserByEmailAndPassword(String email, String password) {
-        String hashedPassword = passwordHashGenerator.generatePasswordHash(password).get();
-        AbstractDao userDao = new UserDaoImpl();
-        Optional<User> user = Optional.empty();
-        try (TransactionManager transactionManager = new TransactionManager()) {
-            transactionManager.beginTransaction(userDao);
-            try {
-                user = ((UserDao) userDao).findUserByEmailAndPassword(email, hashedPassword);
-                transactionManager.commit();
-            } catch (DaoException e) {
-                transactionManager.rollback();
-            }
-        } catch (TransactionException e) {
-            logger.error("failed to find user by email and password");
-        }
-        return user;
-    }
-
-    @Override
     public boolean isEmailExist(String email) {
         AbstractDao userDao = new UserDaoImpl();
         boolean result = false;
@@ -118,76 +70,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean saveUserStatusAndRole(Long userId, String userStatus, String userRole) {
-        AbstractDao userDao = new UserDaoImpl();
-        try (TransactionManager transactionManager = new TransactionManager()) {
-            transactionManager.beginTransaction(userDao);
-            try {
-                User user = ((UserDaoImpl) userDao).findById(userId).orElseThrow(DaoException::new);
-                if (userStatus != null) {
-                    user.setStatus(UserStatus.valueOf(userStatus));
-                }
-                if (userRole != null) {
-                    user.setRole(UserRole.valueOf(userRole));
-                }
-                Optional<User> resul = userDao.update(user);
-                if (resul.isPresent()) {
-                    transactionManager.commit();
-                    return true;
-                }
-            } catch (DaoException e) {
-                transactionManager.rollback();
-            }
-        } catch (TransactionException e) {
-            logger.error("failed to perform a transaction", e);
-        }
-        return false;
-    }
-
-    @Override
-    public boolean createUser(String name, String email, String password) {
-        AbstractDao userDao = new UserDaoImpl();
-        try (TransactionManager transactionManager = new TransactionManager()) {
-            transactionManager.beginTransaction(userDao);
-            try {
-                UserService userService = UserServiceImpl.getInstance();
-                User user = createUserObject(name, email);
-                String hashedPassword = passwordHashGenerator.generatePasswordHash(password).get();
-                String userHash = userHashGenerator.generateUserHash(email).get();
-                boolean result = ((UserDaoImpl) userDao).createUser(user, hashedPassword, userHash);
-                if (result) {
-                    //todo send activation email here
-                    transactionManager.commit();
-                    return true;
-                }
-            } catch (DaoException e) {
-                transactionManager.rollback();
-            }
-        } catch (TransactionException e) {
-            logger.error("can't perform a transaction", e);
-        }
-        return false;
-    }
-
-    @Override
-    public int countAllUsers() {
-        AbstractDao userDao = new UserDaoImpl();
-        int numberOfUsers = 0;
-        try (TransactionManager transactionManager = new TransactionManager()) {
-            transactionManager.beginTransaction(userDao);
-            try {
-                numberOfUsers = ((UserDaoImpl) userDao).countAllUsers();
-                transactionManager.commit();
-            } catch (DaoException e) {
-                transactionManager.rollback();
-            }
-        } catch (TransactionException e) {
-            logger.error("can't perform a transaction", e);
-        }
-        return numberOfUsers;
-    }
-
-    @Override
     public List<User> findAllPaginatedUsers(int currentPage, int usersPerPage) {
         AbstractDao userDao = new UserDaoImpl();
         List<User> users = new ArrayList<>();
@@ -200,51 +82,28 @@ public class UserServiceImpl implements UserService {
                 transactionManager.rollback();
             }
         } catch (TransactionException e) {
-            logger.error("can't find users");
+            logger.error("failed to find users");
         }
         return users;
     }
 
     @Override
-    public boolean activateUserByHash(String hash) {
-        if (hash != null && !hash.isEmpty()) {
-            AbstractDao userDao = new UserDaoImpl();
-            try (TransactionManager transactionManager = new TransactionManager()) {
-                transactionManager.beginTransaction(userDao);
-                try {
-                    boolean isActivated = ((UserDaoImpl) userDao).activateUserByHash(hash);
-                    if (isActivated) {
-                        transactionManager.commit();
-                        return true;
-                    }
-                } catch (DaoException e) {
-                    transactionManager.rollback();
-                }
-            } catch (TransactionException e) {
-                logger.error("failed to activate user");
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean changePassword(User user, String newPassword) {
+    public Optional<User> findUserByEmailAndPassword(String email, String password) {
+        String hashedPassword = passwordHashGenerator.generatePasswordHash(password).get();
         AbstractDao userDao = new UserDaoImpl();
+        Optional<User> user = Optional.empty();
         try (TransactionManager transactionManager = new TransactionManager()) {
             transactionManager.beginTransaction(userDao);
             try {
-                Optional<User> resul = ((UserDaoImpl) userDao).changePassword(user, passwordHashGenerator.generatePasswordHash(newPassword).get());
-                if (resul.isPresent()) {
-                    transactionManager.commit();
-                    return true;
-                }
+                user = ((UserDao) userDao).findUserByEmailAndPassword(email, hashedPassword);
+                transactionManager.commit();
             } catch (DaoException e) {
                 transactionManager.rollback();
             }
         } catch (TransactionException e) {
-            logger.error("failed to perform a transaction", e);
+            logger.error("failed to find user by email");
         }
-        return false;
+        return user;
     }
 
     @Override
@@ -278,7 +137,72 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
-    private Optional<User> findUserByEmail(String email) {
+    @Override
+    public boolean changePassword(User user, String newPassword) {
+        AbstractDao userDao = new UserDaoImpl();
+        try (TransactionManager transactionManager = new TransactionManager()) {
+            transactionManager.beginTransaction(userDao);
+            try {
+                Optional<User> resul = ((UserDaoImpl) userDao).changePassword(user, passwordHashGenerator.generatePasswordHash(newPassword).get());
+                if (resul.isPresent()) {
+                    transactionManager.commit();
+                    return true;
+                }
+            } catch (DaoException e) {
+                transactionManager.rollback();
+            }
+        } catch (TransactionException e) {
+            logger.error("failed to perform a transaction", e);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean saveUserStatusAndRole(Long userId, String userStatus, String userRole) {
+        AbstractDao userDao = new UserDaoImpl();
+        try (TransactionManager transactionManager = new TransactionManager()) {
+            transactionManager.beginTransaction(userDao);
+            try {
+                User user = ((UserDaoImpl) userDao).findById(userId).orElseThrow(DaoException::new);
+                if (userStatus != null) {
+                    user.setStatus(UserStatus.valueOf(userStatus));
+                }
+                if (userRole != null) {
+                    user.setRole(UserRole.valueOf(userRole));
+                }
+                Optional<User> resul = userDao.update(user);
+                if (resul.isPresent()) {
+                    transactionManager.commit();
+                    return true;
+                }
+            } catch (DaoException e) {
+                transactionManager.rollback();
+            }
+        } catch (TransactionException e) {
+            logger.error("failed to perform a transaction", e);
+        }
+        return false;
+    }
+
+    @Override
+    public int countAllUsers() {
+        AbstractDao userDao = new UserDaoImpl();
+        int numberOfUsers = 0;
+        try (TransactionManager transactionManager = new TransactionManager()) {
+            transactionManager.beginTransaction(userDao);
+            try {
+                numberOfUsers = ((UserDaoImpl) userDao).countAllUsers();
+                transactionManager.commit();
+            } catch (DaoException e) {
+                transactionManager.rollback();
+            }
+        } catch (TransactionException e) {
+            logger.error("failed to perform a transaction", e);
+        }
+        return numberOfUsers;
+    }
+
+    public Optional<User> findUserByEmail(String email) {
         AbstractDao userDao = new UserDaoImpl();
         Optional<User> user = Optional.empty();
         try (TransactionManager transactionManager = new TransactionManager()) {
@@ -293,6 +217,76 @@ public class UserServiceImpl implements UserService {
             logger.error("failed to find user by email");
         }
         return user;
+    }
+
+    @Override
+    public Optional<User> findUserById(Long id) {
+        AbstractDao userDao = new UserDaoImpl();
+        Optional<User> user = Optional.empty();
+        try (TransactionManager transactionManager = new TransactionManager()) {
+            transactionManager.beginTransaction(userDao);
+            try {
+                user = ((UserDaoImpl) userDao).findById(id);
+                transactionManager.commit();
+            } catch (DaoException e) {
+                transactionManager.rollback();
+            }
+        } catch (TransactionException e) {
+            logger.error("failed to perform a transaction", e);
+        }
+        return user;
+    }
+
+    @Override
+    public boolean createUser(String name, String email, String password) {
+        AbstractDao userDao = new UserDaoImpl();
+        try (TransactionManager transactionManager = new TransactionManager()) {
+            transactionManager.beginTransaction(userDao);
+            try {
+                User user = createUserObject(name, email);
+                String hashedPassword = passwordHashGenerator.generatePasswordHash(password).get();
+                String userHash = userHashGenerator.generateUserHash(email).get();
+                boolean result = ((UserDaoImpl) userDao).createUser(user, hashedPassword, userHash);
+                if (result) {
+                    LinkEncoderImpl linkEncoder = LinkEncoderImpl.getInstance();
+                    userHash = linkEncoder.encodeURL(userHash).get();
+                    MailSender mailSender = MailSender.getInstance();
+                    String selectedLocalization = "en";
+                    ResourceBundleManager resourceBundleManager = ResourceBundleManager.getInstance();
+                    ResourceBundle resourceBundle = resourceBundleManager.getResourceBundle(selectedLocalization);
+                    mailSender.sendMail(user.getEmail(), resourceBundle.getString(MESSAGE_EMAIL_SUBJECT) , resourceBundle.getString(MESSAGE_EMAIL_TEXT) + userHash);
+                    transactionManager.commit();
+                    return true;
+                }
+            } catch (DaoException e) {
+                transactionManager.rollback();
+            }
+        } catch (TransactionException e) {
+            logger.error("failed to perform a transaction", e);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean activateUserByHash(String hash) {
+        if (hash != null && !hash.isEmpty()) {
+            AbstractDao userDao = new UserDaoImpl();
+            try (TransactionManager transactionManager = new TransactionManager()) {
+                transactionManager.beginTransaction(userDao);
+                try {
+                    boolean isActivated = ((UserDaoImpl) userDao).activateUserByHash(hash);
+                    if (isActivated) {
+                        transactionManager.commit();
+                        return true;
+                    }
+                } catch (DaoException e) {
+                    transactionManager.rollback();
+                }
+            } catch (TransactionException e) {
+                logger.error("failed to activate user");
+            }
+        }
+        return false;
     }
 
     private User createUserObject(String name, String email) {

@@ -18,21 +18,26 @@ public class SignInFormValidator implements FormValidator {
 
     private SignInFormValidator() {
     }
+
     public static FormValidator getInstance() {
         if (instance == null) {
             instance = new SignInFormValidator();
         }
         return instance;
     }
+
     @Override
     public Map<String, String> validateForm(Map<String, String[]> validationData) {
+
         Map<String, String> validationResult = new HashMap<>();
-        if (!validationData.get(EMAIL)[0].matches(EMAIL_PATTERN)) {
+
+        if (!validationData.get(EMAIL)[0].trim().matches(EMAIL_PATTERN)) {
             validationResult.put(EMAIL, MESSAGE_EMAIL_WRONG);
         }
-        if (!validationData.get(PASSWORD)[0].matches(PASSWORD_PATTERN)) {
+        if (!validationData.get(PASSWORD)[0].trim().matches(PASSWORD_PATTERN)) {
             validationResult.put(PASSWORD, MESSAGE_PASSWORD_WRONG);
         }
+
         return validationResult;
     }
 }

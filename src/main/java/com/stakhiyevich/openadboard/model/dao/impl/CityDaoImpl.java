@@ -16,13 +16,8 @@ public class CityDaoImpl extends AbstractDao<City> implements CityDao {
 
     private static final Logger logger = LogManager.getLogger();
 
-    private static final String SQL_FIND_ALL = "SELECT id, title " +
-            "FROM cities " +
-            "ORDER BY title ASC";
-    private static final String SQL_FIND_BY_ID =
-            "SELECT cities.id, cities.title " +
-                    "FROM cities " +
-                    "WHERE cities.id = ?";
+    private static final String SQL_FIND_ALL = "SELECT id, title FROM cities ORDER BY title ASC";
+    private static final String SQL_FIND_BY_ID = "SELECT cities.id, cities.title FROM cities WHERE cities.id = ?";
     private static final String SQL_CREATE = "INSERT INTO cities(cities.title) VALUES ( ? )";
     private static final String SQL_UPDATE = "UPDATE cities SET cities.title = ? WHERE cities.id = ? ";
     private static final String SQL_DELETE = "DELETE FROM cities WHERE cities.id = ? ";

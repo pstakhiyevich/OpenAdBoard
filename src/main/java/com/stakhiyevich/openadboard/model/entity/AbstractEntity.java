@@ -2,7 +2,7 @@ package com.stakhiyevich.openadboard.model.entity;
 
 import java.io.Serializable;
 
-public abstract class AbstractEntity implements Serializable, Cloneable {
+public abstract class AbstractEntity implements Serializable {
 
     private long id;
 
@@ -18,7 +18,9 @@ public abstract class AbstractEntity implements Serializable, Cloneable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof AbstractEntity)) return false;
+
         AbstractEntity that = (AbstractEntity) o;
+
         return getId() == that.getId();
     }
 

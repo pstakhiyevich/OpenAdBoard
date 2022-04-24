@@ -11,6 +11,7 @@ public class PageUrlHolder {
     public static final String CATEGORY_MANAGEMENT_PAGE_URL = "/controller?command=category_management_page";
     public static final String EDIT_USER_URL = "/controller?command=edit_user_page&user_id=";
     public static final String USER_MANAGEMENT_PAGE_URL = "/controller?command=user_management_page";
+    public static final String CONTROLLER_URL = "/controller?";
 
     private PageUrlHolder() {
     }

@@ -26,7 +26,6 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                     "VALUES(?, ?, ?, ?, ?, ?, " +
                     "(SELECT user_statuses.id FROM user_statuses WHERE title = ?), " +
                     "(SELECT user_roles.id FROM user_roles WHERE title = ?))";
-    private static final String SQL_DELETE_USER_BY_ID = "DELETE FROM users WHERE users.id = ?";
     private static final String SQL_FIND_ALL_USERS =
             "SELECT users.id, users.name, users.email, users.password, users.registration_date, users.hash, users.avatar, user_statuses.title, user_roles.title " +
                     "FROM users " +
@@ -52,17 +51,10 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                     "JOIN user_statuses ON users.user_statuses_id = user_statuses.id " +
                     "JOIN user_roles ON users.user_roles_id = user_roles.id " +
                     "WHERE users.id = ?";
-    private static final String SQL_FIND_INACTIVATED_USER_BY_HASH =
-            "SELECT id FROM users " +
-                    "INNER JOIN user_statuses ON users.user_statuses_id = user_statuses.id " +
-                    "WHERE user_statuses.title = 'UNACTIVATED' AND hash = ? " +
-                    "LIMIT 1";
     private static final String SQL_ACTIVATE_USER_BY_HASH =
             "UPDATE users " +
                     "SET users.user_statuses_id = (SELECT id FROM user_statuses WHERE title = 'ACTIVATED') " +
                     "WHERE hash = ?";
-    private static final String SQL_UPDATE_USER_STATUS = "UPDATE users SET users.user_statuses_id = (SELECT id FROM user_statuses WHERE title = ?)";
-    private static final String SQL_UPDATE_USER_ROLE = "UPDATE users SET users.user_roles_id = (SELECT id FROM user_roles WHERE title = ? )";
     private static final String SQL_UPDATE_USER = "UPDATE users " +
             "SET users.name = ?, users.email = ?, users.registration_date = ?, users.avatar = ?, users.user_statuses_id = (SELECT user_statuses.id FROM user_statuses WHERE user_statuses.title = ?), users.user_roles_id = (SELECT user_roles.id FROM user_roles WHERE user_roles.title = ?) " +
             "WHERE users.id = ?";

@@ -26,6 +26,7 @@ public class ChangePasswordFormValidator implements FormValidator {
     @Override
     public Map<String, String> validateForm(Map<String, String[]> data) {
         Map<String, String> validationResult = new HashMap<>();
+
         if (!data.get(OLD_PASSWORD)[0].trim().matches(PASSWORD_PATTERN)) {
             validationResult.put(OLD_PASSWORD, MESSAGE_PASSWORD_WRONG);
         }

@@ -32,9 +32,9 @@ public class GreetingTagHandler extends SimpleTagSupport {
             greeting = resourceBundle.getString(MESSAGE_GOOD_AFTERNOON);
         } else if (hourOfDay >= 16 && hourOfDay <= 21) {
             greeting = resourceBundle.getString(MESSAGE_GOOD_EVENING);
-        } else if (hourOfDay >= 21)
+        } else if (hourOfDay >= 21) {
             greeting = resourceBundle.getString(MESSAGE_GOOD_NIGHT);
-        else {
+        } else {
             greeting = resourceBundle.getString(MESSAGE_HELLO);
         }
         return greeting;

@@ -17,9 +17,6 @@ import static com.stakhiyevich.openadboard.util.MessageKey.MESSAGE_USER_CHANGE_F
 import static com.stakhiyevich.openadboard.util.MessageKey.MESSAGE_USER_CHANGE_SUCCESS;
 
 public class SaveUserChangesCommand implements Command {
-
-    private static final long HEAD_ADMIN_ID = 1;
-
     @Override
     public Router execute(HttpServletRequest request) {
         UserService userService = UserServiceImpl.getInstance();

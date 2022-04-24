@@ -42,7 +42,7 @@ public class CityServiceImpl implements CityService {
                 transactionManager.rollback();
             }
         } catch (TransactionException e) {
-            logger.error("can't perform a transaction", e);
+            logger.error("failed perform a transaction", e);
         }
         return cities;
     }
@@ -60,7 +60,7 @@ public class CityServiceImpl implements CityService {
                 transactionManager.rollback();
             }
         } catch (TransactionException e) {
-            logger.error("can't perform a transaction", e);
+            logger.error("failed perform a transaction", e);
         }
         return cities;
     }
@@ -78,7 +78,7 @@ public class CityServiceImpl implements CityService {
                 transactionManager.rollback();
             }
         } catch (TransactionException e) {
-            logger.error("can't perform a transaction", e);
+            logger.error("failed perform a transaction", e);
         }
         return numberOfCities;
     }
@@ -100,7 +100,7 @@ public class CityServiceImpl implements CityService {
                 transactionManager.rollback();
             }
         } catch (TransactionException e) {
-            logger.error("can't perform a transaction", e);
+            logger.error("failed perform a transaction", e);
         }
         return false;
     }
@@ -122,7 +122,7 @@ public class CityServiceImpl implements CityService {
                 transactionManager.rollback();
             }
         } catch (TransactionException e) {
-            logger.error("can't perform a transaction", e);
+            logger.error("failed perform a transaction", e);
         }
         return false;
     }
@@ -142,7 +142,7 @@ public class CityServiceImpl implements CityService {
                 transactionManager.rollback();
             }
         } catch (TransactionException e) {
-            logger.error("can't perform a transaction", e);
+            logger.error("failed perform a transaction", e);
         }
         return false;
     }

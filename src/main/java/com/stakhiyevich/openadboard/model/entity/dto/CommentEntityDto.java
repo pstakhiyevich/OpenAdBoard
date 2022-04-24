@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class CommentEntityDto implements Serializable {
+
     private long commentId;
     private long itemId;
     private long userId;

@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class CategoryServiceImpl implements CategoryService {
+
     private static final Logger logger = LogManager.getLogger();
     private static CategoryService instance;
 
@@ -42,7 +43,7 @@ public class CategoryServiceImpl implements CategoryService {
                 transactionManager.rollback();
             }
         } catch (TransactionException e) {
-            logger.error("can't perform a transaction", e);
+            logger.error("failed to perform a transaction", e);
         }
         return categories;
     }
@@ -60,7 +61,7 @@ public class CategoryServiceImpl implements CategoryService {
                 transactionManager.rollback();
             }
         } catch (TransactionException e) {
-            logger.error("can't perform a transaction", e);
+            logger.error("failed perform a transaction", e);
         }
         return categories;
     }
@@ -78,7 +79,7 @@ public class CategoryServiceImpl implements CategoryService {
                 transactionManager.rollback();
             }
         } catch (TransactionException e) {
-            logger.error("can't perform a transaction", e);
+            logger.error("failed perform a transaction", e);
         }
         return numberOfCategories;
     }
@@ -99,7 +100,7 @@ public class CategoryServiceImpl implements CategoryService {
                 transactionManager.rollback();
             }
         } catch (TransactionException e) {
-            logger.error("can't perform a transaction", e);
+            logger.error("failed perform a transaction", e);
         }
         return false;
     }
@@ -121,7 +122,7 @@ public class CategoryServiceImpl implements CategoryService {
                 transactionManager.rollback();
             }
         } catch (TransactionException e) {
-            logger.error("can't perform a transaction", e);
+            logger.error("failed perform a transaction", e);
         }
         return false;
     }
@@ -141,7 +142,7 @@ public class CategoryServiceImpl implements CategoryService {
                 transactionManager.rollback();
             }
         } catch (TransactionException e) {
-            logger.error("can't perform a transaction", e);
+            logger.error("failed perform a transaction", e);
         }
         return false;
     }

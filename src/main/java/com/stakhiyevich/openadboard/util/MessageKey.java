@@ -13,10 +13,13 @@ public final class MessageKey {
     public static final String MESSAGE_PASSWORDS_DO_NOT_MATCH = "message.password.not.match";
     public static final String MESSAGE_EMAIL_EXISTS = "message.email.exists";
     public static final String MESSAGE_SUCCESS_REGISTRATION = "message.success.registration";
+    public static final String MESSAGE_FAIL_REGISTRATION = "message.fail.registration";
     public static final String MESSAGE_SEARCH_QUERY_WRONG = "message.search.query.wrong";
     public static final String MESSAGE_COMMENT_TEXT_WRONG = "message.comment.text.wrong";
     public static final String MESSAGE_COMMENT_ADD_SUCCESS = "message.comment.add.success";
     public static final String MESSAGE_COMMENT_ADD_FAIL = "message.comment.add.fail";
+    public static final String MESSAGE_EMAIL_SUBJECT = "message.email.subject";
+    public static final String MESSAGE_EMAIL_TEXT = "message.email.text";
     public static final String MESSAGE_COMMENT_DELETE_SUCCESS = "message.comment.delete.success";
     public static final String MESSAGE_COMMENT_DELETE_FAIL = "message.comment.delete.fail";
     public static final String MESSAGE_TITLE_WRONG = "message.title.wrong";

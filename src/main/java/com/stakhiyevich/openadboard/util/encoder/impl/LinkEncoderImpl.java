@@ -1,5 +1,6 @@
-package com.stakhiyevich.openadboard.util.encoder;
+package com.stakhiyevich.openadboard.util.encoder.impl;
 
+import com.stakhiyevich.openadboard.util.encoder.LinkEncoder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

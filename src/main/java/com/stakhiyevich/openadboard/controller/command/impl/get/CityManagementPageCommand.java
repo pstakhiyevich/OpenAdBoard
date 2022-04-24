@@ -7,50 +7,46 @@ import com.stakhiyevich.openadboard.model.entity.User;
 import com.stakhiyevich.openadboard.model.entity.UserRole;
 import com.stakhiyevich.openadboard.service.CityService;
 import com.stakhiyevich.openadboard.service.impl.CityServiceImpl;
+import com.stakhiyevich.openadboard.util.pagination.PageCounter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 import java.util.List;
 
 import static com.stakhiyevich.openadboard.controller.command.PagePathHolder.CITY_MANAGEMENT_PAGE;
-import static com.stakhiyevich.openadboard.controller.command.PageUrlHolder.HOME_URL;
+import static com.stakhiyevich.openadboard.controller.command.PagePathHolder.ERROR_PAGE_404;
 import static com.stakhiyevich.openadboard.controller.command.RequestParameterHolder.*;
-import static com.stakhiyevich.openadboard.controller.command.RequestParameterHolder.CURRENT_PAGE;
-import static com.stakhiyevich.openadboard.controller.command.RequestParameterHolder.NUMBER_OF_PAGES;
+import static com.stakhiyevich.openadboard.controller.command.RoutingTypeHolder.ERROR;
 import static com.stakhiyevich.openadboard.controller.command.RoutingTypeHolder.FORWARD;
-import static com.stakhiyevich.openadboard.controller.command.RoutingTypeHolder.REDIRECT;
-import static com.stakhiyevich.openadboard.controller.command.SessionAttributeHolder.*;
+import static com.stakhiyevich.openadboard.controller.command.SessionAttributeHolder.USER;
 
 public class CityManagementPageCommand implements Command {
-
-    private static final int DEFAULT_PAGE_NUMBER = 1;
-    private static final int DEFAULT_CITIES_PER_PAGE = 10;
-
     @Override
     public Router execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(USER);
-        if (user.getRole().equals(UserRole.USER)) {
-            return new Router(HOME_URL, REDIRECT);
-        }
+        PageCounter pageCounter = PageCounter.getInstance();
         CityService cityService = CityServiceImpl.getInstance();
 
-        int currentPage = DEFAULT_PAGE_NUMBER;
-        int citiesPerPage = DEFAULT_CITIES_PER_PAGE;
+        if (!user.getRole().equals(UserRole.MODER) && !user.getRole().equals(UserRole.ADMIN)) {
+            return new Router(ERROR_PAGE_404, ERROR);
+        }
+
+        int currentPage = parseIntParameter(request.getParameter(PAGE)) != 0 ? parseIntParameter(request.getParameter(PAGE)) : DEFAULT_PAGE_NUMBER;
+        int citiesPerPage = parseIntParameter(request.getParameter(CITIES_PER_PAGE)) != 0 ? parseIntParameter(request.getParameter(CITIES_PER_PAGE)) : DEFAULT_CITIES_PER_PAGE;
         int numberOfCities = cityService.countAllCities();
-        if (request.getParameter(PAGE) != null) {
-            currentPage = Integer.parseInt(request.getParameter(PAGE));
-            citiesPerPage = Integer.parseInt(request.getParameter(CITIES_PER_PAGE));
+        int numberOfPages = pageCounter.countNumberOfPages(numberOfCities, citiesPerPage);
+        if (currentPage > numberOfPages) {
+            return new Router(ERROR_PAGE_404, ERROR);
         }
-        int numberOfPages = numberOfCities / citiesPerPage;
-        if (numberOfPages % citiesPerPage != 0 && numberOfCities != citiesPerPage && numberOfCities != 0) {
-            numberOfPages++;
-        }
+
         List<City> cities = cityService.findAllPaginatedCities(currentPage, citiesPerPage);
+
         request.setAttribute(CITIES, cities);
         request.setAttribute(NUMBER_OF_PAGES, numberOfPages);
         request.setAttribute(CURRENT_PAGE, currentPage);
         request.setAttribute(CITIES_PER_PAGE, citiesPerPage);
+
         return new Router(CITY_MANAGEMENT_PAGE, FORWARD);
     }
 }

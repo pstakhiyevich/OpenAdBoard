@@ -15,8 +15,7 @@ import static com.stakhiyevich.openadboard.controller.command.PageUrlHolder.SIGN
 import static com.stakhiyevich.openadboard.controller.command.RequestParameterHolder.*;
 import static com.stakhiyevich.openadboard.controller.command.RoutingTypeHolder.REDIRECT;
 import static com.stakhiyevich.openadboard.controller.command.SessionAttributeHolder.VALIDATION_FEEDBACK;
-import static com.stakhiyevich.openadboard.util.MessageKey.MESSAGE_EMAIL_EXISTS;
-import static com.stakhiyevich.openadboard.util.MessageKey.MESSAGE_SUCCESS_REGISTRATION;
+import static com.stakhiyevich.openadboard.util.MessageKey.*;
 
 public class SignUpCommand implements Command {
     @Override
@@ -25,12 +24,14 @@ public class SignUpCommand implements Command {
         FormValidator validator = SignUpFormValidator.getInstance();
         Router router = new Router(SIGN_UP_URL, REDIRECT);
         UserService userService = UserServiceImpl.getInstance();
+
         Map<String, String[]> requestParameters = request.getParameterMap();
         Map<String, String> validationFeedback = validator.validateForm(requestParameters);
         if (!validationFeedback.isEmpty()) {
             session.setAttribute(VALIDATION_FEEDBACK, validationFeedback);
             return router;
         }
+
         String name = request.getParameter(NAME);
         String email = request.getParameter(EMAIL);
         String password = request.getParameter(PASSWORD);
@@ -39,8 +40,10 @@ public class SignUpCommand implements Command {
             session.setAttribute(VALIDATION_FEEDBACK, validationFeedback);
             return router;
         }
+
         boolean result = userService.createUser(name, email, password);
         if (!result) {
+            session.setAttribute(VALIDATION_FEEDBACK, MESSAGE_FAIL_REGISTRATION);
             return router;
         }
         validationFeedback.put(SUCCESS, MESSAGE_SUCCESS_REGISTRATION);

@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="com.stakhiyevich.webdemo.model.entity.UserRole" %>
+<%@ page import="com.stakhiyevich.openadboard.model.entity.UserRole" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <fmt:setLocale value="${sessionScope.localization}" scope="session"/>

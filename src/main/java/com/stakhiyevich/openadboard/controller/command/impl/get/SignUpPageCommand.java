@@ -13,3 +13,4 @@ public class SignUpPageCommand implements Command {
         return new Router(SIGN_UP_PAGE, FORWARD);
     }
 }
+
