@@ -9,26 +9,47 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
+/**
+ * The ProxyConnection class wraps the Connection class and extends its functionality.
+ */
 public class ProxyConnection implements Connection {
 
     private static final Logger logger = LogManager.getLogger();
 
+    /**
+     * The original connection object.
+     */
     private final Connection connection;
 
+    /**
+     * Initializes a proxy connection.
+     *
+     * @param connection the original connection object
+     */
     ProxyConnection(Connection connection) {
         this.connection = connection;
     }
 
+    /**
+     * Sets the auto commit mode to true and releases the connection to the connection pool
+     *
+     * @throws SQLException if a database access error occurs
+     */
     @Override
     public void close() throws SQLException {
         try {
             this.setAutoCommit(true);
             ConnectionPool.getInstance().releaseConnection(this);
         } catch (ConnectionPoolException e) {
-            logger.error("can't close the connection", e);
+            logger.error("failed to close the connection", e);
         }
     }
 
+    /**
+     * Closes the original connection.
+     *
+     * @throws SQLException if a database access error occurs when closing an original connection
+     */
     void reallyClose() throws SQLException {
         connection.close();
     }
@@ -54,13 +75,13 @@ public class ProxyConnection implements Connection {
     }
 
     @Override
-    public void setAutoCommit(boolean autoCommit) throws SQLException {
-        connection.setAutoCommit(autoCommit);
+    public boolean getAutoCommit() throws SQLException {
+        return connection.getAutoCommit();
     }
 
     @Override
-    public boolean getAutoCommit() throws SQLException {
-        return connection.getAutoCommit();
+    public void setAutoCommit(boolean autoCommit) throws SQLException {
+        connection.setAutoCommit(autoCommit);
     }
 
     @Override
@@ -84,18 +105,13 @@ public class ProxyConnection implements Connection {
     }
 
     @Override
-    public void setReadOnly(boolean readOnly) throws SQLException {
-        connection.setReadOnly(readOnly);
-    }
-
-    @Override
     public boolean isReadOnly() throws SQLException {
         return connection.isReadOnly();
     }
 
     @Override
-    public void setCatalog(String catalog) throws SQLException {
-        connection.setCatalog(catalog);
+    public void setReadOnly(boolean readOnly) throws SQLException {
+        connection.setReadOnly(readOnly);
     }
 
     @Override
@@ -104,13 +120,18 @@ public class ProxyConnection implements Connection {
     }
 
     @Override
-    public void setTransactionIsolation(int level) throws SQLException {
-        connection.setTransactionIsolation(level);
+    public void setCatalog(String catalog) throws SQLException {
+        connection.setCatalog(catalog);
     }
 
     @Override
     public int getTransactionIsolation() throws SQLException {
         return connection.getTransactionIsolation();
+    }
+
+    @Override
+    public void setTransactionIsolation(int level) throws SQLException {
+        connection.setTransactionIsolation(level);
     }
 
     @Override
@@ -149,13 +170,13 @@ public class ProxyConnection implements Connection {
     }
 
     @Override
-    public void setHoldability(int holdability) throws SQLException {
-        connection.setHoldability(holdability);
+    public int getHoldability() throws SQLException {
+        return connection.getHoldability();
     }
 
     @Override
-    public int getHoldability() throws SQLException {
-        return connection.getHoldability();
+    public void setHoldability(int holdability) throws SQLException {
+        connection.setHoldability(holdability);
     }
 
     @Override
@@ -239,11 +260,6 @@ public class ProxyConnection implements Connection {
     }
 
     @Override
-    public void setClientInfo(Properties properties) throws SQLClientInfoException {
-        connection.setClientInfo(properties);
-    }
-
-    @Override
     public String getClientInfo(String name) throws SQLException {
         return connection.getClientInfo(name);
     }
@@ -251,6 +267,11 @@ public class ProxyConnection implements Connection {
     @Override
     public Properties getClientInfo() throws SQLException {
         return connection.getClientInfo();
+    }
+
+    @Override
+    public void setClientInfo(Properties properties) throws SQLClientInfoException {
+        connection.setClientInfo(properties);
     }
 
     @Override
@@ -264,13 +285,13 @@ public class ProxyConnection implements Connection {
     }
 
     @Override
-    public void setSchema(String schema) throws SQLException {
-        connection.setSchema(schema);
+    public String getSchema() throws SQLException {
+        return connection.getSchema();
     }
 
     @Override
-    public String getSchema() throws SQLException {
-        return connection.getSchema();
+    public void setSchema(String schema) throws SQLException {
+        connection.setSchema(schema);
     }
 
     @Override
@@ -317,7 +338,6 @@ public class ProxyConnection implements Connection {
     public void setShardingKey(ShardingKey shardingKey) throws SQLException {
         connection.setShardingKey(shardingKey);
     }
-
 
     @Override
     public <T> T unwrap(Class<T> iface) throws SQLException {

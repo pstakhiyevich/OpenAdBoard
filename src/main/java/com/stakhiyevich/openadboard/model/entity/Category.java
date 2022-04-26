@@ -1,6 +1,6 @@
 package com.stakhiyevich.openadboard.model.entity;
 
-public class Category {
+public class Category extends AbstractEntity {
 
     private String title;
 

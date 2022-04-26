@@ -27,6 +27,32 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 <jsp:include page="header.jsp"/>
+<c:if test="${!empty sessionScope.feedback_user_change}">
+    <div class="position-fixed top-0 start-0 p-3" style="z-index: 11">
+        <div id="changeUserFeedbackToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <a class="rounded me-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-envelope"
+                         viewBox="0 0 16 16">
+                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+                    </svg>
+                </a>
+                <strong class="me-auto"><fmt:message key="label.notification"/></strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                <div class="">
+                    <fmt:message key="${sessionScope.feedback_user_change}"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const toast = new bootstrap.Toast(document.getElementById('changeUserFeedbackToast'));
+        toast.show()
+    </script>
+    <c:remove var="feedback_user_change" scope="session"/>
+</c:if>
 <div class="container-fluid mt-3 mb-1">
     <div class="row">
         <div class="col-sm-3 ">
@@ -49,15 +75,12 @@
                     <div class="col">
                         <c:if test="${sessionScope.user.role == UserRole.ADMIN}">
                             <a class="btn btn-primary"
-                               href="${pageContext.request.contextPath}/controller?command=user_management_page"><fmt:message
-                                    key="label.users"/></a>
+                               href="${pageContext.request.contextPath}/controller?command=user_management_page"><fmt:message key="label.users"/></a>
                         </c:if>
                         <a class="btn btn-outline-primary"
-                           href="${pageContext.request.contextPath}/controller?command=category_management_page"><fmt:message
-                                key="label.categories"/></a>
+                           href="${pageContext.request.contextPath}/controller?command=category_management_page"><fmt:message key="label.categories"/></a>
                         <a class="btn btn-outline-primary"
-                           href="${pageContext.request.contextPath}/controller?command=city_management_page"><fmt:message
-                                key="label.cities"/></a>
+                           href="${pageContext.request.contextPath}/controller?command=city_management_page"><fmt:message key="label.cities"/></a>
                     </div>
                     <div class="col d-flex justify-content-end">
                     </div>
@@ -82,7 +105,9 @@
                                 <tr>
                                     <th scope="row">${user.getId()}</th>
                                     <td>
-                                            ${user.getName()}
+                                        <a href="${pageContext.request.contextPath}/controller?command=user_page&user_id=${user.getId()}">
+                                                ${user.getName()}
+                                        </a>
                                     </td>
                                     <td>${user.getEmail()}</td>
                                     <td>
@@ -114,8 +139,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <span><button class="btn btn-outline-primary" type="submit"><fmt:message
-                                                key="label.save"/></button></span>
+                                        <span><button class="btn btn-outline-primary" type="submit"><fmt:message key="label.save"/></button></span>
                                     </td>
                                 </tr>
                             </form>

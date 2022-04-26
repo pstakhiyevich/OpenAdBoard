@@ -13,7 +13,8 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.Optional;
 
-public class PasswordHashGeneratorImpl implements PasswordHashGenerator {
+public final class PasswordHashGeneratorImpl implements PasswordHashGenerator {
+
     private static final Logger logger = LogManager.getLogger();
     private static PasswordHashGeneratorImpl instance;
 
@@ -24,6 +25,7 @@ public class PasswordHashGeneratorImpl implements PasswordHashGenerator {
     private static final String SALT = "sChHR5DLE1hb";
 
     private PasswordHashGeneratorImpl() {
+
     }
 
     public static PasswordHashGeneratorImpl getInstance() {
@@ -35,17 +37,23 @@ public class PasswordHashGeneratorImpl implements PasswordHashGenerator {
 
     @Override
     public Optional<String> generatePasswordHash(String password) {
+
         char[] chars = password.toCharArray();
         byte[] bytes = SALT.getBytes();
+
         PBEKeySpec spec = new PBEKeySpec(chars, bytes, ITERATIONS, KEY_LENGTH);
+
         Arrays.fill(chars, Character.MIN_VALUE);
+
         try {
             SecretKeyFactory fac = SecretKeyFactory.getInstance(ALGORITHM);
             byte[] securePassword = fac.generateSecret(spec).getEncoded();
             return Optional.of(Base64.getEncoder().encodeToString(securePassword));
+
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            logger.error("can't generate password hash", e);
+            logger.error("failed to generate password hash", e);
             return Optional.empty();
+
         } finally {
             spec.clearPassword();
         }

@@ -12,7 +12,6 @@ public class Item extends AbstractEntity {
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
     private String picture;
-    private boolean active;
     private Category category;
     private User user;
     private City city;
@@ -73,14 +72,6 @@ public class Item extends AbstractEntity {
         this.picture = picture;
     }
 
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
     public Category getCategory() {
         return category;
     }
@@ -111,23 +102,22 @@ public class Item extends AbstractEntity {
         if (!(o instanceof Item)) return false;
         if (!super.equals(o)) return false;
 
-        Item that = (Item) o;
+        Item item = (Item) o;
 
-        if (isActive() != that.isActive()) return false;
-        if (getTitle() != null ? !getTitle().equals(that.getTitle()) : that.getTitle() != null) return false;
-        if (getPrice() != null ? !getPrice().equals(that.getPrice()) : that.getPrice() != null) return false;
-        if (getDescription() != null ? !getDescription().equals(that.getDescription()) : that.getDescription() != null)
+        if (getTitle() != null ? !getTitle().equals(item.getTitle()) : item.getTitle() != null) return false;
+        if (getPrice() != null ? !getPrice().equals(item.getPrice()) : item.getPrice() != null) return false;
+        if (getDescription() != null ? !getDescription().equals(item.getDescription()) : item.getDescription() != null)
             return false;
-        if (getContact() != null ? !getContact().equals(that.getContact()) : that.getContact() != null) return false;
-        if (getCreateTime() != null ? !getCreateTime().equals(that.getCreateTime()) : that.getCreateTime() != null)
+        if (getContact() != null ? !getContact().equals(item.getContact()) : item.getContact() != null) return false;
+        if (getCreateTime() != null ? !getCreateTime().equals(item.getCreateTime()) : item.getCreateTime() != null)
             return false;
-        if (getUpdateTime() != null ? !getUpdateTime().equals(that.getUpdateTime()) : that.getUpdateTime() != null)
+        if (getUpdateTime() != null ? !getUpdateTime().equals(item.getUpdateTime()) : item.getUpdateTime() != null)
             return false;
-        if (getPicture() != null ? !getPicture().equals(that.getPicture()) : that.getPicture() != null) return false;
-        if (getCategory() != null ? !getCategory().equals(that.getCategory()) : that.getCategory() != null)
+        if (getPicture() != null ? !getPicture().equals(item.getPicture()) : item.getPicture() != null) return false;
+        if (getCategory() != null ? !getCategory().equals(item.getCategory()) : item.getCategory() != null)
             return false;
-        if (getUser() != null ? !getUser().equals(that.getUser()) : that.getUser() != null) return false;
-        return getCity() != null ? getCity().equals(that.getCity()) : that.getCity() == null;
+        if (getUser() != null ? !getUser().equals(item.getUser()) : item.getUser() != null) return false;
+        return getCity() != null ? getCity().equals(item.getCity()) : item.getCity() == null;
     }
 
     @Override
@@ -140,7 +130,6 @@ public class Item extends AbstractEntity {
         result = 31 * result + (getCreateTime() != null ? getCreateTime().hashCode() : 0);
         result = 31 * result + (getUpdateTime() != null ? getUpdateTime().hashCode() : 0);
         result = 31 * result + (getPicture() != null ? getPicture().hashCode() : 0);
-        result = 31 * result + (isActive() ? 1 : 0);
         result = 31 * result + (getCategory() != null ? getCategory().hashCode() : 0);
         result = 31 * result + (getUser() != null ? getUser().hashCode() : 0);
         result = 31 * result + (getCity() != null ? getCity().hashCode() : 0);
@@ -149,7 +138,7 @@ public class Item extends AbstractEntity {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("ItemEntity{");
+        final StringBuilder sb = new StringBuilder("Item{");
         sb.append("title='").append(title).append('\'');
         sb.append(", price=").append(price);
         sb.append(", description='").append(description).append('\'');
@@ -157,7 +146,6 @@ public class Item extends AbstractEntity {
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", picture='").append(picture).append('\'');
-        sb.append(", active=").append(active);
         sb.append(", category=").append(category);
         sb.append(", user=").append(user);
         sb.append(", city=").append(city);

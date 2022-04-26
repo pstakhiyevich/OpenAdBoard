@@ -38,8 +38,7 @@ public class SignInCommand implements Command {
 
         String email = request.getParameter(EMAIL);
         String password = request.getParameter(PASSWORD);
-        Optional<User> user;
-        user = userService.findUserByEmailAndPassword(email, password);
+        Optional<User> user = userService.findUserByEmailAndPassword(email, password);
         if (user.isEmpty()) {
             validationFeedback.put(FAIL, MESSAGE_FAIL_SING_IN);
             session.setAttribute(SIGN_IN_FEEDBACK, validationFeedback);

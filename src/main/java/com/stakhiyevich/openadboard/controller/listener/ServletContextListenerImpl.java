@@ -5,7 +5,6 @@ import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 
 public class ServletContextListenerImpl implements ServletContextListener {
-
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         ConnectionPool.getInstance();

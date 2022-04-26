@@ -17,3 +17,4 @@ public class LogOutCommand implements Command {
         return new Router(HOME_URL, REDIRECT);
     }
 }
+

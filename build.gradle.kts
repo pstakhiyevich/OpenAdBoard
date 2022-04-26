@@ -22,6 +22,9 @@ dependencies {
     compileOnly("jakarta.servlet.jsp:jakarta.servlet.jsp-api:3.0.0")
 
     implementation ("mysql:mysql-connector-java:8.0.28")
+    implementation("com.sun.mail:jakarta.mail:2.0.1")
+
+    testImplementation("com.h2database:h2:2.1.212")
 }
 
 tasks {

@@ -5,6 +5,7 @@ import com.stakhiyevich.openadboard.controller.command.Router;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
+import static com.stakhiyevich.openadboard.controller.command.PageUrlHolder.CONTROLLER_URL;
 import static com.stakhiyevich.openadboard.controller.command.PageUrlHolder.HOME_URL;
 import static com.stakhiyevich.openadboard.controller.command.RequestParameterHolder.SELECTED_LANGUAGE;
 import static com.stakhiyevich.openadboard.controller.command.RoutingTypeHolder.REDIRECT;
@@ -14,18 +15,13 @@ public class ChangeLanguageCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
+        String currentPageCommand = session.getAttribute(PREVIOUS_COMMAND).toString();
         String selectedLanguage = request.getParameter(SELECTED_LANGUAGE);
         switch (selectedLanguage) {
-            case ENGLISH -> {
-                session.setAttribute(LOCALIZATION, ENGLISH);
-            }
-            case CHINESE -> {
-                session.setAttribute(LOCALIZATION, CHINESE);
-            }
-            case RUSSIAN -> {
-                session.setAttribute(LOCALIZATION, RUSSIAN);
-            }
+            case RUSSIAN -> session.setAttribute(LOCALIZATION, RUSSIAN);
+            case ENGLISH -> session.setAttribute(LOCALIZATION, ENGLISH);
+            case CHINESE -> session.setAttribute(LOCALIZATION, CHINESE);
         }
-        return new Router(HOME_URL, REDIRECT);
+        return new Router(CONTROLLER_URL + currentPageCommand, REDIRECT);
     }
 }
