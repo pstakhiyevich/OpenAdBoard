@@ -23,6 +23,8 @@ dependencies {
 
     implementation ("mysql:mysql-connector-java:8.0.28")
     implementation("com.sun.mail:jakarta.mail:2.0.1")
+
+    testImplementation("com.h2database:h2:2.1.212")
 }
 
 tasks {

@@ -17,8 +17,6 @@ import java.util.Optional;
 
 public class ItemDaoImpl extends AbstractDao<Item> implements ItemDao {
 
-    private static final Logger logger = LogManager.getLogger();
-
     private static final String SQL_CREATE_ITEM = "INSERT INTO items(title, price, description, contact, create_time, update_time, picture, item_categories_id, users_id, cities_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
     private static final String SQL_UPDATE_ITEM = "UPDATE items SET title = ?, price = ?, description = ?, contact = ?, create_time = ?, update_time = ?, picture = ?, item_categories_id = ?, users_id = ?, cities_id = ? WHERE items.id = ?";
     private static final String SQL_FIND_ITEMS = "SELECT items.id, items.title, items.price, items.description, items.contact, items.create_time, items.update_time, items.picture, item_categories.id, item_categories.title, users.id, users.name, users.email, users.password, users.registration_date, users.hash, users.avatar, user_statuses.id, user_statuses.title, user_roles.id, user_roles.title, cities.id, cities.title FROM items INNER JOIN item_categories ON items.item_categories_id = item_categories.id INNER JOIN users ON items.users_id = users.id INNER JOIN user_statuses ON users.user_statuses_id = user_statuses.id INNER JOIN user_roles ON users.user_roles_id = user_roles.id INNER JOIN cities ON items.cities_id = cities.id ";
@@ -42,13 +40,9 @@ public class ItemDaoImpl extends AbstractDao<Item> implements ItemDao {
     public Optional<Item> findById(long id) throws DaoException {
         Object[] args = {id};
         List<Item> items;
-        try {
-            items = customJdbcTemplate.query(connection, SQL_FIND_ITEMS + SQL_WHERE + SQL_ITEM_ID, args, itemRowMapper);
-            if (!items.isEmpty()) {
-                return Optional.ofNullable(items.get(0));
-            }
-        } catch (DaoException e) {
-            logger.error("failed to find an item with id {}", id, e);
+        items = customJdbcTemplate.query(connection, SQL_FIND_ITEMS + SQL_WHERE + SQL_ITEM_ID, args, itemRowMapper);
+        if (!items.isEmpty()) {
+            return Optional.ofNullable(items.get(0));
         }
         return Optional.empty();
     }
@@ -61,12 +55,7 @@ public class ItemDaoImpl extends AbstractDao<Item> implements ItemDao {
     @Override
     public boolean delete(long id) throws DaoException {
         Object[] args = {id};
-        try {
-            return customJdbcTemplate.update(connection, SQL_DELETE_ITEM_BY_ID, args) >= 0;
-        } catch (DaoException e) {
-            logger.error("failed to delete item with id {}", id, e);
-            throw new DaoException("failed to delete item", e);
-        }
+        return customJdbcTemplate.update(connection, SQL_DELETE_ITEM_BY_ID, args) >= 0;
     }
 
     @Override
@@ -100,12 +89,7 @@ public class ItemDaoImpl extends AbstractDao<Item> implements ItemDao {
     public List<Item> findPaginatedItems(int currentPage, int recordsPerPage) throws DaoException {
         int startItem = currentPage * recordsPerPage - recordsPerPage;
         Object[] args = {startItem, recordsPerPage};
-        try {
-            return customJdbcTemplate.query(connection, SQL_FIND_ITEMS + SQL_PAGINATION, args, itemRowMapper);
-        } catch (DaoException e) {
-            logger.error("failed to find items", e);
-            throw new DaoException("failed to find items", e);
-        }
+        return customJdbcTemplate.query(connection, SQL_FIND_ITEMS + SQL_PAGINATION, args, itemRowMapper);
     }
 
     @Override
@@ -128,12 +112,7 @@ public class ItemDaoImpl extends AbstractDao<Item> implements ItemDao {
     public List<Item> findItemsByUserId(long userId, int currentPage, int recordsPerPage) throws DaoException {
         int startItem = currentPage * recordsPerPage - recordsPerPage;
         Object[] args = {userId, startItem, recordsPerPage};
-        try {
-            return customJdbcTemplate.query(connection, SQL_FIND_ITEMS + SQL_WHERE + SQL_USER_ID + SQL_PAGINATION, args, itemRowMapper);
-        } catch (DaoException e) {
-            logger.error("failed to find items", e);
-            throw new DaoException("failed to find items", e);
-        }
+        return customJdbcTemplate.query(connection, SQL_FIND_ITEMS + SQL_WHERE + SQL_USER_ID + SQL_PAGINATION, args, itemRowMapper);
     }
 
     @Override
