@@ -1,6 +1,6 @@
 package com.stakhiyevich.openadboard.controller.command;
 
-public class SessionAttributeHolder {
+public final class SessionAttributeHolder {
 
     public static final String LOCALIZATION = "localization";
     public static final String ENGLISH = "en";

@@ -2,14 +2,12 @@ package com.stakhiyevich.openadboard.model.dao.impl;
 
 import com.stakhiyevich.openadboard.exception.DaoException;
 import com.stakhiyevich.openadboard.model.dao.AbstractDao;
-import com.stakhiyevich.openadboard.model.dao.ItemDao;
 import com.stakhiyevich.openadboard.model.dao.CustomJdbcTemplate;
+import com.stakhiyevich.openadboard.model.dao.ItemDao;
 import com.stakhiyevich.openadboard.model.entity.Item;
 import com.stakhiyevich.openadboard.model.mapper.impl.ItemRowMapper;
 import com.stakhiyevich.openadboard.model.query.QueryBuilder;
 import com.stakhiyevich.openadboard.model.query.impl.ItemQueryBuilder;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Map;

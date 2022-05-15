@@ -66,12 +66,15 @@ public class ConnectionPool {
      */
     public static ConnectionPool getInstance() {
         if (!isPoolCreated.get()) {
-            locker.lock();
-            if (instance == null) {
-                instance = new ConnectionPool();
-                isPoolCreated.set(true);
+            try {
+                locker.lock();
+                if (instance == null) {
+                    instance = new ConnectionPool();
+                    isPoolCreated.set(true);
+                }
+            } finally {
+                locker.unlock();
             }
-            locker.unlock();
         }
         return instance;
     }
