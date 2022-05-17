@@ -56,13 +56,7 @@ public class CommandFilter implements Filter {
         User user = (User) session.getAttribute(USER);
         EnumSet<CommandTypeHolder> filteredCommands;
         CommandTypeHolder requestedCommand = CommandTypeHolder.getCommandType(request.getParameter(COMMAND));
-        UserRole userRole;
-
-        if (user == null) {
-            userRole = UserRole.GUEST;
-        } else {
-            userRole = user.getRole();
-        }
+        UserRole userRole = user == null ? UserRole.GUEST : user.getRole();
 
         switch (userRole) {
             case GUEST -> filteredCommands = guestCommands;

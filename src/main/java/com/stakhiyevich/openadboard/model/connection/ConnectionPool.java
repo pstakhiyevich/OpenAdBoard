@@ -1,6 +1,5 @@
 package com.stakhiyevich.openadboard.model.connection;
 
-import com.stakhiyevich.openadboard.exception.ConnectionPoolException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,7 +22,7 @@ public class ConnectionPool {
     /**
      * Default size of a connection pool
      */
-    private static final int DEFAULT_POOL_SIZE = 4;
+    private static final int POOL_SIZE = 4;
     /**
      * Connection pool instance
      */
@@ -42,9 +41,9 @@ public class ConnectionPool {
      * Fills up the available connections queue
      */
     private ConnectionPool() {
-        availableConnections = new LinkedBlockingDeque<>(DEFAULT_POOL_SIZE);
-        usedConnections = new LinkedBlockingDeque<>(DEFAULT_POOL_SIZE);
-        for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
+        availableConnections = new LinkedBlockingDeque<>(POOL_SIZE);
+        usedConnections = new LinkedBlockingDeque<>(POOL_SIZE);
+        for (int i = 0; i < POOL_SIZE; i++) {
             try {
                 ProxyConnection connection = ConnectionFactory.createConnection();
                 availableConnections.put(connection);
@@ -90,7 +89,7 @@ public class ConnectionPool {
             connection = availableConnections.take();
             usedConnections.put(connection);
         } catch (InterruptedException e) {
-            logger.error("failed to aquire available connection", e);
+            logger.error("failed to acquire available connection", e);
             Thread.currentThread().interrupt();
         }
         return connection;
@@ -100,30 +99,28 @@ public class ConnectionPool {
      * Releases a connection
      *
      * @param connection used connection
-     * @throws ConnectionPoolException if receives the wrong instance of the connection
      */
-    public void releaseConnection(Connection connection) throws ConnectionPoolException {
-        if (connection == null) {
-            logger.error("connection is null");
-        }
+    public boolean releaseConnection(Connection connection) {
         if (!(connection instanceof ProxyConnection)) {
             logger.error("wrong instance");
-            throw new ConnectionPoolException("wrong instance");
+            return false;
         }
         try {
             usedConnections.remove(connection);
             availableConnections.put((ProxyConnection) connection);
+            return true;
         } catch (InterruptedException e) {
-            logger.error("failed to release connection", e);
+            logger.error("failed to release a connection", e);
             Thread.currentThread().interrupt();
         }
+        return false;
     }
 
     /**
      * Destroys the connection pool
      */
     public void destroyPool() {
-        for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
+        for (int i = 0; i < POOL_SIZE; i++) {
             try {
                 availableConnections.take().reallyClose();
             } catch (SQLException e) {

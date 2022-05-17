@@ -1,6 +1,5 @@
 package com.stakhiyevich.openadboard.model.dao;
 
-import com.stakhiyevich.openadboard.exception.ConnectionPoolException;
 import com.stakhiyevich.openadboard.exception.TransactionException;
 import com.stakhiyevich.openadboard.model.connection.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
@@ -59,11 +58,10 @@ public class TransactionManager implements AutoCloseable {
             logger.error("failed to end a transaction", e);
             throw new TransactionException("failed to end a transaction", e);
         }
-        try {
-            ConnectionPool.getInstance().releaseConnection(connection);
-        } catch (ConnectionPoolException e) {
-            logger.error("failed to release a connection", e);
-            throw new TransactionException("failed to release a connection", e);
+        boolean result = ConnectionPool.getInstance().releaseConnection(connection);
+        if (!result) {
+            logger.error("failed to release a connection");
+            throw new TransactionException("failed to release a connection");
         }
         connection = null;
     }

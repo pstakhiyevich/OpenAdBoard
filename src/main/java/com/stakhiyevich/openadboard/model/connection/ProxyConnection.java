@@ -1,6 +1,5 @@
 package com.stakhiyevich.openadboard.model.connection;
 
-import com.stakhiyevich.openadboard.exception.ConnectionPoolException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,7 +11,7 @@ import java.util.concurrent.Executor;
 /**
  * The ProxyConnection class wraps the Connection class and extends its functionality.
  */
-public class ProxyConnection implements Connection {
+class ProxyConnection implements Connection {
 
     private static final Logger logger = LogManager.getLogger();
 
@@ -37,12 +36,8 @@ public class ProxyConnection implements Connection {
      */
     @Override
     public void close() throws SQLException {
-        try {
-            this.setAutoCommit(true);
-            ConnectionPool.getInstance().releaseConnection(this);
-        } catch (ConnectionPoolException e) {
-            logger.error("failed to close the connection", e);
-        }
+        this.setAutoCommit(true);
+        ConnectionPool.getInstance().releaseConnection(this);
     }
 
     /**
