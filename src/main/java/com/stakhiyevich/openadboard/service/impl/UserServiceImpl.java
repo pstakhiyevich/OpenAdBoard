@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
                 transactionManager.rollback();
             }
         } catch (TransactionException e) {
-            logger.error("failed to find users");
+            logger.error("failed to find users", e);
         }
         return users;
     }
@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
                 transactionManager.rollback();
             }
         } catch (TransactionException e) {
-            logger.error("failed to find user by email");
+            logger.error("failed to find user by email", e);
         }
         return user;
     }
@@ -214,7 +214,7 @@ public class UserServiceImpl implements UserService {
                 transactionManager.rollback();
             }
         } catch (TransactionException e) {
-            logger.error("failed to find user by email");
+            logger.error("failed to find user by email", e);
         }
         return user;
     }
@@ -283,7 +283,7 @@ public class UserServiceImpl implements UserService {
                     transactionManager.rollback();
                 }
             } catch (TransactionException e) {
-                logger.error("failed to activate user");
+                logger.error("failed to activate user", e);
             }
         }
         return false;

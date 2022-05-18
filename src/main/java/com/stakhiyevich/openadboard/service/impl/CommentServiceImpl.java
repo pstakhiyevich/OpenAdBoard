@@ -49,7 +49,7 @@ public class CommentServiceImpl implements CommentService {
                 transactionManager.rollback();
             }
         } catch (TransactionException e) {
-            logger.error("failed to perform a transaction");
+            logger.error("failed to perform a transaction", e);
         }
         return false;
     }
@@ -69,7 +69,7 @@ public class CommentServiceImpl implements CommentService {
                 transactionManager.rollback();
             }
         } catch (TransactionException e) {
-            logger.error("failed to perform a transaction");
+            logger.error("failed to perform a transaction", e);
         }
         return false;
     }
@@ -92,7 +92,7 @@ public class CommentServiceImpl implements CommentService {
                 transactionManager.rollback();
             }
         } catch (TransactionException e) {
-            logger.error("failed to perform a transaction");
+            logger.error("failed to perform a transaction", e);
         }
         return commentsDto;
     }
@@ -115,7 +115,7 @@ public class CommentServiceImpl implements CommentService {
                 transactionManager.rollback();
             }
         } catch (TransactionException e) {
-            logger.error("failed to perform a transaction");
+            logger.error("failed to perform a transaction", e);
         }
         return commentsDto;
     }

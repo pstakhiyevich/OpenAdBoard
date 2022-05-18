@@ -50,7 +50,7 @@ public class BookmarkServiceImpl implements BookmarkService {
                 transactionManager.rollback();
             }
         } catch (TransactionException e) {
-            logger.error("failed to perform a transaction");
+            logger.error("failed to perform a transaction", e);
         }
         return bookmarksDto;
     }

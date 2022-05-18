@@ -72,7 +72,7 @@ public class UploadServiceImpl implements UploadService {
         try {
             return Files.deleteIfExists(Paths.get(path));
         } catch (IOException e) {
-            logger.error("failed to delete a file");
+            logger.error("failed to delete a file", e);
         }
         return false;
     }
