@@ -5,7 +5,7 @@ import com.stakhiyevich.openadboard.model.dao.AbstractDao;
 import com.stakhiyevich.openadboard.model.entity.User;
 import com.stakhiyevich.openadboard.model.entity.UserRole;
 import com.stakhiyevich.openadboard.model.entity.UserStatus;
-import com.stakhiyevich.openadboard.util.hasher.InMemoryDbConfig;
+import com.stakhiyevich.openadboard.model.InMemoryDbConfig;
 import org.junit.jupiter.api.*;
 
 import java.sql.Connection;

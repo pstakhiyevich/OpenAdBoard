@@ -1,4 +1,4 @@
-package com.stakhiyevich.openadboard.util.hasher;
+package com.stakhiyevich.openadboard.model;
 
 import org.h2.tools.RunScript;
 

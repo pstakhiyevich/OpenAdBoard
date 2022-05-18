@@ -3,7 +3,7 @@ package com.stakhiyevich.openadboard.model.dao.impl;
 import com.stakhiyevich.openadboard.exception.DaoException;
 import com.stakhiyevich.openadboard.model.dao.AbstractDao;
 import com.stakhiyevich.openadboard.model.entity.*;
-import com.stakhiyevich.openadboard.util.hasher.InMemoryDbConfig;
+import com.stakhiyevich.openadboard.model.InMemoryDbConfig;
 import org.junit.jupiter.api.*;
 
 import java.math.BigDecimal;
