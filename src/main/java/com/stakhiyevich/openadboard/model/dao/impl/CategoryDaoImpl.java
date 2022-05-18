@@ -16,17 +16,27 @@ public class CategoryDaoImpl extends AbstractDao<Category> implements CategoryDa
 
     private static final Logger logger = LogManager.getLogger();
 
-    private static final String SQL_FIND_ALL = "SELECT id, title " +
-            "FROM item_categories " +
-            "ORDER BY title ASC";
-    private static final String SQL_CREATE = "INSERT INTO item_categories(item_categories.title) VALUES(?)";
-    private static final String SQL_UPDATE = "UPDATE item_categories SET item_categories.title = ? WHERE item_categories.id = ? ";
-    private static final String SQL_DELETE = "DELETE FROM item_categories WHERE item_categories.id = ? ";
-    private static final String SQL_FIND_BY_ID =
-            "SELECT item_categories.id, item_categories.title " +
-                    "FROM item_categories " +
-                    "WHERE item_categories.id = ?";
-    private static final String SQL_COUNT_CATEGORIES = "SELECT COUNT(item_categories.id) FROM item_categories";
+    private static final String SQL_FIND_ALL = """
+            SELECT id, title
+            FROM item_categories
+            ORDER BY id ASC""";
+    private static final String SQL_CREATE = """
+            INSERT INTO item_categories(item_categories.title)
+            VALUES(?)""";
+    private static final String SQL_UPDATE = """
+            UPDATE item_categories
+            SET item_categories.title = ?
+            WHERE item_categories.id = ?""";
+    private static final String SQL_DELETE = """
+            DELETE FROM item_categories
+            WHERE item_categories.id = ?""";
+    private static final String SQL_FIND_BY_ID = """
+            SELECT item_categories.id, item_categories.title
+            FROM item_categories
+            WHERE item_categories.id = ?""";
+    private static final String SQL_COUNT_CATEGORIES = """
+            SELECT COUNT(item_categories.id)
+            FROM item_categories""";
     private static final String SQL_PAGINATION = " LIMIT ?, ? ";
 
     private final CustomJdbcTemplate<Category> customJdbcTemplate = new CustomJdbcTemplate<>();

@@ -16,11 +16,25 @@ public class BookmarkDaoImpl extends AbstractDao<Bookmark> implements BookmarkDa
 
     private static final Logger logger = LogManager.getLogger();
 
-    private static final String SQL_FIND_BY_USER_ID = "SELECT bookmarks.users_id, bookmarks.items_id FROM bookmarks WHERE bookmarks.users_id = ? LIMIT ?, ?";
-    private static final String SQL_COUNT_BY_USER_ID = "SELECT COUNT(bookmarks.items_id) FROM bookmarks WHERE bookmarks.users_id = ?";
-    private static final String SQL_ADD_BOOKMARK = "INSERT INTO bookmarks (users_id, items_id) VALUES (?, ?) ";
-    private static final String SQL_DELETE_BOOKMARK = "DELETE FROM bookmarks WHERE bookmarks.users_id = ? AND bookmarks.items_id = ?";
-    private static final String SQL_FIND_BY_USER_ITEM_ID = "SELECT bookmarks.users_id, bookmarks.items_id FROM bookmarks WHERE bookmarks.users_id = ? AND bookmarks.items_id = ?";
+    private static final String SQL_FIND_BY_USER_ID = """
+            SELECT bookmarks.users_id, bookmarks.items_id
+            FROM bookmarks
+            WHERE bookmarks.users_id = ?
+            LIMIT ?, ?""";
+    private static final String SQL_COUNT_BY_USER_ID = """
+            SELECT COUNT(bookmarks.items_id)
+            FROM bookmarks
+            WHERE bookmarks.users_id = ?""";
+    private static final String SQL_ADD_BOOKMARK = """
+            INSERT INTO bookmarks (users_id, items_id)
+            VALUES (?, ?)""";
+    private static final String SQL_DELETE_BOOKMARK = """
+            DELETE FROM bookmarks
+            WHERE bookmarks.users_id = ? AND bookmarks.items_id = ?""";
+    private static final String SQL_FIND_BY_USER_ITEM_ID = """
+            SELECT bookmarks.users_id, bookmarks.items_id
+            FROM bookmarks
+            WHERE bookmarks.users_id = ? AND bookmarks.items_id = ?""";
 
     private final CustomJdbcTemplate<Bookmark> customJdbcTemplate = new CustomJdbcTemplate<>();
     private final BookmarkRowMapper bookmarkRowMapper = new BookmarkRowMapper();

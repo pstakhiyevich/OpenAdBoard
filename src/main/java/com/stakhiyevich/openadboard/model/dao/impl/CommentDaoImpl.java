@@ -17,12 +17,27 @@ public class CommentDaoImpl extends AbstractDao<Comment> implements CommentDao {
 
     private static final Logger logger = LogManager.getLogger();
 
-    private static final String SQL_ADD_COMMENT = "INSERT INTO comments(comments.text, comments.create_time, comments.items_id, comments.users_id) VALUES (?, ?, ?, ?) ";
-    private static final String SQL_UPDATE_COMMENT = "UPDATE comments SET comments.text = ?, comments.create_time = ?, comments.items_id = ?, comments.users_id = ? WHERE comments.id = ?";
-    private static final String SQL_DELETE_COMMENT_BY_ID = "DELETE FROM comments WHERE comments.id = ?";
-    private static final String SQL_FIND_BY_ID = "SELECT comments.id, comments.text, comments.create_time, comments.items_id, comments.users_id FROM comments WHERE comments.id = ?";
-    private static final String SQL_FIND_BY_ITEM_ID = "SELECT comments.id, comments.text, comments.create_time, comments.items_id, comments.users_id FROM comments WHERE comments.items_id = ?";
-    private static final String SQL_FIND_BY_USER_ID = "SELECT comments.id, comments.text, comments.create_time, comments.items_id, comments.users_id FROM comments WHERE comments.users_id = ?";
+    private static final String SQL_ADD_COMMENT = """
+            INSERT INTO comments(comments.text, comments.create_time, comments.items_id, comments.users_id)
+            VALUES (?, ?, ?, ?)""";
+    private static final String SQL_UPDATE_COMMENT = """
+            UPDATE comments SET comments.text = ?, comments.create_time = ?, comments.items_id = ?, comments.users_id = ?
+            WHERE comments.id = ?""";
+    private static final String SQL_DELETE_COMMENT_BY_ID = """
+            DELETE FROM comments
+            WHERE comments.id = ?""";
+    private static final String SQL_FIND_BY_ID = """
+            SELECT comments.id, comments.text, comments.create_time, comments.items_id, comments.users_id
+            FROM comments
+            WHERE comments.id = ?""";
+    private static final String SQL_FIND_BY_ITEM_ID = """
+            SELECT comments.id, comments.text, comments.create_time, comments.items_id, comments.users_id
+            FROM comments
+            WHERE comments.items_id = ?""";
+    private static final String SQL_FIND_BY_USER_ID = """
+            SELECT comments.id, comments.text, comments.create_time, comments.items_id, comments.users_id
+            FROM comments
+            WHERE comments.users_id = ?""";
 
     private final CommentRowMapper commentMapper = new CommentRowMapper();
     private final CustomJdbcTemplate<Comment> customJdbcTemplate = new CustomJdbcTemplate<>();

@@ -5,7 +5,6 @@ import com.stakhiyevich.openadboard.model.dao.AbstractDao;
 import com.stakhiyevich.openadboard.model.dao.CustomJdbcTemplate;
 import com.stakhiyevich.openadboard.model.dao.UserDao;
 import com.stakhiyevich.openadboard.model.entity.User;
-import com.stakhiyevich.openadboard.model.mapper.RowMapper;
 import com.stakhiyevich.openadboard.model.mapper.impl.UserRowMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,7 +12,6 @@ import org.apache.logging.log4j.Logger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,43 +19,42 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
     private static final Logger logger = LogManager.getLogger();
 
-    private static final String SQL_CREATE_USER =
-            "INSERT INTO users(name, email, password, registration_date, hash, avatar, user_statuses_id, user_roles_id) " +
-                    "VALUES(?, ?, ?, ?, ?, ?, " +
-                    "(SELECT user_statuses.id FROM user_statuses WHERE title = ?), " +
-                    "(SELECT user_roles.id FROM user_roles WHERE title = ?))";
-    private static final String SQL_FIND_ALL_USERS =
-            "SELECT users.id, users.name, users.email, users.password, users.registration_date, users.hash, users.avatar, user_statuses.title, user_roles.title " +
-                    "FROM users " +
-                    "JOIN user_statuses ON users.user_statuses_id = user_statuses.id " +
-                    "JOIN user_roles ON users.user_roles_id = user_roles.id";
-    private static final String SQL_IS_EMAIL_EXIST =
-            "SELECT id FROM users WHERE email = ? LIMIT 1";
-    private static final String SQL_FIND_BY_EMAIL =
-            "SELECT users.id, users.name, users.email, users.password, users.registration_date, users.hash, users.avatar, user_statuses.title, user_roles.title " +
-                    "FROM users " +
-                    "JOIN user_statuses ON users.user_statuses_id = user_statuses.id " +
-                    "JOIN user_roles ON users.user_roles_id = user_roles.id " +
-                    "WHERE email = ?";
-    private static final String SQL_FIND_BY_EMAIL_AND_PASSWORD =
-            "SELECT users.id, users.name, users.email, users.registration_date, users.hash, users.avatar, user_statuses.title, user_roles.title " +
-                    "FROM users " +
-                    "JOIN user_statuses ON users.user_statuses_id = user_statuses.id " +
-                    "JOIN user_roles ON users.user_roles_id = user_roles.id " +
-                    "WHERE users.email = ? AND users.password = ?";
-    private static final String SQL_FIND_BY_ID =
-            "SELECT users.id, users.name, users.email, users.password, users.registration_date, users.hash, users.avatar, user_statuses.title, user_roles.title " +
-                    "FROM users " +
-                    "JOIN user_statuses ON users.user_statuses_id = user_statuses.id " +
-                    "JOIN user_roles ON users.user_roles_id = user_roles.id " +
-                    "WHERE users.id = ?";
-    private static final String SQL_ACTIVATE_USER_BY_HASH =
-            "UPDATE users " +
-                    "SET users.user_statuses_id = (SELECT id FROM user_statuses WHERE title = 'ACTIVATED') " +
-                    "WHERE hash = ?";
-    private static final String SQL_UPDATE_USER = "UPDATE users " +
-            "SET users.name = ?, users.email = ?, users.registration_date = ?, users.avatar = ?, users.user_statuses_id = (SELECT user_statuses.id FROM user_statuses WHERE user_statuses.title = ?), users.user_roles_id = (SELECT user_roles.id FROM user_roles WHERE user_roles.title = ?) " +
-            "WHERE users.id = ?";
+    private static final String SQL_CREATE_USER = """
+            INSERT INTO users(name, email, password, registration_date, hash, avatar, user_statuses_id, user_roles_id)
+            VALUES(?, ?, ?, ?, ?, ?, (SELECT user_statuses.id FROM user_statuses WHERE title = ?), (SELECT user_roles.id FROM user_roles WHERE title = ?))""";
+    private static final String SQL_FIND_ALL_USERS = """
+            SELECT users.id, users.name, users.email, users.password, users.registration_date, users.hash, users.avatar, user_statuses.title, user_roles.title
+            FROM users
+            INNER JOIN user_statuses ON users.user_statuses_id = user_statuses.id
+            INNER JOIN user_roles ON users.user_roles_id = user_roles.id""";
+    private static final String SQL_FIND_BY_EMAIL = """
+            SELECT users.id, users.name, users.email, users.password, users.registration_date, users.hash, users.avatar, user_statuses.title, user_roles.title
+            FROM users
+            INNER JOIN user_statuses ON users.user_statuses_id = user_statuses.id JOIN user_roles ON users.user_roles_id = user_roles.id
+            WHERE email = ?""";
+    private static final String SQL_FIND_BY_EMAIL_AND_PASSWORD = """
+            SELECT users.id, users.name, users.email, users.registration_date, users.hash, users.avatar, user_statuses.title, user_roles.title
+            FROM users
+            INNER JOIN user_statuses ON users.user_statuses_id = user_statuses.id
+            INNER JOIN user_roles ON users.user_roles_id = user_roles.id
+            WHERE users.email = ? AND users.password = ?""";
+    private static final String SQL_FIND_BY_ID = """
+            SELECT users.id, users.name, users.email, users.password, users.registration_date, users.hash, users.avatar, user_statuses.title, user_roles.title
+            FROM users
+            INNER JOIN user_statuses ON users.user_statuses_id = user_statuses.id
+            INNER JOIN user_roles ON users.user_roles_id = user_roles.id
+            WHERE users.id = ?""";
+    private static final String SQL_ACTIVATE_USER_BY_HASH = """
+            UPDATE users
+            SET users.user_statuses_id = (SELECT id FROM user_statuses WHERE title = 'ACTIVATED')
+            WHERE hash = ?""";
+    private static final String SQL_UPDATE_USER = """
+            UPDATE users
+            SET users.name = ?, users.email = ?, users.registration_date = ?, users.avatar = ?,
+            users.user_statuses_id = (SELECT user_statuses.id FROM user_statuses WHERE user_statuses.title = ?),
+            users.user_roles_id = (SELECT user_roles.id FROM user_roles WHERE user_roles.title = ?)
+            WHERE users.id = ?""";
+    private static final String SQL_IS_EMAIL_EXIST = "SELECT id FROM users WHERE email = ? LIMIT 1";
     private static final String SQL_UPDATE_PASSWORD_BY_ID = "UPDATE users SET users.password = ? WHERE users.id = ?";
     private static final String SQL_COUNT_USERS = "SELECT COUNT(users.id) FROM users";
     private static final String SQL_ORDER_BY_ID_ASC = " ORDER BY users.id ASC ";
