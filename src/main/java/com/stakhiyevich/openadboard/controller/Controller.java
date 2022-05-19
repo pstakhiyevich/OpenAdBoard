@@ -29,7 +29,6 @@ public class Controller extends HttpServlet {
     }
 
     private void processCommand(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        logger.info("processing command:  {}", req.getParameter(COMMAND));
         String commandName = req.getParameter(COMMAND);
         Command command = CommandFactory.getInstance().getCommand(commandName);
         Router router = command.execute(req);
