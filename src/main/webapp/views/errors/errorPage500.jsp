@@ -25,8 +25,23 @@
 <div class="d-flex align-items-center justify-content-center vh-100">
     <div class="text-center">
         <h1 class="display-1 fw-bold">500</h1>
-        <p class="fs-3"><span class="text-danger"><fmt:message key="message.unexpected.error"/></span></p>
-        <a class="btn btn-outline-primary mt-3" href="${pageContext.request.contextPath}/controller?command=home_page"><fmt:message key="label.home_page"/></a>
+        <p class="fs-3"><span class="text-danger"><fmt:message
+                key="message.unexpected.error"/></span></p>
+
+        <a class="btn btn-outline-primary mt-3"
+           href="${pageContext.request.contextPath}/controller?command=home_page"><fmt:message
+                key="label.home_page"/></a>
+
+        <div class="row mt-4">
+            <p class="lead">
+                <fmt:message key="message.please.contact.administrator"/>
+            </p>
+        </div>
+        <div class="row">
+            <p class="lead">
+                t329023@gmail.com
+            </p>
+        </div>
     </div>
 </div>
 </body>

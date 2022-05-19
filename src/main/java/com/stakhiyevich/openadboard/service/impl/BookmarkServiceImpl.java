@@ -1,6 +1,7 @@
 package com.stakhiyevich.openadboard.service.impl;
 
 import com.stakhiyevich.openadboard.exception.DaoException;
+import com.stakhiyevich.openadboard.exception.ServiceException;
 import com.stakhiyevich.openadboard.exception.TransactionException;
 import com.stakhiyevich.openadboard.model.dao.AbstractDao;
 import com.stakhiyevich.openadboard.model.dao.TransactionManager;
@@ -33,7 +34,7 @@ public class BookmarkServiceImpl implements BookmarkService {
     }
 
     @Override
-    public List<BookmarkEntityDto> findByUserId(long userId, int currentPage, int recordsPerPage) {
+    public List<BookmarkEntityDto> findByUserId(long userId, int currentPage, int recordsPerPage) throws ServiceException {
         AbstractDao bookmarkDao = new BookmarkDaoImpl();
         AbstractDao itemDao = new ItemDaoImpl();
         List<BookmarkEntityDto> bookmarksDto = new ArrayList<>();
@@ -48,9 +49,11 @@ public class BookmarkServiceImpl implements BookmarkService {
                 transactionManager.commit();
             } catch (DaoException e) {
                 transactionManager.rollback();
+                throw new ServiceException(e);
             }
         } catch (TransactionException e) {
             logger.error("failed to perform a transaction", e);
+            throw new ServiceException(e);
         }
         return bookmarksDto;
     }

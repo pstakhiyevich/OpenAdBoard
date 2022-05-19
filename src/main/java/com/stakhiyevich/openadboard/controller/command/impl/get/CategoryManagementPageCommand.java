@@ -2,6 +2,7 @@ package com.stakhiyevich.openadboard.controller.command.impl.get;
 
 import com.stakhiyevich.openadboard.controller.command.Command;
 import com.stakhiyevich.openadboard.controller.command.Router;
+import com.stakhiyevich.openadboard.exception.ServiceException;
 import com.stakhiyevich.openadboard.model.entity.Category;
 import com.stakhiyevich.openadboard.model.entity.User;
 import com.stakhiyevich.openadboard.model.entity.UserRole;
@@ -10,17 +11,21 @@ import com.stakhiyevich.openadboard.service.impl.CategoryServiceImpl;
 import com.stakhiyevich.openadboard.util.pagination.PageCounter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-import static com.stakhiyevich.openadboard.controller.command.PagePathHolder.CATEGORY_MANAGEMENT_PAGE;
-import static com.stakhiyevich.openadboard.controller.command.PagePathHolder.ERROR_PAGE_404;
+import static com.stakhiyevich.openadboard.controller.command.PagePathHolder.*;
 import static com.stakhiyevich.openadboard.controller.command.PageUrlHolder.HOME_URL;
 import static com.stakhiyevich.openadboard.controller.command.RequestParameterHolder.*;
 import static com.stakhiyevich.openadboard.controller.command.RoutingTypeHolder.*;
 import static com.stakhiyevich.openadboard.controller.command.SessionAttributeHolder.*;
 
 public class CategoryManagementPageCommand implements Command {
+
+    private static final Logger logger = LogManager.getLogger();
+
     @Override
     public Router execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -40,7 +45,13 @@ public class CategoryManagementPageCommand implements Command {
             return new Router(ERROR_PAGE_404, ERROR);
         }
 
-        List<Category> categories = categoryService.findAllPaginatedCategories(currentPage, categoriesPerPage);
+        List<Category> categories;
+        try {
+            categories = categoryService.findAllPaginatedCategories(currentPage, categoriesPerPage);
+        } catch (ServiceException e) {
+            logger.error("failed to find categories", e);
+            return new Router(ERROR_PAGE_500, ERROR);
+        }
 
         request.setAttribute(CATEGORIES, categories);
         request.setAttribute(NUMBER_OF_PAGES, numberOfPages);

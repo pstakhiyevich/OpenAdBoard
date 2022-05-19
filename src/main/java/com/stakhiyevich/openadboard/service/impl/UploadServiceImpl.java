@@ -1,5 +1,6 @@
 package com.stakhiyevich.openadboard.service.impl;
 
+import com.stakhiyevich.openadboard.exception.ServiceException;
 import com.stakhiyevich.openadboard.service.ItemService;
 import com.stakhiyevich.openadboard.service.UploadService;
 import jakarta.servlet.http.Part;
@@ -68,7 +69,12 @@ public class UploadServiceImpl implements UploadService {
     @Override
     public boolean deleteFile(long itemId) {
         ItemService itemService = ItemServiceImpl.getInstance();
-        String path = properties.getProperty(UPLOAD_DIRECTORY) + itemService.findItemById(itemId).get().getPicture();
+        String path = null;
+        try {
+            path = properties.getProperty(UPLOAD_DIRECTORY) + itemService.findItemById(itemId).get().getPicture();
+        } catch (ServiceException e) {
+            logger.error("failed to find an item by id", e);
+        }
         try {
             return Files.deleteIfExists(Paths.get(path));
         } catch (IOException e) {

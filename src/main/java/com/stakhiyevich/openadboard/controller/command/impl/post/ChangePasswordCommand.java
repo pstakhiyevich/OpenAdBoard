@@ -2,6 +2,7 @@ package com.stakhiyevich.openadboard.controller.command.impl.post;
 
 import com.stakhiyevich.openadboard.controller.command.Command;
 import com.stakhiyevich.openadboard.controller.command.Router;
+import com.stakhiyevich.openadboard.exception.ServiceException;
 import com.stakhiyevich.openadboard.model.entity.User;
 import com.stakhiyevich.openadboard.service.UserService;
 import com.stakhiyevich.openadboard.service.impl.UserServiceImpl;
@@ -9,18 +10,25 @@ import com.stakhiyevich.openadboard.util.validator.FormValidator;
 import com.stakhiyevich.openadboard.util.validator.impl.ChangePasswordFormValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Map;
 import java.util.Optional;
 
+import static com.stakhiyevich.openadboard.controller.command.PagePathHolder.ERROR_PAGE_500;
 import static com.stakhiyevich.openadboard.controller.command.PageUrlHolder.EDIT_USER_URL;
 import static com.stakhiyevich.openadboard.controller.command.RequestParameterHolder.NEW_PASSWORD;
 import static com.stakhiyevich.openadboard.controller.command.RequestParameterHolder.OLD_PASSWORD;
+import static com.stakhiyevich.openadboard.controller.command.RoutingTypeHolder.ERROR;
 import static com.stakhiyevich.openadboard.controller.command.RoutingTypeHolder.REDIRECT;
 import static com.stakhiyevich.openadboard.controller.command.SessionAttributeHolder.*;
 import static com.stakhiyevich.openadboard.util.MessageKey.*;
 
 public class ChangePasswordCommand implements Command {
+
+    private static final Logger logger = LogManager.getLogger();
+
     @Override
     public Router execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -38,7 +46,13 @@ public class ChangePasswordCommand implements Command {
 
         String oldPassword = request.getParameter(OLD_PASSWORD);
         String newPassword = request.getParameter(NEW_PASSWORD);
-        Optional<User> user = userService.findUserByEmailAndPassword(currentUser.getEmail(), oldPassword);
+        Optional<User> user;
+        try {
+            user = userService.findUserByEmailAndPassword(currentUser.getEmail(), oldPassword);
+        } catch (ServiceException e) {
+            logger.error("failed to find a user", e);
+            return new Router(ERROR_PAGE_500, ERROR);
+        }
         if (user.isEmpty()) {
             validationFeedback.put(OLD_PASSWORD, MESSAGE_PASSWORD_WRONG);
             session.setAttribute(CHANGE_PASSWORD_VALIDATION_FEEDBACK, validationFeedback);

@@ -1,5 +1,6 @@
 package com.stakhiyevich.openadboard.service;
 
+import com.stakhiyevich.openadboard.exception.ServiceException;
 import com.stakhiyevich.openadboard.model.entity.Item;
 import com.stakhiyevich.openadboard.model.entity.User;
 import jakarta.servlet.http.Part;
@@ -41,7 +42,7 @@ public interface ItemService {
      * @param parameters item's parameters from a request
      * @return a list of items
      */
-    List<Item> findItemsWithParameters(Map<String, String[]> parameters);
+    List<Item> findItemsWithParameters(Map<String, String[]> parameters) throws ServiceException;
 
     /**
      * Count all items with specified parameters.
@@ -66,7 +67,7 @@ public interface ItemService {
      * @param itemsPerPage an items per page number
      * @return a list of items
      */
-    List<Item> findPaginatedItems(int currentPage, int itemsPerPage);
+    List<Item> findPaginatedItems(int currentPage, int itemsPerPage) throws ServiceException;
 
     /**
      * Finds items for the current page with specified user id
@@ -76,7 +77,7 @@ public interface ItemService {
      * @param itemsPerPage an items per page number
      * @return a list of items
      */
-    List<Item> findPaginatedItemsByUserId(long userId, int currentPage, int itemsPerPage);
+    List<Item> findPaginatedItemsByUserId(long userId, int currentPage, int itemsPerPage) throws ServiceException;
 
     /**
      * Finds an item with the specified item id
@@ -84,7 +85,7 @@ public interface ItemService {
      * @param id item's id
      * @return an optional object of an item
      */
-    Optional<Item> findItemById(long id);
+    Optional<Item> findItemById(long id) throws ServiceException;
 
     /**
      * Checks whether a user can edit an item, in other works whether it is a user's own item.

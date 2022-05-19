@@ -17,7 +17,7 @@ public interface BookmarkService {
      * @param recordsPerPage the bookmarks per page number
      * @return a list of bookmark's data transfer objects
      */
-    List<BookmarkEntityDto> findByUserId(long userId, int currentPage, int recordsPerPage);
+    List<BookmarkEntityDto> findByUserId(long userId, int currentPage, int recordsPerPage) throws ServiceException;
 
     /**
      * Adds a new bookmark with the specified user id and item id.

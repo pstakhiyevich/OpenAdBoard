@@ -1,9 +1,8 @@
 package com.stakhiyevich.openadboard.controller.command.impl.get;
 
 import com.stakhiyevich.openadboard.controller.command.Command;
-import com.stakhiyevich.openadboard.controller.command.PagePathHolder;
 import com.stakhiyevich.openadboard.controller.command.Router;
-import com.stakhiyevich.openadboard.controller.command.RoutingTypeHolder;
+import com.stakhiyevich.openadboard.exception.ServiceException;
 import com.stakhiyevich.openadboard.model.entity.Category;
 import com.stakhiyevich.openadboard.model.entity.City;
 import com.stakhiyevich.openadboard.model.entity.Item;
@@ -18,24 +17,26 @@ import com.stakhiyevich.openadboard.util.validator.FormValidator;
 import com.stakhiyevich.openadboard.util.validator.impl.SearchFormValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.stakhiyevich.openadboard.controller.command.PagePathHolder.ERROR_PAGE_404;
-import static com.stakhiyevich.openadboard.controller.command.PagePathHolder.HOME_PAGE;
+import static com.stakhiyevich.openadboard.controller.command.PagePathHolder.*;
 import static com.stakhiyevich.openadboard.controller.command.RequestParameterHolder.*;
-import static com.stakhiyevich.openadboard.controller.command.RequestParameterHolder.ITEMS_PER_PAGE;
-import static com.stakhiyevich.openadboard.controller.command.RequestParameterHolder.PAGE;
-import static com.stakhiyevich.openadboard.controller.command.RequestParameterHolder.SEARCH_QUERY;
 import static com.stakhiyevich.openadboard.controller.command.RoutingTypeHolder.ERROR;
 import static com.stakhiyevich.openadboard.controller.command.RoutingTypeHolder.FORWARD;
 import static com.stakhiyevich.openadboard.controller.command.SessionAttributeHolder.PREVIOUS_COMMAND;
 import static com.stakhiyevich.openadboard.controller.command.SessionAttributeHolder.VALIDATION_FEEDBACK;
-import static com.stakhiyevich.openadboard.model.query.QueryParametersHolder.*;
+import static com.stakhiyevich.openadboard.model.query.QueryParametersHolder.SORT_BY;
+import static com.stakhiyevich.openadboard.model.query.QueryParametersHolder.SORT_NEW;
 
 public class HomePageCommand implements Command {
+
+    private static final Logger logger = LogManager.getLogger();
+
     @Override
     public Router execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -70,9 +71,29 @@ public class HomePageCommand implements Command {
             return new Router(ERROR_PAGE_404, ERROR);
         }
 
-        List<Category> categories = categoryService.findAllCategories();
-        List<City> cities = cityService.findAllCities();
-        List<Item> items = itemService.findItemsWithParameters(requestParameterMap);
+        List<Category> categories;
+        try {
+            categories = categoryService.findAllCategories();
+        } catch (ServiceException e) {
+            logger.error("failed to find categories", e);
+            return new Router(ERROR_PAGE_500, ERROR);
+        }
+
+        List<City> cities;
+        try {
+            cities = cityService.findAllCities();
+        } catch (ServiceException e) {
+            logger.error("failed to find cities", e);
+            return new Router(ERROR_PAGE_500, ERROR);
+        }
+
+        List<Item> items;
+        try {
+            items = itemService.findItemsWithParameters(requestParameterMap);
+        } catch (ServiceException e) {
+            logger.error("failed to find items", e);
+            return new Router(ERROR_PAGE_500, ERROR);
+        }
 
         request.setAttribute(ITEMS, items);
         request.setAttribute(SORT_BY, sortBy);

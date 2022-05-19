@@ -1,5 +1,6 @@
 package com.stakhiyevich.openadboard.service;
 
+import com.stakhiyevich.openadboard.exception.ServiceException;
 import com.stakhiyevich.openadboard.model.entity.dto.CommentEntityDto;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public interface CommentService {
      * @param itemId an item's id
      * @return a list of comments
      */
-    List<CommentEntityDto> findByItemId(long itemId);
+    List<CommentEntityDto> findByItemId(long itemId) throws ServiceException;
 
     /**
      * Finds comments with the specified user id.
@@ -40,7 +41,7 @@ public interface CommentService {
      * @param userId a user's id
      * @return a list of comments
      */
-    List<CommentEntityDto> findByUserId(long userId);
+    List<CommentEntityDto> findByUserId(long userId) throws ServiceException;
 
     /**
      * Checks whether a user has the rights to delete s comment, in other words whether it is the user's own comment.

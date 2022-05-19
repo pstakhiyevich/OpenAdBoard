@@ -1,6 +1,7 @@
 package com.stakhiyevich.openadboard.service.impl;
 
 import com.stakhiyevich.openadboard.exception.DaoException;
+import com.stakhiyevich.openadboard.exception.ServiceException;
 import com.stakhiyevich.openadboard.exception.TransactionException;
 import com.stakhiyevich.openadboard.model.dao.AbstractDao;
 import com.stakhiyevich.openadboard.model.dao.TransactionManager;
@@ -30,9 +31,9 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public List<City> findAllCities() {
+    public List<City> findAllCities() throws ServiceException {
         AbstractDao cityDao = new CityDaoImpl();
-        List<City> cities = new ArrayList<>();
+        List<City> cities;
         try (TransactionManager transactionManager = new TransactionManager()) {
             transactionManager.beginTransaction(cityDao);
             try {
@@ -40,17 +41,20 @@ public class CityServiceImpl implements CityService {
                 transactionManager.commit();
             } catch (DaoException e) {
                 transactionManager.rollback();
+                throw new ServiceException(e);
             }
         } catch (TransactionException e) {
             logger.error("failed perform a transaction", e);
+            throw new ServiceException(e);
+
         }
         return cities;
     }
 
     @Override
-    public List<City> findAllPaginatedCities(int currentPage, int citiesPerPage) {
+    public List<City> findAllPaginatedCities(int currentPage, int citiesPerPage) throws ServiceException {
         AbstractDao cityDao = new CityDaoImpl();
-        List<City> cities = new ArrayList<>();
+        List<City> cities;
         try (TransactionManager transactionManager = new TransactionManager()) {
             transactionManager.beginTransaction(cityDao);
             try {
@@ -58,9 +62,11 @@ public class CityServiceImpl implements CityService {
                 transactionManager.commit();
             } catch (DaoException e) {
                 transactionManager.rollback();
+                throw new ServiceException(e);
             }
         } catch (TransactionException e) {
             logger.error("failed perform a transaction", e);
+            throw new ServiceException(e);
         }
         return cities;
     }

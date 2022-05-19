@@ -1,6 +1,7 @@
 package com.stakhiyevich.openadboard.service.impl;
 
 import com.stakhiyevich.openadboard.exception.DaoException;
+import com.stakhiyevich.openadboard.exception.ServiceException;
 import com.stakhiyevich.openadboard.exception.TransactionException;
 import com.stakhiyevich.openadboard.model.dao.AbstractDao;
 import com.stakhiyevich.openadboard.model.dao.TransactionManager;
@@ -31,7 +32,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Category> findAllCategories() {
+    public List<Category> findAllCategories() throws ServiceException {
         AbstractDao itemCategoryDao = new CategoryDaoImpl();
         List<Category> categories = new ArrayList<>();
         try (TransactionManager transactionManager = new TransactionManager()) {
@@ -41,15 +42,17 @@ public class CategoryServiceImpl implements CategoryService {
                 transactionManager.commit();
             } catch (DaoException e) {
                 transactionManager.rollback();
+                throw new ServiceException(e);
             }
         } catch (TransactionException e) {
             logger.error("failed to perform a transaction", e);
+            throw new ServiceException(e);
         }
         return categories;
     }
 
     @Override
-    public List<Category> findAllPaginatedCategories(int currentPage, int categoriesPerPage) {
+    public List<Category> findAllPaginatedCategories(int currentPage, int categoriesPerPage) throws ServiceException {
         AbstractDao itemCategoryDao = new CategoryDaoImpl();
         List<Category> categories = new ArrayList<>();
         try (TransactionManager transactionManager = new TransactionManager()) {
@@ -59,9 +62,11 @@ public class CategoryServiceImpl implements CategoryService {
                 transactionManager.commit();
             } catch (DaoException e) {
                 transactionManager.rollback();
+                throw new ServiceException(e);
             }
         } catch (TransactionException e) {
             logger.error("failed perform a transaction", e);
+            throw new ServiceException(e);
         }
         return categories;
     }

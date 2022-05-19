@@ -1,5 +1,6 @@
 package com.stakhiyevich.openadboard.service;
 
+import com.stakhiyevich.openadboard.exception.ServiceException;
 import com.stakhiyevich.openadboard.model.entity.User;
 import jakarta.servlet.http.Part;
 
@@ -26,7 +27,7 @@ public interface UserService {
      * @param usersPerPage a users per page number
      * @return a list of users
      */
-    List<User> findAllPaginatedUsers(int currentPage, int usersPerPage);
+    List<User> findAllPaginatedUsers(int currentPage, int usersPerPage) throws ServiceException;
 
     /**
      * Finds a user with the specified email.
@@ -34,7 +35,7 @@ public interface UserService {
      * @param email a user's emial
      * @return an optional object of a user
      */
-    Optional<User> findUserByEmail(String email);
+    Optional<User> findUserByEmail(String email) throws ServiceException;
 
     /**
      * Finds a user with the specified id.
@@ -42,7 +43,7 @@ public interface UserService {
      * @param id a user's id
      * @return an optional object of a user
      */
-    Optional<User> findUserById(Long id);
+    Optional<User> findUserById(Long id) throws ServiceException;
 
     /**
      * Finds a user with the specified email and password
@@ -51,7 +52,7 @@ public interface UserService {
      * @param password a user's password
      * @return an optional object of a user
      */
-    Optional<User> findUserByEmailAndPassword(String email, String password);
+    Optional<User> findUserByEmailAndPassword(String email, String password) throws ServiceException;
 
     /**
      * Updates a user with specified name, email and picture's parts

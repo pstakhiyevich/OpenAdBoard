@@ -1,5 +1,6 @@
 package com.stakhiyevich.openadboard.service;
 
+import com.stakhiyevich.openadboard.exception.ServiceException;
 import com.stakhiyevich.openadboard.model.entity.City;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface CityService {
      *
      * @return a list of cities
      */
-    List<City> findAllCities();
+    List<City> findAllCities() throws ServiceException;
 
     /**
      * Finds all cities for the current page.
@@ -23,7 +24,7 @@ public interface CityService {
      * @param citiesPerPage the cities per page number
      * @return a list of cities
      */
-    List<City> findAllPaginatedCities(int currentPage, int citiesPerPage);
+    List<City> findAllPaginatedCities(int currentPage, int citiesPerPage) throws ServiceException;
 
     /**
      * Counts the number of cities.

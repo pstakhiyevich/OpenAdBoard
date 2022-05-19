@@ -1,6 +1,7 @@
 package com.stakhiyevich.openadboard.service.impl;
 
 import com.stakhiyevich.openadboard.exception.DaoException;
+import com.stakhiyevich.openadboard.exception.ServiceException;
 import com.stakhiyevich.openadboard.exception.TransactionException;
 import com.stakhiyevich.openadboard.model.dao.AbstractDao;
 import com.stakhiyevich.openadboard.model.dao.TransactionManager;
@@ -70,7 +71,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllPaginatedUsers(int currentPage, int usersPerPage) {
+    public List<User> findAllPaginatedUsers(int currentPage, int usersPerPage) throws ServiceException {
         AbstractDao userDao = new UserDaoImpl();
         List<User> users = new ArrayList<>();
         try (TransactionManager transactionManager = new TransactionManager()) {
@@ -80,15 +81,17 @@ public class UserServiceImpl implements UserService {
                 transactionManager.commit();
             } catch (DaoException e) {
                 transactionManager.rollback();
+                throw new ServiceException(e);
             }
         } catch (TransactionException e) {
             logger.error("failed to find users", e);
+            throw new ServiceException(e);
         }
         return users;
     }
 
     @Override
-    public Optional<User> findUserByEmailAndPassword(String email, String password) {
+    public Optional<User> findUserByEmailAndPassword(String email, String password) throws ServiceException {
         String hashedPassword = passwordHashGenerator.generatePasswordHash(password).get();
         AbstractDao userDao = new UserDaoImpl();
         Optional<User> user = Optional.empty();
@@ -99,9 +102,11 @@ public class UserServiceImpl implements UserService {
                 transactionManager.commit();
             } catch (DaoException e) {
                 transactionManager.rollback();
+                throw new ServiceException(e);
             }
         } catch (TransactionException e) {
             logger.error("failed to find user by email", e);
+            throw new ServiceException(e);
         }
         return user;
     }
@@ -202,7 +207,7 @@ public class UserServiceImpl implements UserService {
         return numberOfUsers;
     }
 
-    public Optional<User> findUserByEmail(String email) {
+    public Optional<User> findUserByEmail(String email) throws ServiceException {
         AbstractDao userDao = new UserDaoImpl();
         Optional<User> user = Optional.empty();
         try (TransactionManager transactionManager = new TransactionManager()) {
@@ -212,15 +217,17 @@ public class UserServiceImpl implements UserService {
                 transactionManager.commit();
             } catch (DaoException e) {
                 transactionManager.rollback();
+                throw new ServiceException(e);
             }
         } catch (TransactionException e) {
             logger.error("failed to find user by email", e);
+            throw new ServiceException(e);
         }
         return user;
     }
 
     @Override
-    public Optional<User> findUserById(Long id) {
+    public Optional<User> findUserById(Long id) throws ServiceException {
         AbstractDao userDao = new UserDaoImpl();
         Optional<User> user = Optional.empty();
         try (TransactionManager transactionManager = new TransactionManager()) {
@@ -230,9 +237,11 @@ public class UserServiceImpl implements UserService {
                 transactionManager.commit();
             } catch (DaoException e) {
                 transactionManager.rollback();
+                throw new ServiceException(e);
             }
         } catch (TransactionException e) {
             logger.error("failed to perform a transaction", e);
+            throw new ServiceException(e);
         }
         return user;
     }

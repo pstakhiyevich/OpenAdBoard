@@ -1,6 +1,7 @@
 package com.stakhiyevich.openadboard.service.impl;
 
 import com.stakhiyevich.openadboard.exception.DaoException;
+import com.stakhiyevich.openadboard.exception.ServiceException;
 import com.stakhiyevich.openadboard.exception.TransactionException;
 import com.stakhiyevich.openadboard.model.dao.AbstractDao;
 import com.stakhiyevich.openadboard.model.dao.TransactionManager;
@@ -203,9 +204,9 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> findPaginatedItems(int currentPage, int itemsPerPage) {
+    public List<Item> findPaginatedItems(int currentPage, int itemsPerPage) throws ServiceException {
         AbstractDao itemDao = new ItemDaoImpl();
-        List<Item> items = new ArrayList<>();
+        List<Item> items;
         try (TransactionManager transactionManager = new TransactionManager()) {
             transactionManager.beginTransaction(itemDao);
             try {
@@ -213,17 +214,19 @@ public class ItemServiceImpl implements ItemService {
                 transactionManager.commit();
             } catch (DaoException e) {
                 transactionManager.rollback();
+                throw new ServiceException(e);
             }
         } catch (TransactionException e) {
             logger.error("failed to perform a transaction", e);
+            throw new ServiceException(e);
         }
         return items;
     }
 
     @Override
-    public List<Item> findPaginatedItemsByUserId(long userId, int currentPage, int itemsPerPage) {
+    public List<Item> findPaginatedItemsByUserId(long userId, int currentPage, int itemsPerPage) throws ServiceException {
         AbstractDao itemDao = new ItemDaoImpl();
-        List<Item> items = new ArrayList<>();
+        List<Item> items;
         try (TransactionManager transactionManager = new TransactionManager()) {
             transactionManager.beginTransaction(itemDao);
             try {
@@ -231,17 +234,19 @@ public class ItemServiceImpl implements ItemService {
                 transactionManager.commit();
             } catch (DaoException e) {
                 transactionManager.rollback();
+                throw new ServiceException(e);
             }
         } catch (TransactionException e) {
             logger.error("failed to perform a transaction", e);
+            throw new ServiceException(e);
         }
         return items;
     }
 
     @Override
-    public Optional<Item> findItemById(long id) {
+    public Optional<Item> findItemById(long id) throws ServiceException {
         AbstractDao itemDao = new ItemDaoImpl();
-        Optional<Item> item = Optional.empty();
+        Optional<Item> item;
         try (TransactionManager transactionManager = new TransactionManager()) {
             transactionManager.beginTransaction(itemDao);
             try {
@@ -249,9 +254,11 @@ public class ItemServiceImpl implements ItemService {
                 transactionManager.commit();
             } catch (DaoException e) {
                 transactionManager.rollback();
+                throw new ServiceException(e);
             }
         } catch (TransactionException e) {
             logger.error("failed to perform a transaction", e);
+            throw new ServiceException(e);
         }
         return item;
     }

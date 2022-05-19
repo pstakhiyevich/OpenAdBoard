@@ -1,5 +1,6 @@
 package com.stakhiyevich.openadboard.service;
 
+import com.stakhiyevich.openadboard.exception.ServiceException;
 import com.stakhiyevich.openadboard.model.entity.Category;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface CategoryService {
      *
      * @return a list of categories
      */
-    List<Category> findAllCategories();
+    List<Category> findAllCategories() throws ServiceException;
 
     /**
      * Finds all categories for the current page.
@@ -23,7 +24,7 @@ public interface CategoryService {
      * @param categoriesPerPage the categories per page number
      * @return a list of categories
      */
-    List<Category> findAllPaginatedCategories(int currentPage, int categoriesPerPage);
+    List<Category> findAllPaginatedCategories(int currentPage, int categoriesPerPage) throws ServiceException;
 
     /**
      * Count all categories.

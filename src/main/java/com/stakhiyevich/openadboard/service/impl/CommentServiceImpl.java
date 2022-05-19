@@ -1,6 +1,7 @@
 package com.stakhiyevich.openadboard.service.impl;
 
 import com.stakhiyevich.openadboard.exception.DaoException;
+import com.stakhiyevich.openadboard.exception.ServiceException;
 import com.stakhiyevich.openadboard.exception.TransactionException;
 import com.stakhiyevich.openadboard.model.dao.AbstractDao;
 import com.stakhiyevich.openadboard.model.dao.TransactionManager;
@@ -75,7 +76,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentEntityDto> findByItemId(long itemId) {
+    public List<CommentEntityDto> findByItemId(long itemId) throws ServiceException {
         AbstractDao commentDao = new CommentDaoImpl();
         AbstractDao userDao = new UserDaoImpl();
         List<CommentEntityDto> commentsDto = new ArrayList<>();
@@ -90,15 +91,17 @@ public class CommentServiceImpl implements CommentService {
                 transactionManager.commit();
             } catch (DaoException e) {
                 transactionManager.rollback();
+                throw new ServiceException(e);
             }
         } catch (TransactionException e) {
             logger.error("failed to perform a transaction", e);
+            throw new ServiceException(e);
         }
         return commentsDto;
     }
 
     @Override
-    public List<CommentEntityDto> findByUserId(long userId) {
+    public List<CommentEntityDto> findByUserId(long userId) throws ServiceException {
         AbstractDao commentDao = new CommentDaoImpl();
         AbstractDao userDao = new UserDaoImpl();
         List<CommentEntityDto> commentsDto = new ArrayList<>();
@@ -113,9 +116,11 @@ public class CommentServiceImpl implements CommentService {
                 transactionManager.commit();
             } catch (DaoException e) {
                 transactionManager.rollback();
+                throw new ServiceException(e);
             }
         } catch (TransactionException e) {
             logger.error("failed to perform a transaction", e);
+            throw new ServiceException(e);
         }
         return commentsDto;
     }

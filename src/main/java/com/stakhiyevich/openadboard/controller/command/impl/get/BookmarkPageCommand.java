@@ -2,6 +2,7 @@ package com.stakhiyevich.openadboard.controller.command.impl.get;
 
 import com.stakhiyevich.openadboard.controller.command.Command;
 import com.stakhiyevich.openadboard.controller.command.Router;
+import com.stakhiyevich.openadboard.exception.ServiceException;
 import com.stakhiyevich.openadboard.model.entity.User;
 import com.stakhiyevich.openadboard.model.entity.dto.BookmarkEntityDto;
 import com.stakhiyevich.openadboard.service.BookmarkService;
@@ -9,11 +10,12 @@ import com.stakhiyevich.openadboard.service.impl.BookmarkServiceImpl;
 import com.stakhiyevich.openadboard.util.pagination.PageCounter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-import static com.stakhiyevich.openadboard.controller.command.PagePathHolder.BOOKMARK_PAGE;
-import static com.stakhiyevich.openadboard.controller.command.PagePathHolder.ERROR_PAGE_404;
+import static com.stakhiyevich.openadboard.controller.command.PagePathHolder.*;
 import static com.stakhiyevich.openadboard.controller.command.RequestParameterHolder.*;
 import static com.stakhiyevich.openadboard.controller.command.RoutingTypeHolder.ERROR;
 import static com.stakhiyevich.openadboard.controller.command.RoutingTypeHolder.FORWARD;
@@ -21,6 +23,9 @@ import static com.stakhiyevich.openadboard.controller.command.SessionAttributeHo
 import static com.stakhiyevich.openadboard.controller.command.SessionAttributeHolder.USER;
 
 public class BookmarkPageCommand implements Command {
+
+    private static final Logger logger = LogManager.getLogger();
+
     @Override
     public Router execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -37,7 +42,14 @@ public class BookmarkPageCommand implements Command {
             return new Router(ERROR_PAGE_404, ERROR);
         }
 
-        List<BookmarkEntityDto> bookmarks = bookmarkService.findByUserId(user.getId(), currentPage, itemsPerPage);
+        List<BookmarkEntityDto> bookmarks;
+        try {
+            bookmarks = bookmarkService.findByUserId(user.getId(), currentPage, itemsPerPage);
+        } catch (ServiceException e) {
+            logger.error("failed to find a bookmark by user id", e);
+            return new Router(ERROR_PAGE_500, ERROR);
+        }
+
         if (!bookmarks.isEmpty()) {
             request.setAttribute(BOOKMARKS, bookmarks);
         }
